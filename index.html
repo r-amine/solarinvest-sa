@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SolarInvest SA - Solar Energy Investment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .form-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+        }
+        
+        .form-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .form-card h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .form-card .subtitle {
+            text-align: center;
+            color: #a0aec0;
+            margin-bottom: 30px;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active {
+            background: #f59e0b;
+            color: #1e1b4b;
+        }
+        
+        input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 16px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+        }
+        
+        input::placeholder {
+            color: #94a3b8;
+        }
+        
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #f59e0b;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #1e1b4b;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #d97706;
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            padding: 20px;
+            border-radius: 24px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .balance-card {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 25px;
+            border-radius: 16px;
+            text-align: center;
+        }
+        
+        .balance-card .label {
+            font-size: 12px;
+            color: #a0aec0;
+        }
+        
+        .balance-card .amount {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .stat-card .label {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 8px;
+        }
+        
+        .stat-card .value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .value.green { color: #4ade80; }
+        .value.yellow { color: #f59e0b; }
+        .value.blue { color: #60a5fa; }
+        
+        .vip-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .vip-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .vip-card:hover {
+            transform: translateY(-5px);
+            border-color: #f59e0b;
+        }
+        
+        .vip-header {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .vip-name {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .vip-panels {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        .vip-body {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .vip-cost {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .vip-profit {
+            background: rgba(34,197,94,0.2);
+            padding: 10px;
+            border-radius: 12px;
+            margin: 15px 0;
+            color: #4ade80;
+            font-weight: bold;
+        }
+        
+        .vip-daily {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+        
+        .invest-btn {
+            background: #f59e0b;
+            color: #1e1b4b;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: bold;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .investments-list {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 20px;
+        }
+        
+        .investment-item {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            background: #334155;
+            border-radius: 10px;
+            height: 8px;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            background: #4ade80;
+            border-radius: 10px;
+            height: 100%;
+            width: 0%;
+        }
+        
+        .claim-btn {
+            background: #4ade80;
+            color: #1e1b4b;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+        
+        .deposit-btn {
+            background: #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .error-text {
+            color: #ef4444;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 15px;
+        }
+        
+        h2 {
+            margin: 30px 0 20px 0;
+        }
+        
+        .flex {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .wallet-address {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-family: monospace;
+            word-break: break-all;
+            margin-top: 10px;
+        }
+        
+        .copy-btn {
+            background: #334155;
+            padding: 5px 10px;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .form-card {
+                padding: 25px;
+                margin: 20px;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .vip-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    
+    <script>
+        // CONFIGURATION
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx8nvJc2uZBwJwrSKPAFmIRWqPtQ1sfmjqEz4YmYL9JX1Y3jW-5VlW3ib2S2cUxEeiVCA/exec";
+        const WALLET_ADDRESS = "TLi3ANb8GCJzypyBofqwvjqjXR1G8Hr1cN";
+        
+        // VIP Levels with 25% Profit
+        const VIP_LEVELS = {
+            VIP1: { name: 'VIP1', cost: 11, totalReturn: 13.75, dailyReturn: 0.98, duration: 14, panels: 1, profit: 2.75 },
+            VIP2: { name: 'VIP2', cost: 55, totalReturn: 68.75, dailyReturn: 4.91, duration: 14, panels: 5, profit: 13.75 },
+            VIP3: { name: 'VIP3', cost: 110, totalReturn: 137.50, dailyReturn: 9.82, duration: 14, panels: 10, profit: 27.50 },
+            VIP4: { name: 'VIP4', cost: 275, totalReturn: 343.75, dailyReturn: 24.55, duration: 14, panels: 25, profit: 68.75 },
+            VIP5: { name: 'VIP5', cost: 550, totalReturn: 687.50, dailyReturn: 49.11, duration: 14, panels: 50, profit: 137.50 }
+        };
+        
+        let currentUser = null;
+        let userBalance = 0;
+        let userInvested = 0;
+        let userEarned = 0;
+        let investments = [];
+        let pendingClaim = 0;
+        
+        // Helper function for API calls
+        async function callSheet(action, data = {}) {
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action, ...data })
+                });
+                const text = await response.text();
+                return JSON.parse(text);
+            } catch (error) {
+                console.error(error);
+                return { error: error.message };
+            }
+        }
+        
+        // Hash password (simple)
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hash = await crypto.subtle.digest('SHA-256', data);
+            return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+        
+        // Login function
+        async function login(email, password) {
+            const hashedPassword = await hashPassword(password);
+            const result = await callSheet('getUser', { email });
+            
+            if (result.error) {
+                return { success: false, error: 'User not found' };
+            }
+            
+            if (result.password_hash !== hashedPassword) {
+                return { success: false, error: 'Invalid password' };
+            }
+            
+            localStorage.setItem('token', btoa(email));
+            localStorage.setItem('email', email);
+            return { success: true };
+        }
+        
+        // Register function
+        async function register(email, password, retypePassword) {
+            if (password !== retypePassword) {
+                return { success: false, error: 'Passwords do not match' };
+            }
+            
+            if (password.length < 6) {
+                return { success: false, error: 'Password must be at least 6 characters' };
+            }
+            
+            const checkUser = await callSheet('getUser', { email });
+            if (checkUser && checkUser.email) {
+                return { success: false, error: 'Email already registered' };
+            }
+            
+            const hashedPassword = await hashPassword(password);
+            await callSheet('register', { email, password: hashedPassword });
+            
+            localStorage.setItem('token', btoa(email));
+            localStorage.setItem('email', email);
+            return { success: true };
+        }
+        
+        // Get user data
+        async function fetchUser() {
+            const email = localStorage.getItem('email');
+            if (!email) return false;
+            
+            const result = await callSheet('getUser', { email });
+            if (result.email) {
+                userBalance = result.balance || 0;
+                userInvested = result.totalInvested || 0;
+                userEarned = result.totalEarned || 0;
+                return true;
+            }
+            return false;
+        }
+        
+        // Get investments
+        async function fetchInvestments() {
+            const email = localStorage.getItem('email');
+            if (!email) return [];
+            
+            const result = await callSheet('getInvestments', { email });
+            investments = result || [];
+            return investments;
+        }
+        
+        // Get pending claim
+        async function fetchPendingClaim() {
+            const email = localStorage.getItem('email');
+            if (!email) return 0;
+            
+            const investments = await fetchInvestments();
+            let pending = 0;
+            
+            for (const inv of investments) {
+                if (inv.status === 'active') {
+                    const lastClaim = new Date(inv.lastClaim);
+                    const daysPassed = Math.floor((Date.now() - lastClaim) / (1000 * 60 * 60 * 24));
+                    
+                    if (daysPassed > 0) {
+                        const earn = daysPassed * inv.dailyReturn;
+                        const maxClaimable = inv.totalReturn - inv.totalClaimed;
+                        pending += Math.min(earn, maxClaimable);
+                    }
+                }
+            }
+            pendingClaim = pending;
+            return pending;
+        }
+        
+        // Invest (shows wallet address for payment)
+        async function invest(vipKey) {
+            const vip = VIP_LEVELS[vipKey];
+            
+            // Show payment instructions
+            const confirmMsg = `📋 INVESTMENT DETAILS:\n\n` +
+                `Plan: ${vip.name}\n` +
+                `Amount: ${vip.cost} USDT\n` +
+                `Return: ${vip.totalReturn} USDT\n` +
+                `Profit: +${vip.profit} USDT (25%)\n` +
+                `Duration: ${vip.duration} days\n\n` +
+                `💰 SEND ${vip.cost} USDT TO:\n${WALLET_ADDRESS}\n\n` +
+                `⚠️ After sending, click OK and we will verify your payment.`;
+            
+            if (!confirm(confirmMsg)) return;
+            
+            // Ask for transaction ID
+            const txHash = prompt("Enter your transaction ID (TXID) from your wallet:");
+            if (!txHash || txHash.length < 10) {
+                alert("Transaction ID is required. Payment not recorded.");
+                return;
+            }
+            
+            // Simulate payment verification (in real app, you'd verify on blockchain)
+            alert(`✅ Payment recorded! Your ${vip.cost} USDT investment in ${vip.name} is active.\n\nTransaction ID: ${txHash}\n\nYour balance will be updated after admin verification.`);
+            
+            const email = localStorage.getItem('email');
+            const user = await callSheet('getUser', { email });
+            
+            if (user.balance >= vip.cost) {
+                // User has balance, use it
+                const newBalance = user.balance - vip.cost;
+                await callSheet('updateBalance', { email, newBalance });
+            }
+            
+            // Add investment
+            const startDate = new Date().toISOString();
+            const endDate = new Date();
+            endDate.setDate(endDate.getDate() + vip.duration);
+            
+            await callSheet('addInvestment', {
+                email: email,
+                vipLevel: vipKey,
+                amount: vip.cost,
+                totalReturn: vip.totalReturn,
+                dailyReturn: vip.dailyReturn,
+                startDate: startDate,
+                endDate: endDate.toISOString(),
+                lastClaim: startDate,
+                totalClaimed: 0,
+                status: 'active'
+            });
+            
+            await callSheet('addTransaction', {
+                email: email,
+                type: 'investment',
+                amount: vip.cost,
+                description: `Invested in ${vip.name} - ${vip.panels} solar panels. TX: ${txHash}`
+            });
+            
+            await Promise.all([fetchUser(), fetchInvestments(), fetchPendingClaim()]);
+            renderDashboard();
+        }
+        
+        // Claim earnings
+        async function claimEarnings() {
+            const email = localStorage.getItem('email');
+            const investments = await fetchInvestments();
+            
+            let totalEarn = 0;
+            
+            for (const inv of investments) {
+                if (inv.status === 'active') {
+                    const lastClaim = new Date(inv.lastClaim);
+                    const endDate = new Date(inv.endDate);
+                    const now = new Date();
+                    
+                    if (now > endDate) {
+                        continue;
+                    }
+                    
+                    const daysPassed = Math.floor((now - lastClaim) / (1000 * 60 * 60 * 24));
+                    
+                    if (daysPassed > 0) {
+                        const earn = daysPassed * inv.dailyReturn;
+                        const maxClaimable = inv.totalReturn - inv.totalClaimed;
+                        const actualEarn = Math.min(earn, maxClaimable);
+                        
+                        if (actualEarn > 0) {
+                            totalEarn += actualEarn;
+                            const newTotalClaimed = inv.totalClaimed + actualEarn;
+                            const newStatus = newTotalClaimed >= inv.totalReturn ? 'completed' : 'active';
+                            
+                            await callSheet('updateInvestmentClaim', {
+                                email: email,
+                                vipLevel: inv.vipLevel,
+                                newTotalClaimed: newTotalClaimed,
+                                newLastClaim: now.toISOString(),
+                                newStatus: newStatus
+                            });
+                        }
+                    }
+                }
+            }
+            
+            if (totalEarn > 0) {
+                const user = await callSheet('getUser', { email });
+                const newBalance = (user.balance || 0) + totalEarn;
+                await callSheet('updateBalance', { email, newBalance });
+                
+                await callSheet('addTransaction', {
+                    email: email,
+                    type: 'earn',
+                    amount: totalEarn,
+                    description: `Solar earnings claimed`
+                });
+            }
+            
+            await Promise.all([fetchUser(), fetchInvestments(), fetchPendingClaim()]);
+            
+            if (totalEarn > 0) {
+                alert(`✅ Claimed ${totalEarn.toFixed(2)} USDT!`);
+            } else {
+                alert(`No earnings to claim yet. Check back tomorrow!`);
+            }
+            
+            renderDashboard();
+        }
+        
+        // Copy wallet address
+        function copyWalletAddress() {
+            navigator.clipboard.writeText(WALLET_ADDRESS);
+            alert("Wallet address copied! Send USDT (TRC20) to this address.");
+        }
+        
+        // Logout
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('email');
+            render();
+        }
+        
+        // Check if logged in
+        function isLoggedIn() {
+            return !!localStorage.getItem('token');
+        }
+        
+        // Render Login/Register Form
+        function renderAuthForm() {
+            let activeTab = 'login';
+            let email = '';
+            let password = '';
+            let retypePassword = '';
+            let error = '';
+            let loading = false;
+            
+            function handleSubmit() {
+                if (loading) return;
+                loading = true;
+                error = '';
+                render();
+                
+                if (activeTab === 'login') {
+                    login(email, password).then(result => {
+                        loading = false;
+                        if (result.success) {
+                            render();
+                        } else {
+                            error = result.error;
+                            render();
+                        }
+                    });
+                } else {
+                    register(email, password, retypePassword).then(result => {
+                        loading = false;
+                        if (result.success) {
+                            render();
+                        } else {
+                            error = result.error;
+                            render();
+                        }
+                    });
+                }
+            }
+            
+            function render() {
+                const app = document.getElementById('app');
+                app.innerHTML = `
+                    <div class="form-container">
+                        <div class="form-card">
+                            <h1>☀️ SolarInvest SA</h1>
+                            <div class="subtitle">Invest in Solar • Earn 25% Profit</div>
+                            
+                            <div class="tab-buttons">
+                                <button class="tab-btn ${activeTab === 'login' ? 'active' : ''}" onclick="window.authHandler.setTab('login')">Login</button>
+                                <button class="tab-btn ${activeTab === 'register' ? 'active' : ''}" onclick="window.authHandler.setTab('register')">Register</button>
+                            </div>
+                            
+                            <input type="email" placeholder="Email Address" id="email" value="${escapeHtml(email)}">
+                            <input type="password" placeholder="Password" id="password" value="${escapeHtml(password)}">
+                            ${activeTab === 'register' ? `<input type="password" placeholder="Retype Password" id="retypePassword">` : ''}
+                            
+                            ${error ? `<div class="error-text">❌ ${error}</div>` : ''}
+                            
+                            <button ${loading ? 'disabled' : ''} onclick="window.authHandler.submit()">
+                                ${loading ? 'Processing...' : (activeTab === 'login' ? 'Login' : 'Register')}
+                            </button>
+                            
+                            <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #94a3b8;">
+                                🇿🇦 Supporting solar energy in South Africa
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                const emailInput = document.getElementById('email');
+                const passwordInput = document.getElementById('password');
+                const retypeInput = document.getElementById('retypePassword');
+                if (emailInput) emailInput.addEventListener('input', (e) => email = e.target.value);
+                if (passwordInput) passwordInput.addEventListener('input', (e) => password = e.target.value);
+                if (retypeInput) retypeInput.addEventListener('input', (e) => retypePassword = e.target.value);
+            }
+            
+            window.authHandler = {
+                setTab: (tab) => {
+                    activeTab = tab;
+                    error = '';
+                    render();
+                },
+                submit: handleSubmit
+            };
+            
+            render();
+        }
+        
+        // Render Dashboard
+        async function renderDashboard() {
+            await Promise.all([fetchUser(), fetchInvestments(), fetchPendingClaim()]);
+            
+            const app = document.getElementById('app');
+            
+            // Generate VIP cards HTML
+            let vipCardsHtml = '';
+            for (const [key, vip] of Object.entries(VIP_LEVELS)) {
+                vipCardsHtml += `
+                    <div class="vip-card" onclick="window.dashboardHandler.invest('${key}')">
+                        <div class="vip-header">
+                            <div class="vip-name">${vip.name}</div>
+                            <div class="vip-panels">${vip.panels} Solar Panel${vip.panels > 1 ? 's' : ''}</div>
+                        </div>
+                        <div class="vip-body">
+                            <div class="vip-cost">${vip.cost} USDT</div>
+                            <div class="vip-profit">+${vip.profit} USDT (25%)</div>
+                            <div class="vip-daily">📅 ${vip.duration} days</div>
+                            <div class="vip-daily">⚡ ${vip.dailyReturn.toFixed(2)} USDT/day</div>
+                            <button class="invest-btn">Invest Now</button>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Generate investments HTML
+            let investmentsHtml = '';
+            if (investments.length > 0) {
+                investmentsHtml = '<h2>📋 Your Active Investments</h2><div class="investments-list">';
+                for (const inv of investments) {
+                    const progress = (inv.totalClaimed / inv.totalReturn) * 100;
+                    investmentsHtml += `
+                        <div class="investment-item">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span><strong>${inv.vipLevel}</strong> - ${inv.amount} USDT</span>
+                                <span>Claimed: ${inv.totalClaimed.toFixed(2)} / ${inv.totalReturn.toFixed(2)} USDT</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${progress}%"></div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8;">
+                                <span>Started: ${new Date(inv.startDate).toLocaleDateString()}</span>
+                                <span>Remaining: ${(inv.totalReturn - inv.totalClaimed).toFixed(2)} USDT</span>
+                            </div>
+                        </div>
+                    `;
+                }
+                investmentsHtml += '</div>';
+            }
+            
+            app.innerHTML = `
+                <div class="container">
+                    <div class="header">
+                        <div class="logo">☀️ SolarInvest SA</div>
+                        <div class="flex">
+                            <button class="deposit-btn" onclick="window.dashboardHandler.showWallet()">
+                                💰 Deposit USDT
+                            </button>
+                            <button class="claim-btn" onclick="window.dashboardHandler.claim()">
+                                ⚡ Claim ${pendingClaim > 0 ? pendingClaim.toFixed(2) : ''} Earnings
+                            </button>
+                            <button class="logout-btn" onclick="window.dashboardHandler.logout()">Logout</button>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="label">💰 Balance</div>
+                            <div class="value green">${userBalance.toFixed(2)} USDT</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="label">📈 Total Invested</div>
+                            <div class="value">${userInvested.toFixed(2)} USDT</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="label">✨ Total Earned</div>
+                            <div class="value yellow">${userEarned.toFixed(2)} USDT</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="label">⏳ Pending Claim</div>
+                            <div class="value blue">${pendingClaim.toFixed(2)} USDT</div>
+                        </div>
+                    </div>
+                    
+                    <h2>🌱 Investment Plans (25% Profit)</h2>
+                    <div class="vip-grid">
+                        ${vipCardsHtml}
+                    </div>
+                    
+                    ${investmentsHtml}
+                    
+                    <div style="margin-top: 40px; background: rgba(59,130,246,0.1); padding: 20px; border-radius: 20px; border: 1px solid #3b82f6;">
+                        <h3 style="margin-bottom: 15px;">🇿🇦 About South Africa Solar Project</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 14px;">
+                            <div>
+                                ✓ Each VIP level represents real solar panel investment<br>
+                                ✓ Fixed 25% return over 14 days<br>
+                                ✓ Daily earnings can be claimed anytime
+                            </div>
+                            <div>
+                                ☀️ South Africa receives 2,500+ hours of sunshine annually<br>
+                                🔋 Solar energy helps reduce load shedding<br>
+                                🌍 1 USDT invested = 5kg CO₂ saved per year
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            window.dashboardHandler = {
+                invest: (vipKey) => invest(vipKey),
+                claim: () => claimEarnings(),
+                logout: () => logout(),
+                showWallet: () => {
+                    alert(`💰 Send USDT (TRC20) to:\n\n${WALLET_ADDRESS}\n\nAfter sending, your balance will be updated.`);
+                }
+            };
+        }
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        async function render() {
+            if (isLoggedIn()) {
+                await renderDashboard();
+            } else {
+                renderAuthForm();
+            }
+        }
+        
+        render();
+    </script>
+</body>
+</html>
