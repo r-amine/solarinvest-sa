@@ -38,7 +38,7 @@
             padding: 40px;
             border-radius: 24px;
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
             border: 1px solid rgba(255,255,255,0.2);
         }
         
@@ -297,6 +297,10 @@
             margin-bottom: 15px;
         }
         
+        .success-text {
+            color: #4ade80;
+        }
+        
         h2 {
             margin: 30px 0 20px 0;
         }
@@ -308,13 +312,22 @@
             flex-wrap: wrap;
         }
         
-        .wallet-address {
+        .wallet-box {
             background: rgba(0,0,0,0.3);
-            padding: 15px;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #f59e0b;
+        }
+        
+        .wallet-address {
+            background: rgba(255,255,255,0.1);
+            padding: 12px;
             border-radius: 12px;
             font-family: monospace;
             word-break: break-all;
-            text-align: center;
+            font-size: 14px;
             margin: 10px 0;
         }
         
@@ -346,10 +359,10 @@
     
     <script>
         // ============================================================
-        // CONFIGURATION - UPDATED WITH YOUR NEW APPS SCRIPT URL
+        // CONFIGURATION
         // ============================================================
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxPBNKmPYXb4LthuoSBjlUAiWUPqYdbcQB8yj6efJgZShZw8VVCqcLhniZBmg_5ZMT_jA/exec";
-        const WALLET_ADDRESS = "TLi3ANb8GCJzypyBofqwvjqjXR1G8Hr1cN";
+        const MAIN_WALLET = "TLi3ANb8GCJzypyBofqwvjqjXR1G8Hr1cN";
         
         // VIP Levels with 25% Profit
         const VIP_LEVELS = {
@@ -360,13 +373,13 @@
             VIP5: { name: 'VIP5', cost: 550, totalReturn: 687.50, dailyReturn: 49.11, duration: 14, panels: 50, profit: 137.50 }
         };
         
-        let currentUser = null;
+        let userWalletAddress = "";
         let userBalance = 0;
         let userInvested = 0;
         let userEarned = 0;
         let investments = [];
         let pendingClaim = 0;
-        let isCheckingPayment = false;
+        let isChecking = false;
         
         // Helper function for API calls
         async function callSheet(action, data = {}) {
@@ -383,113 +396,6 @@
             }
         }
         
-        // CHECK TRON USDT PAYMENTS (using TronGrid API - FREE)
-        async function checkUSDTDeposit() {
-            try {
-                const url = `https://api.trongrid.io/v1/accounts/${WALLET_ADDRESS}/transactions/trc20?limit=50&only_confirmed=true`;
-                const response = await fetch(url);
-                const data = await response.json();
-                
-                if (!data.data || data.data.length === 0) {
-                    return { success: false, message: "No transactions found" };
-                }
-                
-                const last24Hours = Date.now() - (24 * 60 * 60 * 1000);
-                const recentTxs = data.data.filter(tx => {
-                    const txTime = parseInt(tx.block_timestamp);
-                    return txTime > last24Hours && tx.token_info?.symbol === "USDT";
-                });
-                
-                if (recentTxs.length === 0) {
-                    return { success: false, message: "No recent USDT deposits" };
-                }
-                
-                const processedTxs = await callSheet('getProcessedTransactions', { wallet: WALLET_ADDRESS });
-                const processedHashes = processedTxs.hashes || [];
-                
-                const newDeposits = recentTxs.filter(tx => !processedHashes.includes(tx.transaction_id));
-                
-                if (newDeposits.length === 0) {
-                    return { success: false, message: "All deposits already processed" };
-                }
-                
-                let totalNew = 0;
-                for (const tx of newDeposits) {
-                    const amount = parseFloat(tx.value) / 1000000;
-                    totalNew += amount;
-                    
-                    await callSheet('markTransactionProcessed', {
-                        txHash: tx.transaction_id,
-                        amount: amount,
-                        fromAddress: tx.from,
-                        wallet: WALLET_ADDRESS
-                    });
-                }
-                
-                return {
-                    success: true,
-                    amount: totalNew,
-                    transactions: newDeposits.length,
-                    message: `Found ${newDeposits.length} new deposit(s) totaling ${totalNew.toFixed(2)} USDT`
-                };
-                
-            } catch (error) {
-                console.error("Error checking payments:", error);
-                return { success: false, error: error.message };
-            }
-        }
-        
-        // Update user balance after deposit
-        async function updateBalanceFromDeposit(amount) {
-            const email = localStorage.getItem('email');
-            const user = await callSheet('getUser', { email });
-            const newBalance = (user.balance || 0) + amount;
-            
-            await callSheet('updateBalance', { email, newBalance });
-            await callSheet('addTransaction', {
-                email: email,
-                type: 'deposit',
-                amount: amount,
-                description: `Auto-detected USDT deposit to wallet`
-            });
-            
-            return newBalance;
-        }
-        
-        // Manual balance check button
-        async function checkAndUpdateBalance() {
-            if (isCheckingPayment) {
-                alert("Already checking... Please wait.");
-                return;
-            }
-            
-            isCheckingPayment = true;
-            
-            const checkBtn = document.querySelector('.check-balance-btn');
-            const originalText = checkBtn?.innerHTML;
-            if (checkBtn) checkBtn.innerHTML = "⏳ Checking blockchain...";
-            
-            try {
-                const result = await checkUSDTDeposit();
-                
-                if (result.success && result.amount > 0) {
-                    const newBalance = await updateBalanceFromDeposit(result.amount);
-                    alert(`✅ ${result.message}\n\n💰 Your balance has been increased by ${result.amount.toFixed(2)} USDT!\nNew balance: ${newBalance.toFixed(2)} USDT`);
-                    await Promise.all([fetchUser(), fetchInvestments(), fetchPendingClaim()]);
-                    renderDashboard();
-                } else if (result.success) {
-                    alert(`ℹ️ ${result.message}\n\nSend USDT to:\n${WALLET_ADDRESS}\n\nThen click "Check Balance" again.`);
-                } else {
-                    alert(`⚠️ Could not check blockchain: ${result.error || result.message}\n\nPlease try again later.`);
-                }
-            } catch (error) {
-                alert("Error checking balance. Please try again.");
-            } finally {
-                isCheckingPayment = false;
-                if (checkBtn) checkBtn.innerHTML = originalText;
-            }
-        }
-        
         // Hash password
         async function hashPassword(password) {
             const encoder = new TextEncoder();
@@ -498,25 +404,7 @@
             return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
         }
         
-        // Login function
-        async function login(email, password) {
-            const hashedPassword = await hashPassword(password);
-            const result = await callSheet('getUser', { email });
-            
-            if (result.error) {
-                return { success: false, error: 'User not found' };
-            }
-            
-            if (result.password_hash !== hashedPassword) {
-                return { success: false, error: 'Invalid password' };
-            }
-            
-            localStorage.setItem('token', btoa(email));
-            localStorage.setItem('email', email);
-            return { success: true };
-        }
-        
-        // Register function
+        // REGISTER - Creates a new wallet for the user
         async function register(email, password, retypePassword) {
             if (password !== retypePassword) {
                 return { success: false, error: 'Passwords do not match' };
@@ -526,26 +414,54 @@
                 return { success: false, error: 'Password must be at least 6 characters' };
             }
             
+            // Check if user exists
             const checkUser = await callSheet('getUser', { email });
             if (checkUser && checkUser.email) {
                 return { success: false, error: 'Email already registered' };
             }
             
             const hashedPassword = await hashPassword(password);
-            await callSheet('register', { email, password: hashedPassword });
+            
+            // Register and generate wallet
+            const result = await callSheet('register', { email, password: hashedPassword });
+            
+            if (result.success) {
+                localStorage.setItem('token', btoa(email));
+                localStorage.setItem('email', email);
+                localStorage.setItem('walletAddress', result.walletAddress);
+                return { success: true };
+            }
+            
+            return { success: false, error: result.error };
+        }
+        
+        // LOGIN
+        async function login(email, password) {
+            const hashedPassword = await hashPassword(password);
+            const result = await callSheet('getUser', { email });
+            
+            if (result.error || !result.email) {
+                return { success: false, error: 'User not found' };
+            }
+            
+            if (result.password_hash !== hashedPassword) {
+                return { success: false, error: 'Invalid password' };
+            }
             
             localStorage.setItem('token', btoa(email));
             localStorage.setItem('email', email);
+            localStorage.setItem('walletAddress', result.walletAddress);
             return { success: true };
         }
         
-        // Get user data
+        // GET USER DATA
         async function fetchUser() {
             const email = localStorage.getItem('email');
             if (!email) return false;
             
             const result = await callSheet('getUser', { email });
             if (result.email) {
+                userWalletAddress = result.walletAddress;
                 userBalance = result.balance || 0;
                 userInvested = result.totalInvested || 0;
                 userEarned = result.totalEarned || 0;
@@ -554,7 +470,7 @@
             return false;
         }
         
-        // Get investments
+        // GET INVESTMENTS
         async function fetchInvestments() {
             const email = localStorage.getItem('email');
             if (!email) return [];
@@ -564,19 +480,13 @@
             return investments;
         }
         
-        // Get pending claim
+        // GET PENDING CLAIM
         async function fetchPendingClaim() {
-            const email = localStorage.getItem('email');
-            if (!email) return 0;
-            
-            const investments = await fetchInvestments();
             let pending = 0;
-            
             for (const inv of investments) {
                 if (inv.status === 'active') {
                     const lastClaim = new Date(inv.lastClaim);
                     const daysPassed = Math.floor((Date.now() - lastClaim) / (1000 * 60 * 60 * 24));
-                    
                     if (daysPassed > 0) {
                         const earn = daysPassed * inv.dailyReturn;
                         const maxClaimable = inv.totalReturn - inv.totalClaimed;
@@ -588,21 +498,75 @@
             return pending;
         }
         
-        // Process investment
-        async function processInvestment(vipKey, amount, method) {
+        // CHECK USER'S PERSONAL WALLET FOR DEPOSITS
+        async function checkUserWallet() {
+            if (isChecking) {
+                alert("Already checking... Please wait.");
+                return;
+            }
+            
+            isChecking = true;
+            
+            const checkBtn = document.querySelector('.check-balance-btn');
+            if (checkBtn) checkBtn.innerHTML = "⏳ Checking your wallet...";
+            
+            try {
+                const result = await callSheet('checkUserWallet', {
+                    email: localStorage.getItem('email'),
+                    walletAddress: userWalletAddress
+                });
+                
+                if (result.success && result.amount > 0) {
+                    // Update user's balance
+                    const newBalance = userBalance + result.amount;
+                    await callSheet('updateBalance', { 
+                        email: localStorage.getItem('email'), 
+                        newBalance: newBalance 
+                    });
+                    
+                    await callSheet('addTransaction', {
+                        email: localStorage.getItem('email'),
+                        type: 'deposit',
+                        amount: result.amount,
+                        description: `Auto-detected deposit of ${result.amount} USDT to your personal wallet`
+                    });
+                    
+                    alert(`✅ Found ${result.transactions} new deposit(s) totaling ${result.amount.toFixed(2)} USDT!\n\nYour balance has been updated.`);
+                    
+                    await fetchUser();
+                    await fetchInvestments();
+                    await fetchPendingClaim();
+                    renderDashboard();
+                } else {
+                    alert(`ℹ️ No new deposits found.\n\nSend USDT to your personal wallet:\n${userWalletAddress}\n\nThen click "Check Wallet" again.`);
+                }
+            } catch (error) {
+                alert("Error checking wallet. Please try again.");
+            } finally {
+                isChecking = false;
+                if (checkBtn) checkBtn.innerHTML = "🔍 Check Wallet";
+            }
+        }
+        
+        // INVEST
+        async function invest(vipKey) {
+            const vip = VIP_LEVELS[vipKey];
+            
+            if (userBalance >= vip.cost) {
+                if (confirm(`Use ${vip.cost} USDT from your balance to invest in ${vip.name}?\n\nReturn: ${vip.totalReturn} USDT (+${vip.profit} USDT profit)`)) {
+                    await processInvestment(vipKey, vip.cost);
+                }
+            } else {
+                alert(`⚠️ Insufficient balance!\n\nYour balance: ${userBalance} USDT\nNeed: ${vip.cost} USDT\n\nPlease send USDT to your personal wallet first:\n${userWalletAddress}\n\nThen click "Check Wallet" to update your balance.`);
+            }
+        }
+        
+        async function processInvestment(vipKey, amount) {
             const vip = VIP_LEVELS[vipKey];
             const email = localStorage.getItem('email');
-            const user = await callSheet('getUser', { email });
             
-            if (method === 'balance' && user.balance < amount) {
-                alert("Insufficient balance!");
-                return false;
-            }
-            
-            if (method === 'balance') {
-                const newBalance = user.balance - amount;
-                await callSheet('updateBalance', { email, newBalance });
-            }
+            const newBalance = userBalance - amount;
+            await callSheet('updateBalance', { email, newBalance });
             
             const startDate = new Date().toISOString();
             const endDate = new Date();
@@ -628,41 +592,16 @@
                 description: `Invested in ${vip.name} - ${vip.panels} solar panels`
             });
             
-            await Promise.all([fetchUser(), fetchInvestments(), fetchPendingClaim()]);
+            await fetchUser();
+            await fetchInvestments();
+            await fetchPendingClaim();
             renderDashboard();
             alert(`✅ Successfully invested ${amount} USDT in ${vip.name}!`);
-            return true;
         }
         
-        // Invest
-        async function invest(vipKey) {
-            const vip = VIP_LEVELS[vipKey];
-            
-            const confirmMsg = `📋 INVESTMENT DETAILS:\n\n` +
-                `Plan: ${vip.name}\n` +
-                `Amount: ${vip.cost} USDT\n` +
-                `Return: ${vip.totalReturn} USDT\n` +
-                `Profit: +${vip.profit} USDT (25%)\n` +
-                `Duration: ${vip.duration} days\n\n` +
-                `💰 SEND ${vip.cost} USDT TO:\n${WALLET_ADDRESS}\n\n` +
-                `After sending, click "Check Balance" to verify your payment.`;
-            
-            if (!confirm(confirmMsg)) return;
-            
-            if (userBalance >= vip.cost) {
-                if (confirm(`You have ${userBalance} USDT in your balance. Use balance to invest?`)) {
-                    await processInvestment(vipKey, vip.cost, 'balance');
-                }
-            } else {
-                alert(`Please send ${vip.cost} USDT to:\n${WALLET_ADDRESS}\n\nThen click "Check Balance" to verify your deposit.`);
-            }
-        }
-        
-        // Claim earnings
+        // CLAIM EARNINGS
         async function claimEarnings() {
             const email = localStorage.getItem('email');
-            const investments = await fetchInvestments();
-            
             let totalEarn = 0;
             
             for (const inv of investments) {
@@ -671,9 +610,7 @@
                     const endDate = new Date(inv.endDate);
                     const now = new Date();
                     
-                    if (now > endDate) {
-                        continue;
-                    }
+                    if (now > endDate) continue;
                     
                     const daysPassed = Math.floor((now - lastClaim) / (1000 * 60 * 60 * 24));
                     
@@ -700,8 +637,7 @@
             }
             
             if (totalEarn > 0) {
-                const user = await callSheet('getUser', { email });
-                const newBalance = (user.balance || 0) + totalEarn;
+                const newBalance = userBalance + totalEarn;
                 await callSheet('updateBalance', { email, newBalance });
                 
                 await callSheet('addTransaction', {
@@ -710,38 +646,45 @@
                     amount: totalEarn,
                     description: `Solar earnings claimed`
                 });
-            }
-            
-            await Promise.all([fetchUser(), fetchInvestments(), fetchPendingClaim()]);
-            
-            if (totalEarn > 0) {
+                
+                await fetchUser();
+                await fetchInvestments();
+                await fetchPendingClaim();
+                renderDashboard();
                 alert(`✅ Claimed ${totalEarn.toFixed(2)} USDT!`);
             } else {
-                alert(`No earnings to claim yet. Check back tomorrow!`);
+                alert("No earnings to claim yet. Check back tomorrow!");
             }
-            
-            renderDashboard();
         }
         
-        // Logout
+        // COPY TEXT
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text);
+            alert("Wallet address copied!");
+        }
+        
+        // LOGOUT
         function logout() {
-            localStorage.removeItem('token');
-            localStorage.removeItem('email');
+            localStorage.clear();
             render();
         }
         
-        // Check if logged in
         function isLoggedIn() {
             return !!localStorage.getItem('token');
         }
         
-        // Copy wallet address
-        function copyWalletAddress() {
-            navigator.clipboard.writeText(WALLET_ADDRESS);
-            alert("Wallet address copied! Send USDT (TRC20) to this address.");
+        // ESCAPE HTML
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
         }
         
-        // Render Login/Register Form
+        // ========== RENDER AUTH FORM ==========
         function renderAuthForm() {
             let activeTab = 'login';
             let email = '';
@@ -802,12 +745,8 @@
                                 ${loading ? 'Processing...' : (activeTab === 'login' ? 'Login' : 'Register')}
                             </button>
                             
-                            <div class="wallet-address" style="margin-top: 20px; font-size: 12px;">
-                                💰 Our Wallet: ${WALLET_ADDRESS.substring(0, 10)}...${WALLET_ADDRESS.substring(WALLET_ADDRESS.length - 6)}
-                            </div>
-                            
-                            <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #94a3b8;">
-                                🇿🇦 Supporting solar energy in South Africa
+                            <div class="checking-status" style="margin-top: 20px;">
+                                💡 When you register, you get your own personal USDT wallet address!
                             </div>
                         </div>
                     </div>
@@ -833,7 +772,7 @@
             render();
         }
         
-        // Render Dashboard
+        // ========== RENDER DASHBOARD ==========
         async function renderDashboard() {
             await Promise.all([fetchUser(), fetchInvestments(), fetchPendingClaim()]);
             
@@ -887,11 +826,8 @@
                     <div class="header">
                         <div class="logo">☀️ SolarInvest SA</div>
                         <div class="flex">
-                            <button class="deposit-btn" onclick="window.dashboardHandler.showWallet()">
-                                💰 Deposit USDT
-                            </button>
-                            <button class="claim-btn check-balance-btn" onclick="window.dashboardHandler.checkBalance()">
-                                🔍 Check Balance
+                            <button class="claim-btn check-balance-btn" onclick="window.dashboardHandler.checkWallet()">
+                                🔍 Check Wallet
                             </button>
                             <button class="claim-btn" onclick="window.dashboardHandler.claim()">
                                 ⚡ Claim ${pendingClaim > 0 ? pendingClaim.toFixed(2) : ''} Earnings
@@ -919,12 +855,16 @@
                         </div>
                     </div>
                     
-                    <div class="wallet-address" style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
-                        <div style="font-size: 14px; margin-bottom: 8px;">💰 Our USDT (TRC20) Wallet:</div>
-                        <div style="font-family: monospace; word-break: break-all; font-size: 14px;">${WALLET_ADDRESS}</div>
-                        <button onclick="window.dashboardHandler.copyAddress()" style="background: #334155; padding: 8px 16px; font-size: 12px; width: auto; margin-top: 10px;">📋 Copy Address</button>
-                        <div class="checking-status" style="margin-top: 10px;">
-                            💡 After sending USDT, click "Check Balance" to automatically verify and update your balance.
+                    <div class="wallet-box">
+                        <div style="font-size: 14px; margin-bottom: 8px;">💳 YOUR PERSONAL USDT WALLET (TRC20)</div>
+                        <div class="wallet-address">${userWalletAddress}</div>
+                        <button onclick="window.dashboardHandler.copyAddress()" style="background: #334155; padding: 8px 16px; font-size: 12px; width: auto;">📋 Copy Address</button>
+                        <div class="checking-status" style="margin-top: 15px;">
+                            ⚠️ IMPORTANT: Send USDT (TRC20) ONLY to your wallet address above.<br>
+                            1️⃣ Send USDT to your personal wallet<br>
+                            2️⃣ Click "Check Wallet" to verify<br>
+                            3️⃣ Your balance will update automatically<br>
+                            4️⃣ Then invest in VIP plans!
                         </div>
                     </div>
                     
@@ -957,22 +897,9 @@
                 invest: (vipKey) => invest(vipKey),
                 claim: () => claimEarnings(),
                 logout: () => logout(),
-                checkBalance: () => checkAndUpdateBalance(),
-                showWallet: () => {
-                    alert(`💰 Send USDT (TRC20) to:\n\n${WALLET_ADDRESS}\n\nAfter sending, click "Check Balance" to verify.`);
-                },
-                copyAddress: () => copyWalletAddress()
+                checkWallet: () => checkUserWallet(),
+                copyAddress: () => copyToClipboard(userWalletAddress)
             };
-        }
-        
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
         }
         
         async function render() {
