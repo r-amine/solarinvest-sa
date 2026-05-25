@@ -297,10 +297,6 @@
             margin-bottom: 15px;
         }
         
-        .success-text {
-            color: #4ade80;
-        }
-        
         h2 {
             margin: 30px 0 20px 0;
         }
@@ -349,8 +345,10 @@
     <div id="app"></div>
     
     <script>
-        // CONFIGURATION
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx8nvJc2uZBwJwrSKPAFmIRWqPtQ1sfmjqEz4YmYL9JX1Y3jW-5VlW3ib2S2cUxEeiVCA/exec";
+        // ============================================================
+        // CONFIGURATION - UPDATED WITH YOUR NEW APPS SCRIPT URL
+        // ============================================================
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxPBNKmPYXb4LthuoSBjlUAiWUPqYdbcQB8yj6efJgZShZw8VVCqcLhniZBmg_5ZMT_jA/exec";
         const WALLET_ADDRESS = "TLi3ANb8GCJzypyBofqwvjqjXR1G8Hr1cN";
         
         // VIP Levels with 25% Profit
@@ -380,7 +378,7 @@
                 const text = await response.text();
                 return JSON.parse(text);
             } catch (error) {
-                console.error(error);
+                console.error("API Error:", error);
                 return { error: error.message };
             }
         }
@@ -388,7 +386,6 @@
         // CHECK TRON USDT PAYMENTS (using TronGrid API - FREE)
         async function checkUSDTDeposit() {
             try {
-                // Use TronGrid API to get transactions for this address
                 const url = `https://api.trongrid.io/v1/accounts/${WALLET_ADDRESS}/transactions/trc20?limit=50&only_confirmed=true`;
                 const response = await fetch(url);
                 const data = await response.json();
@@ -397,7 +394,6 @@
                     return { success: false, message: "No transactions found" };
                 }
                 
-                // Get the last 24 hours transactions
                 const last24Hours = Date.now() - (24 * 60 * 60 * 1000);
                 const recentTxs = data.data.filter(tx => {
                     const txTime = parseInt(tx.block_timestamp);
@@ -408,7 +404,6 @@
                     return { success: false, message: "No recent USDT deposits" };
                 }
                 
-                // Check which transactions haven't been processed
                 const processedTxs = await callSheet('getProcessedTransactions', { wallet: WALLET_ADDRESS });
                 const processedHashes = processedTxs.hashes || [];
                 
@@ -418,13 +413,11 @@
                     return { success: false, message: "All deposits already processed" };
                 }
                 
-                // Calculate total new deposit amount
                 let totalNew = 0;
                 for (const tx of newDeposits) {
-                    const amount = parseFloat(tx.value) / 1000000; // USDT has 6 decimals
+                    const amount = parseFloat(tx.value) / 1000000;
                     totalNew += amount;
                     
-                    // Mark as processed
                     await callSheet('markTransactionProcessed', {
                         txHash: tx.transaction_id,
                         amount: amount,
@@ -472,10 +465,9 @@
             
             isCheckingPayment = true;
             
-            // Show checking message
-            const claimBtn = document.querySelector('.claim-btn');
-            const originalText = claimBtn?.innerHTML;
-            if (claimBtn) claimBtn.innerHTML = "⏳ Checking blockchain...";
+            const checkBtn = document.querySelector('.check-balance-btn');
+            const originalText = checkBtn?.innerHTML;
+            if (checkBtn) checkBtn.innerHTML = "⏳ Checking blockchain...";
             
             try {
                 const result = await checkUSDTDeposit();
@@ -486,15 +478,15 @@
                     await Promise.all([fetchUser(), fetchInvestments(), fetchPendingClaim()]);
                     renderDashboard();
                 } else if (result.success) {
-                    alert(`ℹ️ ${result.message}\n\nNo new deposits found. Send USDT to:\n${WALLET_ADDRESS}\n\nThen click "Check Balance" again.`);
+                    alert(`ℹ️ ${result.message}\n\nSend USDT to:\n${WALLET_ADDRESS}\n\nThen click "Check Balance" again.`);
                 } else {
-                    alert(`⚠️ Could not check blockchain: ${result.error || result.message}\n\nPlease try again later or contact support.`);
+                    alert(`⚠️ Could not check blockchain: ${result.error || result.message}\n\nPlease try again later.`);
                 }
             } catch (error) {
                 alert("Error checking balance. Please try again.");
             } finally {
                 isCheckingPayment = false;
-                if (claimBtn) claimBtn.innerHTML = originalText;
+                if (checkBtn) checkBtn.innerHTML = originalText;
             }
         }
         
@@ -596,31 +588,7 @@
             return pending;
         }
         
-        // Invest
-        async function invest(vipKey) {
-            const vip = VIP_LEVELS[vipKey];
-            
-            const confirmMsg = `📋 INVESTMENT DETAILS:\n\n` +
-                `Plan: ${vip.name}\n` +
-                `Amount: ${vip.cost} USDT\n` +
-                `Return: ${vip.totalReturn} USDT\n` +
-                `Profit: +${vip.profit} USDT (25%)\n` +
-                `Duration: ${vip.duration} days\n\n` +
-                `💰 SEND ${vip.cost} USDT TO:\n${WALLET_ADDRESS}\n\n` +
-                `⚠️ After sending, click "Check Balance" to verify your payment.`;
-            
-            if (!confirm(confirmMsg)) return;
-            
-            // Check if user has enough balance already
-            if (userBalance >= vip.cost) {
-                if (confirm(`You have ${userBalance} USDT in your balance. Use balance to invest?`)) {
-                    await processInvestment(vipKey, vip.cost, 'balance');
-                }
-            } else {
-                alert(`Please send ${vip.cost} USDT to:\n${WALLET_ADDRESS}\n\nThen click "Check Balance" to verify your deposit and invest.`);
-            }
-        }
-        
+        // Process investment
         async function processInvestment(vipKey, amount, method) {
             const vip = VIP_LEVELS[vipKey];
             const email = localStorage.getItem('email');
@@ -664,6 +632,30 @@
             renderDashboard();
             alert(`✅ Successfully invested ${amount} USDT in ${vip.name}!`);
             return true;
+        }
+        
+        // Invest
+        async function invest(vipKey) {
+            const vip = VIP_LEVELS[vipKey];
+            
+            const confirmMsg = `📋 INVESTMENT DETAILS:\n\n` +
+                `Plan: ${vip.name}\n` +
+                `Amount: ${vip.cost} USDT\n` +
+                `Return: ${vip.totalReturn} USDT\n` +
+                `Profit: +${vip.profit} USDT (25%)\n` +
+                `Duration: ${vip.duration} days\n\n` +
+                `💰 SEND ${vip.cost} USDT TO:\n${WALLET_ADDRESS}\n\n` +
+                `After sending, click "Check Balance" to verify your payment.`;
+            
+            if (!confirm(confirmMsg)) return;
+            
+            if (userBalance >= vip.cost) {
+                if (confirm(`You have ${userBalance} USDT in your balance. Use balance to invest?`)) {
+                    await processInvestment(vipKey, vip.cost, 'balance');
+                }
+            } else {
+                alert(`Please send ${vip.cost} USDT to:\n${WALLET_ADDRESS}\n\nThen click "Check Balance" to verify your deposit.`);
+            }
         }
         
         // Claim earnings
@@ -898,7 +890,7 @@
                             <button class="deposit-btn" onclick="window.dashboardHandler.showWallet()">
                                 💰 Deposit USDT
                             </button>
-                            <button class="claim-btn" onclick="window.dashboardHandler.checkBalance()">
+                            <button class="claim-btn check-balance-btn" onclick="window.dashboardHandler.checkBalance()">
                                 🔍 Check Balance
                             </button>
                             <button class="claim-btn" onclick="window.dashboardHandler.claim()">
