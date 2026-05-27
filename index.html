@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SolarInvest SA - Solar Energy Investment</title>
+    <title>SolarInvest SA - 125% Profit Investment</title>
     <style>
         * {
             margin: 0;
@@ -29,7 +29,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            padding: 20px;
         }
         
         .form-card {
@@ -93,7 +93,6 @@
         }
         
         button {
-            width: 100%;
             padding: 14px;
             background: #f59e0b;
             border: none;
@@ -135,7 +134,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
         
         .stat-card {
@@ -162,7 +161,7 @@
         
         .vip-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             margin-bottom: 40px;
         }
@@ -171,14 +170,19 @@
             background: rgba(255,255,255,0.05);
             border-radius: 20px;
             overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
             transition: transform 0.3s;
             cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.1);
         }
         
         .vip-card:hover {
             transform: translateY(-5px);
             border-color: #f59e0b;
+        }
+        
+        .vip-card.gold {
+            border: 2px solid #fbbf24;
+            background: linear-gradient(135deg, rgba(251,191,36,0.1), rgba(0,0,0,0.3));
         }
         
         .vip-header {
@@ -187,169 +191,169 @@
             text-align: center;
         }
         
-        .vip-name {
-            font-size: 20px;
-            font-weight: bold;
+        .vip-header.gold {
+            background: linear-gradient(135deg, #fbbf24, #d97706);
         }
         
-        .vip-panels {
-            font-size: 12px;
-            opacity: 0.9;
+        .vip-name {
+            font-size: 24px;
+            font-weight: bold;
         }
         
         .vip-body {
             padding: 20px;
-            text-align: center;
         }
         
-        .vip-cost {
-            font-size: 24px;
+        .vip-price {
+            font-size: 32px;
             font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .vip-return {
+            text-align: center;
+            color: #4ade80;
+            font-size: 18px;
             margin-bottom: 10px;
         }
         
         .vip-profit {
-            background: rgba(34,197,94,0.2);
+            text-align: center;
+            color: #fbbf24;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .vip-delay {
+            background: rgba(59,130,246,0.2);
             padding: 10px;
             border-radius: 12px;
+            text-align: center;
+            font-size: 13px;
             margin: 15px 0;
-            color: #4ade80;
-            font-weight: bold;
         }
         
-        .vip-daily {
-            font-size: 14px;
-            color: #94a3b8;
-            margin-bottom: 10px;
-        }
-        
-        .invest-btn {
-            background: #f59e0b;
-            color: #1e1b4b;
-            padding: 12px;
-            border-radius: 12px;
-            font-weight: bold;
-            border: none;
+        .buy-btn {
             width: 100%;
-            cursor: pointer;
-            margin-top: 10px;
         }
         
-        .investments-list {
+        .gold-badge {
+            background: #fbbf24;
+            color: #1e1b4b;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 8px;
+        }
+        
+        .investment-card {
             background: rgba(255,255,255,0.05);
             border-radius: 20px;
             padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid #f59e0b;
         }
         
-        .investment-item {
-            background: rgba(255,255,255,0.05);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 10px;
-        }
-        
-        .progress-bar {
-            background: #334155;
-            border-radius: 10px;
-            height: 8px;
-            margin: 10px 0;
-        }
-        
-        .progress-fill {
-            background: #4ade80;
-            border-radius: 10px;
-            height: 100%;
-            width: 0%;
-        }
-        
-        .claim-btn {
-            background: #4ade80;
-            color: #1e1b4b;
-            padding: 12px 24px;
-            border-radius: 12px;
+        .countdown {
+            font-size: 24px;
             font-weight: bold;
-            border: none;
-            cursor: pointer;
+            color: #f59e0b;
+            text-align: center;
+            margin: 15px 0;
         }
         
-        .logout-btn {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 12px;
-            cursor: pointer;
+        .withdraw-btn {
+            background: #4ade80;
+            width: 100%;
+            margin-top: 15px;
+        }
+        
+        .withdraw-btn:hover {
+            background: #22c55e;
+        }
+        
+        .flex-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
         }
         
         .deposit-btn {
             background: #3b82f6;
             color: white;
-            padding: 12px 24px;
+        }
+        
+        .deposit-btn:hover {
+            background: #2563eb;
+        }
+        
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .info-box {
+            background: rgba(59,130,246,0.2);
+            padding: 15px;
             border-radius: 12px;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .error-text {
-            color: #ef4444;
+            margin: 20px 0;
             font-size: 14px;
-            margin-top: -10px;
-            margin-bottom: 15px;
+            text-align: center;
         }
         
-        .success-text {
-            color: #4ade80;
-        }
-        
-        h2 {
-            margin: 30px 0 20px 0;
-        }
-        
-        .flex {
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
             display: flex;
-            gap: 15px;
             align-items: center;
-            flex-wrap: wrap;
+            justify-content: center;
+            z-index: 9999;
+            font-size: 18px;
         }
         
         .wallet-box {
             background: rgba(0,0,0,0.3);
-            padding: 20px;
-            border-radius: 16px;
+            padding: 15px;
+            border-radius: 12px;
             margin-bottom: 20px;
             text-align: center;
-            border: 1px solid #f59e0b;
         }
         
         .wallet-address {
             background: rgba(255,255,255,0.1);
-            padding: 12px;
-            border-radius: 12px;
+            padding: 10px;
+            border-radius: 8px;
             font-family: monospace;
+            font-size: 12px;
             word-break: break-all;
-            font-size: 14px;
             margin: 10px 0;
         }
         
-        .checking-status {
-            background: rgba(59,130,246,0.2);
-            padding: 10px;
-            border-radius: 12px;
+        .error-text {
+            color: #ef4444;
+            margin-bottom: 15px;
             text-align: center;
-            font-size: 14px;
-            margin-top: 10px;
         }
         
         @media (max-width: 768px) {
             .form-card {
                 padding: 25px;
-                margin: 20px;
-            }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
             }
             .vip-grid {
                 grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -359,29 +363,20 @@
     
     <script>
         // ============================================================
-        // CONFIGURATION
+        // CONFIGURATION - UPDATED WITH YOUR NEW APPS SCRIPT URL
         // ============================================================
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxPBNKmPYXb4LthuoSBjlUAiWUPqYdbcQB8yj6efJgZShZw8VVCqcLhniZBmg_5ZMT_jA/exec";
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwCPxRiP0C1_FuKISYy4liDmk5AU5_H79btMgJ0Yv9ajvUUzQNl9j6VZypsuZ-bSBzwGQ/exec";
         const MAIN_WALLET = "TLi3ANb8GCJzypyBofqwvjqjXR1G8Hr1cN";
         
-        // VIP Levels with 25% Profit
-        const VIP_LEVELS = {
-            VIP1: { name: 'VIP1', cost: 11, totalReturn: 13.75, dailyReturn: 0.98, duration: 14, panels: 1, profit: 2.75 },
-            VIP2: { name: 'VIP2', cost: 55, totalReturn: 68.75, dailyReturn: 4.91, duration: 14, panels: 5, profit: 13.75 },
-            VIP3: { name: 'VIP3', cost: 110, totalReturn: 137.50, dailyReturn: 9.82, duration: 14, panels: 10, profit: 27.50 },
-            VIP4: { name: 'VIP4', cost: 275, totalReturn: 343.75, dailyReturn: 24.55, duration: 14, panels: 25, profit: 68.75 },
-            VIP5: { name: 'VIP5', cost: 550, totalReturn: 687.50, dailyReturn: 49.11, duration: 14, panels: 50, profit: 137.50 }
-        };
-        
-        let userWalletAddress = "";
+        let userData = null;
         let userBalance = 0;
         let userInvested = 0;
         let userEarned = 0;
-        let investments = [];
-        let pendingClaim = 0;
-        let isChecking = false;
+        let activeInvestment = null;
+        let withdrawalStatus = null;
+        let isLoading = false;
+        let countdownInterval = null;
         
-        // Helper function for API calls
         async function callSheet(action, data = {}) {
             try {
                 const response = await fetch(APPS_SCRIPT_URL, {
@@ -396,7 +391,6 @@
             }
         }
         
-        // Hash password
         async function hashPassword(password) {
             const encoder = new TextEncoder();
             const data = encoder.encode(password);
@@ -404,64 +398,43 @@
             return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
         }
         
-        // REGISTER - Creates a new wallet for the user
         async function register(email, password, retypePassword) {
-            if (password !== retypePassword) {
-                return { success: false, error: 'Passwords do not match' };
-            }
+            if (password !== retypePassword) return { success: false, error: 'Passwords do not match' };
+            if (password.length < 6) return { success: false, error: 'Password must be at least 6 characters' };
             
-            if (password.length < 6) {
-                return { success: false, error: 'Password must be at least 6 characters' };
-            }
-            
-            // Check if user exists
             const checkUser = await callSheet('getUser', { email });
-            if (checkUser && checkUser.email) {
-                return { success: false, error: 'Email already registered' };
-            }
+            if (checkUser && checkUser.email) return { success: false, error: 'Email already registered' };
             
             const hashedPassword = await hashPassword(password);
-            
-            // Register and generate wallet
             const result = await callSheet('register', { email, password: hashedPassword });
             
             if (result.success) {
                 localStorage.setItem('token', btoa(email));
                 localStorage.setItem('email', email);
-                localStorage.setItem('walletAddress', result.walletAddress);
                 return { success: true };
             }
-            
             return { success: false, error: result.error };
         }
         
-        // LOGIN
         async function login(email, password) {
             const hashedPassword = await hashPassword(password);
             const result = await callSheet('getUser', { email });
             
-            if (result.error || !result.email) {
-                return { success: false, error: 'User not found' };
-            }
-            
-            if (result.password_hash !== hashedPassword) {
-                return { success: false, error: 'Invalid password' };
-            }
+            if (result.error || !result.email) return { success: false, error: 'User not found' };
+            if (result.password_hash !== hashedPassword) return { success: false, error: 'Invalid password' };
             
             localStorage.setItem('token', btoa(email));
             localStorage.setItem('email', email);
-            localStorage.setItem('walletAddress', result.walletAddress);
             return { success: true };
         }
         
-        // GET USER DATA
         async function fetchUser() {
             const email = localStorage.getItem('email');
             if (!email) return false;
             
             const result = await callSheet('getUser', { email });
             if (result.email) {
-                userWalletAddress = result.walletAddress;
+                userData = result;
                 userBalance = result.balance || 0;
                 userInvested = result.totalInvested || 0;
                 userEarned = result.totalEarned || 0;
@@ -470,201 +443,103 @@
             return false;
         }
         
-        // GET INVESTMENTS
-        async function fetchInvestments() {
+        async function fetchWithdrawalStatus() {
             const email = localStorage.getItem('email');
-            if (!email) return [];
+            if (!email) return null;
             
-            const result = await callSheet('getInvestments', { email });
-            investments = result || [];
-            return investments;
+            const result = await callSheet('checkWithdrawalStatus', { email });
+            withdrawalStatus = result;
+            return withdrawalStatus;
         }
         
-        // GET PENDING CLAIM
-        async function fetchPendingClaim() {
-            let pending = 0;
-            for (const inv of investments) {
-                if (inv.status === 'active') {
-                    const lastClaim = new Date(inv.lastClaim);
-                    const daysPassed = Math.floor((Date.now() - lastClaim) / (1000 * 60 * 60 * 24));
-                    if (daysPassed > 0) {
-                        const earn = daysPassed * inv.dailyReturn;
-                        const maxClaimable = inv.totalReturn - inv.totalClaimed;
-                        pending += Math.min(earn, maxClaimable);
-                    }
-                }
+        async function checkPayment() {
+            const email = localStorage.getItem('email');
+            if (!email) return;
+            
+            isLoading = true;
+            showLoading("Checking for deposits...");
+            
+            const result = await callSheet('checkPayment', { email });
+            
+            if (result.success && result.amount > 0) {
+                await fetchUser();
+                alert(`✅ Found ${result.amount} USDT deposited! Your balance has been updated.`);
+                renderDashboard();
+            } else if (result.success) {
+                alert("No new deposits found. Send USDT to the wallet address above.");
+            } else {
+                alert("Error checking payment. Please try again.");
             }
-            pendingClaim = pending;
-            return pending;
+            
+            hideLoading();
+            isLoading = false;
         }
         
-        // CHECK USER'S PERSONAL WALLET FOR DEPOSITS
-        async function checkUserWallet() {
-            if (isChecking) {
-                alert("Already checking... Please wait.");
+        async function purchaseVIP(vipLevel, config) {
+            if (userBalance < config.cost) {
+                alert(`⚠️ Insufficient balance!\n\nYour balance: ${userBalance} USDT\nNeed: ${config.cost} USDT\n\nPlease deposit first.`);
                 return;
             }
             
-            isChecking = true;
-            
-            const checkBtn = document.querySelector('.check-balance-btn');
-            if (checkBtn) checkBtn.innerHTML = "⏳ Checking your wallet...";
-            
-            try {
-                const result = await callSheet('checkUserWallet', {
-                    email: localStorage.getItem('email'),
-                    walletAddress: userWalletAddress
-                });
-                
-                if (result.success && result.amount > 0) {
-                    // Update user's balance
-                    const newBalance = userBalance + result.amount;
-                    await callSheet('updateBalance', { 
-                        email: localStorage.getItem('email'), 
-                        newBalance: newBalance 
-                    });
-                    
-                    await callSheet('addTransaction', {
-                        email: localStorage.getItem('email'),
-                        type: 'deposit',
-                        amount: result.amount,
-                        description: `Auto-detected deposit of ${result.amount} USDT to your personal wallet`
-                    });
-                    
-                    alert(`✅ Found ${result.transactions} new deposit(s) totaling ${result.amount.toFixed(2)} USDT!\n\nYour balance has been updated.`);
-                    
-                    await fetchUser();
-                    await fetchInvestments();
-                    await fetchPendingClaim();
-                    renderDashboard();
-                } else {
-                    alert(`ℹ️ No new deposits found.\n\nSend USDT to your personal wallet:\n${userWalletAddress}\n\nThen click "Check Wallet" again.`);
-                }
-            } catch (error) {
-                alert("Error checking wallet. Please try again.");
-            } finally {
-                isChecking = false;
-                if (checkBtn) checkBtn.innerHTML = "🔍 Check Wallet";
-            }
-        }
-        
-        // INVEST
-        async function invest(vipKey) {
-            const vip = VIP_LEVELS[vipKey];
-            
-            if (userBalance >= vip.cost) {
-                if (confirm(`Use ${vip.cost} USDT from your balance to invest in ${vip.name}?\n\nReturn: ${vip.totalReturn} USDT (+${vip.profit} USDT profit)`)) {
-                    await processInvestment(vipKey, vip.cost);
-                }
-            } else {
-                alert(`⚠️ Insufficient balance!\n\nYour balance: ${userBalance} USDT\nNeed: ${vip.cost} USDT\n\nPlease send USDT to your personal wallet first:\n${userWalletAddress}\n\nThen click "Check Wallet" to update your balance.`);
-            }
-        }
-        
-        async function processInvestment(vipKey, amount) {
-            const vip = VIP_LEVELS[vipKey];
-            const email = localStorage.getItem('email');
-            
-            const newBalance = userBalance - amount;
-            await callSheet('updateBalance', { email, newBalance });
-            
-            const startDate = new Date().toISOString();
-            const endDate = new Date();
-            endDate.setDate(endDate.getDate() + vip.duration);
-            
-            await callSheet('addInvestment', {
-                email: email,
-                vipLevel: vipKey,
-                amount: amount,
-                totalReturn: vip.totalReturn,
-                dailyReturn: vip.dailyReturn,
-                startDate: startDate,
-                endDate: endDate.toISOString(),
-                lastClaim: startDate,
-                totalClaimed: 0,
-                status: 'active'
-            });
-            
-            await callSheet('addTransaction', {
-                email: email,
-                type: 'investment',
-                amount: amount,
-                description: `Invested in ${vip.name} - ${vip.panels} solar panels`
-            });
-            
-            await fetchUser();
-            await fetchInvestments();
-            await fetchPendingClaim();
-            renderDashboard();
-            alert(`✅ Successfully invested ${amount} USDT in ${vip.name}!`);
-        }
-        
-        // CLAIM EARNINGS
-        async function claimEarnings() {
-            const email = localStorage.getItem('email');
-            let totalEarn = 0;
-            
-            for (const inv of investments) {
-                if (inv.status === 'active') {
-                    const lastClaim = new Date(inv.lastClaim);
-                    const endDate = new Date(inv.endDate);
-                    const now = new Date();
-                    
-                    if (now > endDate) continue;
-                    
-                    const daysPassed = Math.floor((now - lastClaim) / (1000 * 60 * 60 * 24));
-                    
-                    if (daysPassed > 0) {
-                        const earn = daysPassed * inv.dailyReturn;
-                        const maxClaimable = inv.totalReturn - inv.totalClaimed;
-                        const actualEarn = Math.min(earn, maxClaimable);
-                        
-                        if (actualEarn > 0) {
-                            totalEarn += actualEarn;
-                            const newTotalClaimed = inv.totalClaimed + actualEarn;
-                            const newStatus = newTotalClaimed >= inv.totalReturn ? 'completed' : 'active';
-                            
-                            await callSheet('updateInvestmentClaim', {
-                                email: email,
-                                vipLevel: inv.vipLevel,
-                                newTotalClaimed: newTotalClaimed,
-                                newLastClaim: now.toISOString(),
-                                newStatus: newStatus
-                            });
-                        }
-                    }
-                }
+            if (!confirm(`Buy ${vipLevel} for ${config.cost} USDT?\n\n📈 Profit: +${config.profitPercent}%\n💰 Total Return: ${config.totalReturn} USDT\n⏰ Withdrawal available after ${config.lockDays} days\n\nProceed?`)) {
+                return;
             }
             
-            if (totalEarn > 0) {
-                const newBalance = userBalance + totalEarn;
-                await callSheet('updateBalance', { email, newBalance });
-                
-                await callSheet('addTransaction', {
-                    email: email,
-                    type: 'earn',
-                    amount: totalEarn,
-                    description: `Solar earnings claimed`
-                });
-                
+            isLoading = true;
+            showLoading("Processing your investment...");
+            
+            const result = await callSheet('purchaseVIP', { email: localStorage.getItem('email'), vipLevel });
+            
+            hideLoading();
+            
+            if (result.success) {
                 await fetchUser();
-                await fetchInvestments();
-                await fetchPendingClaim();
+                await fetchWithdrawalStatus();
+                alert(`✅ ${result.message}`);
                 renderDashboard();
-                alert(`✅ Claimed ${totalEarn.toFixed(2)} USDT!`);
             } else {
-                alert("No earnings to claim yet. Check back tomorrow!");
+                alert(result.error || "Purchase failed. Please try again.");
             }
+            
+            isLoading = false;
         }
         
-        // COPY TEXT
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text);
-            alert("Wallet address copied!");
+        async function withdraw() {
+            if (!withdrawalStatus || !withdrawalStatus.canWithdraw) {
+                alert("Withdrawal not available yet. Please wait for the lock period to end.");
+                return;
+            }
+            
+            if (!confirm(`Withdraw ${withdrawalStatus.totalReturn} USDT?\n\nInvestment: ${withdrawalStatus.investedAmount} USDT\nProfit: +${withdrawalStatus.profit} USDT (${withdrawalStatus.profitPercent}%)\n\nProceed?`)) {
+                return;
+            }
+            
+            isLoading = true;
+            showLoading("Processing withdrawal...");
+            
+            const result = await callSheet('withdraw', { email: localStorage.getItem('email') });
+            
+            hideLoading();
+            
+            if (result.success) {
+                await fetchUser();
+                await fetchWithdrawalStatus();
+                alert(`✅ ${result.message}`);
+                renderDashboard();
+            } else {
+                alert(result.error || "Withdrawal failed. Please try again.");
+            }
+            
+            isLoading = false;
         }
         
-        // LOGOUT
+        function copyWalletAddress() {
+            navigator.clipboard.writeText(MAIN_WALLET);
+            alert("Wallet address copied! Send USDT (TRC20) to this address.");
+        }
+        
         function logout() {
+            if (countdownInterval) clearInterval(countdownInterval);
             localStorage.clear();
             render();
         }
@@ -673,7 +548,23 @@
             return !!localStorage.getItem('token');
         }
         
-        // ESCAPE HTML
+        function showLoading(message) {
+            let overlay = document.getElementById('loading-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'loading-overlay';
+                overlay.className = 'loading-overlay';
+                document.body.appendChild(overlay);
+            }
+            overlay.innerHTML = `<div style="background: #1e1b4b; padding: 20px 40px; border-radius: 16px;">⏳ ${message}</div>`;
+            overlay.style.display = 'flex';
+        }
+        
+        function hideLoading() {
+            const overlay = document.getElementById('loading-overlay');
+            if (overlay) overlay.style.display = 'none';
+        }
+        
         function escapeHtml(str) {
             if (!str) return '';
             return str.replace(/[&<>]/g, function(m) {
@@ -682,6 +573,39 @@
                 if (m === '>') return '&gt;';
                 return m;
             });
+        }
+        
+        function startCountdown(lockEndDate) {
+            if (countdownInterval) clearInterval(countdownInterval);
+            
+            function updateCountdown() {
+                const countdownEl = document.getElementById('countdown');
+                if (!countdownEl) return;
+                
+                const now = new Date();
+                const end = new Date(lockEndDate);
+                const remaining = Math.max(0, end - now);
+                
+                if (remaining <= 0) {
+                    clearInterval(countdownInterval);
+                    renderDashboard();
+                    return;
+                }
+                
+                const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+                
+                if (days > 0) {
+                    countdownEl.innerHTML = `⏰ Withdrawal available in: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+                } else {
+                    countdownEl.innerHTML = `⏰ Withdrawal available in: ${hours}h ${minutes}m ${seconds}s`;
+                }
+            }
+            
+            updateCountdown();
+            countdownInterval = setInterval(updateCountdown, 1000);
         }
         
         // ========== RENDER AUTH FORM ==========
@@ -728,7 +652,7 @@
                     <div class="form-container">
                         <div class="form-card">
                             <h1>☀️ SolarInvest SA</h1>
-                            <div class="subtitle">Invest in Solar • Earn 25% Profit</div>
+                            <div class="subtitle">Invest in Solar • 125% Profit</div>
                             
                             <div class="tab-buttons">
                                 <button class="tab-btn ${activeTab === 'login' ? 'active' : ''}" onclick="window.authHandler.setTab('login')">Login</button>
@@ -745,8 +669,8 @@
                                 ${loading ? 'Processing...' : (activeTab === 'login' ? 'Login' : 'Register')}
                             </button>
                             
-                            <div class="checking-status" style="margin-top: 20px;">
-                                💡 When you register, you get your own personal USDT wallet address!
+                            <div class="info-box" style="margin-top: 20px;">
+                                💡 Invest in solar energy • Earn 125% profit • Withdraw after 3 days
                             </div>
                         </div>
                     </div>
@@ -774,63 +698,93 @@
         
         // ========== RENDER DASHBOARD ==========
         async function renderDashboard() {
-            await Promise.all([fetchUser(), fetchInvestments(), fetchPendingClaim()]);
+            await fetchUser();
+            await fetchWithdrawalStatus();
+            
+            // Get VIP config from backend
+            const vipConfigResult = await callSheet('getVIPConfig', {});
+            const VIP_CONFIG = vipConfigResult.error ? {} : vipConfigResult;
             
             const app = document.getElementById('app');
             
+            // Generate VIP cards
             let vipCardsHtml = '';
-            for (const [key, vip] of Object.entries(VIP_LEVELS)) {
+            const vipList = ['VIP1', 'VIP2', 'VIP3', 'VIP4', 'VIP5', 'GOLD'];
+            
+            for (const vip of vipList) {
+                const config = VIP_CONFIG[vip];
+                if (!config) continue;
+                
+                const isGold = vip === 'GOLD';
                 vipCardsHtml += `
-                    <div class="vip-card" onclick="window.dashboardHandler.invest('${key}')">
-                        <div class="vip-header">
-                            <div class="vip-name">${vip.name}</div>
-                            <div class="vip-panels">${vip.panels} Solar Panel${vip.panels > 1 ? 's' : ''}</div>
+                    <div class="vip-card ${isGold ? 'gold' : ''}" onclick="window.dashboardHandler.buyVIP('${vip}')">
+                        <div class="vip-header ${isGold ? 'gold' : ''}">
+                            <div class="vip-name">${vip}</div>
+                            ${isGold ? '<div class="gold-badge">🌟 LIMITED OFFER</div>' : ''}
                         </div>
                         <div class="vip-body">
-                            <div class="vip-cost">${vip.cost} USDT</div>
-                            <div class="vip-profit">+${vip.profit} USDT (25%)</div>
-                            <div class="vip-daily">📅 ${vip.duration} days</div>
-                            <div class="vip-daily">⚡ ${vip.dailyReturn.toFixed(2)} USDT/day</div>
-                            <button class="invest-btn">Invest Now</button>
+                            <div class="vip-price">${config.cost} USDT</div>
+                            <div class="vip-return">📈 +${config.profitPercent}% Profit</div>
+                            <div class="vip-profit">💰 Total Return: ${config.totalReturn} USDT</div>
+                            <div class="vip-delay">
+                                ⏰ Withdrawal available after ${config.lockDays} days<br>
+                                <span style="font-size: 11px;">For your security</span>
+                            </div>
+                            <button class="buy-btn">Buy ${vip}</button>
                         </div>
                     </div>
                 `;
             }
             
-            let investmentsHtml = '';
-            if (investments.length > 0) {
-                investmentsHtml = '<h2>📋 Your Active Investments</h2><div class="investments-list">';
-                for (const inv of investments) {
-                    const progress = (inv.totalClaimed / inv.totalReturn) * 100;
-                    investmentsHtml += `
-                        <div class="investment-item">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                                <span><strong>${inv.vipLevel}</strong> - ${inv.amount} USDT</span>
-                                <span>Claimed: ${inv.totalClaimed.toFixed(2)} / ${inv.totalReturn.toFixed(2)} USDT</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${progress}%"></div>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8;">
-                                <span>Started: ${new Date(inv.startDate).toLocaleDateString()}</span>
-                                <span>Remaining: ${(inv.totalReturn - inv.totalClaimed).toFixed(2)} USDT</span>
-                            </div>
+            // Active investment section
+            let activeInvestmentHtml = '';
+            if (withdrawalStatus && withdrawalStatus.hasInvestment) {
+                const canWithdraw = withdrawalStatus.canWithdraw;
+                
+                activeInvestmentHtml = `
+                    <div class="investment-card">
+                        <h3 style="margin-bottom: 15px;">📊 Your Active Investment</h3>
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                            <div><strong>VIP Level:</strong> ${withdrawalStatus.vipLevel}</div>
+                            <div><strong>Invested:</strong> ${withdrawalStatus.investedAmount} USDT</div>
+                            <div><strong>Expected Return:</strong> ${withdrawalStatus.totalReturn} USDT</div>
+                            <div><strong>Profit:</strong> +${withdrawalStatus.profit} USDT (${withdrawalStatus.profitPercent}%)</div>
                         </div>
-                    `;
+                        
+                        ${!canWithdraw ? `
+                            <div class="countdown" id="countdown"></div>
+                            <div style="text-align: center; color: #94a3b8; font-size: 14px;">
+                                🔒 For your security, withdrawal available after ${withdrawalStatus.lockDays} days
+                            </div>
+                        ` : `
+                            <div style="text-align: center; color: #4ade80; margin: 15px 0;">
+                                ✅ Withdrawal is now available!
+                            </div>
+                            <button class="withdraw-btn" onclick="window.dashboardHandler.withdraw()">
+                                💰 Withdraw ${withdrawalStatus.totalReturn} USDT
+                            </button>
+                        `}
+                    </div>
+                `;
+                
+                // Start countdown if not ready and we have a start date
+                if (!canWithdraw && withdrawalStatus.startDate) {
+                    const lockEnd = new Date(withdrawalStatus.startDate);
+                    lockEnd.setDate(lockEnd.getDate() + withdrawalStatus.lockDays);
+                    setTimeout(() => startCountdown(lockEnd), 100);
                 }
-                investmentsHtml += '</div>';
             }
             
             app.innerHTML = `
                 <div class="container">
                     <div class="header">
                         <div class="logo">☀️ SolarInvest SA</div>
-                        <div class="flex">
-                            <button class="claim-btn check-balance-btn" onclick="window.dashboardHandler.checkWallet()">
-                                🔍 Check Wallet
+                        <div class="flex-buttons">
+                            <button class="deposit-btn" onclick="window.dashboardHandler.showWallet()">
+                                💰 Deposit
                             </button>
-                            <button class="claim-btn" onclick="window.dashboardHandler.claim()">
-                                ⚡ Claim ${pendingClaim > 0 ? pendingClaim.toFixed(2) : ''} Earnings
+                            <button class="deposit-btn" onclick="window.dashboardHandler.checkPayment()" style="background: #6366f1;">
+                                🔍 Check Payment
                             </button>
                             <button class="logout-btn" onclick="window.dashboardHandler.logout()">Logout</button>
                         </div>
@@ -850,55 +804,47 @@
                             <div class="value yellow">${userEarned.toFixed(2)} USDT</div>
                         </div>
                         <div class="stat-card">
-                            <div class="label">⏳ Pending Claim</div>
-                            <div class="value blue">${pendingClaim.toFixed(2)} USDT</div>
+                            <div class="label">📊 Active Investment</div>
+                            <div class="value blue">${withdrawalStatus && withdrawalStatus.hasInvestment ? 'Yes' : 'No'}</div>
                         </div>
                     </div>
                     
                     <div class="wallet-box">
-                        <div style="font-size: 14px; margin-bottom: 8px;">💳 YOUR PERSONAL USDT WALLET (TRC20)</div>
-                        <div class="wallet-address">${userWalletAddress}</div>
+                        <div style="font-size: 14px; margin-bottom: 8px;">💳 Deposit USDT (TRC20) to:</div>
+                        <div class="wallet-address">${MAIN_WALLET}</div>
                         <button onclick="window.dashboardHandler.copyAddress()" style="background: #334155; padding: 8px 16px; font-size: 12px; width: auto;">📋 Copy Address</button>
-                        <div class="checking-status" style="margin-top: 15px;">
-                            ⚠️ IMPORTANT: Send USDT (TRC20) ONLY to your wallet address above.<br>
-                            1️⃣ Send USDT to your personal wallet<br>
-                            2️⃣ Click "Check Wallet" to verify<br>
-                            3️⃣ Your balance will update automatically<br>
-                            4️⃣ Then invest in VIP plans!
+                        <div class="info-box" style="margin-top: 15px;">
+                            ⚠️ Send USDT (TRC20) only to the address above.<br>
+                            After sending, click "Check Payment" to update your balance.
                         </div>
                     </div>
                     
-                    <h2>🌱 Investment Plans (25% Profit)</h2>
+                    ${activeInvestmentHtml}
+                    
+                    <h2>🌱 Investment Plans (125% Profit)</h2>
                     <div class="vip-grid">
                         ${vipCardsHtml}
                     </div>
                     
-                    ${investmentsHtml}
-                    
-                    <div style="margin-top: 40px; background: rgba(59,130,246,0.1); padding: 20px; border-radius: 20px; border: 1px solid #3b82f6;">
-                        <h3 style="margin-bottom: 15px;">🇿🇦 About South Africa Solar Project</h3>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 14px;">
-                            <div>
-                                ✓ Each VIP level represents real solar panel investment<br>
-                                ✓ Fixed 25% return over 14 days<br>
-                                ✓ Daily earnings can be claimed anytime
-                            </div>
-                            <div>
-                                ☀️ South Africa receives 2,500+ hours of sunshine annually<br>
-                                🔋 Solar energy helps reduce load shedding<br>
-                                🌍 1 USDT invested = 5kg CO₂ saved per year
-                            </div>
-                        </div>
+                    <div class="info-box">
+                        <strong>📌 How it works:</strong><br>
+                        1️⃣ Deposit USDT to the wallet address above<br>
+                        2️⃣ Buy any VIP plan<br>
+                        3️⃣ Wait 3 days for security<br>
+                        4️⃣ Withdraw your investment + 125% profit
                     </div>
                 </div>
             `;
             
             window.dashboardHandler = {
-                invest: (vipKey) => invest(vipKey),
-                claim: () => claimEarnings(),
+                buyVIP: (vip) => purchaseVIP(vip, VIP_CONFIG[vip]),
+                withdraw: () => withdraw(),
                 logout: () => logout(),
-                checkWallet: () => checkUserWallet(),
-                copyAddress: () => copyToClipboard(userWalletAddress)
+                checkPayment: () => checkPayment(),
+                showWallet: () => {
+                    alert(`💰 Send USDT (TRC20) to:\n\n${MAIN_WALLET}\n\nAfter sending, click "Check Payment" to update your balance.`);
+                },
+                copyAddress: () => copyWalletAddress()
             };
         }
         
