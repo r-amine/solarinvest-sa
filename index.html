@@ -363,16 +363,15 @@
     
     <script>
         // ============================================================
-        // CONFIGURATION - UPDATED WITH YOUR NEW APPS SCRIPT URL
+        // CONFIGURATION - YOUR APPS SCRIPT URL
         // ============================================================
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwCPxRiP0C1_FuKISYy4liDmk5AU5_H79btMgJ0Yv9ajvUUzQNl9j6VZypsuZ-bSBzwGQ/exec";
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwIbykWyLQ3zibWsKTuH2YqqE0g8IMN8sWzh3g3pyzaeq3g9yd5VP3CnVYFqJTcY7VDcg/exec";
         const MAIN_WALLET = "TLi3ANb8GCJzypyBofqwvjqjXR1G8Hr1cN";
         
         let userData = null;
         let userBalance = 0;
         let userInvested = 0;
         let userEarned = 0;
-        let activeInvestment = null;
         let withdrawalStatus = null;
         let isLoading = false;
         let countdownInterval = null;
@@ -452,32 +451,52 @@
             return withdrawalStatus;
         }
         
-        async function checkPayment() {
-            const email = localStorage.getItem('email');
-            if (!email) return;
+        async function depositWithTX() {
+            const txHash = prompt(
+                "📋 DEPOSIT USDT\n\n" +
+                "1. Send USDT (TRC20) to:\n" + MAIN_WALLET + "\n\n" +
+                "2. Enter your Transaction ID (TX Hash):\n\n" +
+                "Example: 0x7e6d5c9f3a8b2e1d4c7f9a3b5e8d2c1a\n\n" +
+                "Enter TX Hash:"
+            );
             
-            isLoading = true;
-            showLoading("Checking for deposits...");
+            if (!txHash) return;
             
-            const result = await callSheet('checkPayment', { email });
-            
-            if (result.success && result.amount > 0) {
-                await fetchUser();
-                alert(`✅ Found ${result.amount} USDT deposited! Your balance has been updated.`);
-                renderDashboard();
-            } else if (result.success) {
-                alert("No new deposits found. Send USDT to the wallet address above.");
-            } else {
-                alert("Error checking payment. Please try again.");
+            if (txHash.length < 20) {
+                alert("Invalid Transaction ID. Please copy the full TX Hash.");
+                return;
             }
             
+            const amount = prompt("Enter the amount you sent (USDT):", "");
+            if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
+                alert("Please enter a valid amount.");
+                return;
+            }
+            
+            isLoading = true;
+            showLoading("Verifying transaction on blockchain...");
+            
+            const result = await callSheet('verifyTransaction', { 
+                email: localStorage.getItem('email'),
+                txHash: txHash,
+                amount: parseFloat(amount)
+            });
+            
             hideLoading();
+            
+            if (result.success) {
+                await fetchUser();
+                alert(`✅ Verified! ${result.amount} USDT added to your balance.`);
+                renderDashboard();
+            } else {
+                alert(`❌ Verification failed: ${result.error}`);
+            }
             isLoading = false;
         }
         
         async function purchaseVIP(vipLevel, config) {
             if (userBalance < config.cost) {
-                alert(`⚠️ Insufficient balance!\n\nYour balance: ${userBalance} USDT\nNeed: ${config.cost} USDT\n\nPlease deposit first.`);
+                alert(`⚠️ Insufficient balance! Need ${config.cost} USDT.`);
                 return;
             }
             
@@ -498,7 +517,7 @@
                 alert(`✅ ${result.message}`);
                 renderDashboard();
             } else {
-                alert(result.error || "Purchase failed. Please try again.");
+                alert(result.error || "Purchase failed.");
             }
             
             isLoading = false;
@@ -506,7 +525,7 @@
         
         async function withdraw() {
             if (!withdrawalStatus || !withdrawalStatus.canWithdraw) {
-                alert("Withdrawal not available yet. Please wait for the lock period to end.");
+                alert("Withdrawal not available yet. Please wait.");
                 return;
             }
             
@@ -527,7 +546,7 @@
                 alert(`✅ ${result.message}`);
                 renderDashboard();
             } else {
-                alert(result.error || "Withdrawal failed. Please try again.");
+                alert(result.error || "Withdrawal failed.");
             }
             
             isLoading = false;
@@ -535,7 +554,7 @@
         
         function copyWalletAddress() {
             navigator.clipboard.writeText(MAIN_WALLET);
-            alert("Wallet address copied! Send USDT (TRC20) to this address.");
+            alert("Wallet address copied!");
         }
         
         function logout() {
@@ -701,13 +720,11 @@
             await fetchUser();
             await fetchWithdrawalStatus();
             
-            // Get VIP config from backend
             const vipConfigResult = await callSheet('getVIPConfig', {});
             const VIP_CONFIG = vipConfigResult.error ? {} : vipConfigResult;
             
             const app = document.getElementById('app');
             
-            // Generate VIP cards
             let vipCardsHtml = '';
             const vipList = ['VIP1', 'VIP2', 'VIP3', 'VIP4', 'VIP5', 'GOLD'];
             
@@ -736,7 +753,6 @@
                 `;
             }
             
-            // Active investment section
             let activeInvestmentHtml = '';
             if (withdrawalStatus && withdrawalStatus.hasInvestment) {
                 const canWithdraw = withdrawalStatus.canWithdraw;
@@ -767,7 +783,6 @@
                     </div>
                 `;
                 
-                // Start countdown if not ready and we have a start date
                 if (!canWithdraw && withdrawalStatus.startDate) {
                     const lockEnd = new Date(withdrawalStatus.startDate);
                     lockEnd.setDate(lockEnd.getDate() + withdrawalStatus.lockDays);
@@ -780,11 +795,8 @@
                     <div class="header">
                         <div class="logo">☀️ SolarInvest SA</div>
                         <div class="flex-buttons">
-                            <button class="deposit-btn" onclick="window.dashboardHandler.showWallet()">
+                            <button class="deposit-btn" onclick="window.dashboardHandler.deposit()">
                                 💰 Deposit
-                            </button>
-                            <button class="deposit-btn" onclick="window.dashboardHandler.checkPayment()" style="background: #6366f1;">
-                                🔍 Check Payment
                             </button>
                             <button class="logout-btn" onclick="window.dashboardHandler.logout()">Logout</button>
                         </div>
@@ -812,10 +824,9 @@
                     <div class="wallet-box">
                         <div style="font-size: 14px; margin-bottom: 8px;">💳 Deposit USDT (TRC20) to:</div>
                         <div class="wallet-address">${MAIN_WALLET}</div>
-                        <button onclick="window.dashboardHandler.copyAddress()" style="background: #334155; padding: 8px 16px; font-size: 12px; width: auto;">📋 Copy Address</button>
+                        <button onclick="window.dashboardHandler.copyAddress()" style="background: #334155; padding: 8px 16px; font-size: 12px; width: auto; margin-top: 10px;">📋 Copy Address</button>
                         <div class="info-box" style="margin-top: 15px;">
-                            ⚠️ Send USDT (TRC20) only to the address above.<br>
-                            After sending, click "Check Payment" to update your balance.
+                            After sending USDT, click DEPOSIT and enter your Transaction ID (TX Hash).
                         </div>
                     </div>
                     
@@ -828,10 +839,11 @@
                     
                     <div class="info-box">
                         <strong>📌 How it works:</strong><br>
-                        1️⃣ Deposit USDT to the wallet address above<br>
-                        2️⃣ Buy any VIP plan<br>
-                        3️⃣ Wait 3 days for security<br>
-                        4️⃣ Withdraw your investment + 125% profit
+                        1️⃣ Copy wallet address and send USDT (TRC20)<br>
+                        2️⃣ Click DEPOSIT and enter your Transaction ID<br>
+                        3️⃣ Buy any VIP plan<br>
+                        4️⃣ Wait 3 days for security<br>
+                        5️⃣ Withdraw your investment + 125% profit
                     </div>
                 </div>
             `;
@@ -840,10 +852,7 @@
                 buyVIP: (vip) => purchaseVIP(vip, VIP_CONFIG[vip]),
                 withdraw: () => withdraw(),
                 logout: () => logout(),
-                checkPayment: () => checkPayment(),
-                showWallet: () => {
-                    alert(`💰 Send USDT (TRC20) to:\n\n${MAIN_WALLET}\n\nAfter sending, click "Check Payment" to update your balance.`);
-                },
+                deposit: () => depositWithTX(),
                 copyAddress: () => copyWalletAddress()
             };
         }
