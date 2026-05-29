@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SolarInvest SA - Clean & Modern</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>SolarInvest SA - Solar Energy Investment</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="https://img.icons8.com/color/96/solar-panel.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
@@ -34,23 +36,10 @@
             border-radius: 10px;
         }
         
-        ::-webkit-scrollbar-thumb:hover {
-            background: #64748b;
-        }
-        
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 24px;
-        }
-        
-        /* Glassmorphism Cards */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
         }
         
         /* Form Container */
@@ -112,6 +101,56 @@
             box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
         }
         
+        /* Form Tabs Smooth Transition */
+        .form-content {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .form-content.login-active {
+            display: block;
+        }
+        
+        .form-content.register-active {
+            display: none;
+        }
+        
+        /* Password Input with Eye */
+        .password-wrapper {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        
+        .password-wrapper input {
+            width: 100%;
+            padding: 14px 48px 14px 16px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .password-wrapper input:focus {
+            outline: none;
+            border-color: #0284c7;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #94a3b8;
+            transition: color 0.3s;
+        }
+        
+        .password-toggle:hover {
+            color: #0284c7;
+        }
+        
         input {
             width: 100%;
             padding: 14px 16px;
@@ -149,11 +188,6 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);
-        }
-        
-        .btn-primary:disabled {
-            opacity: 0.6;
-            transform: none;
         }
         
         /* Header */
@@ -217,13 +251,111 @@
         }
         
         .stat-card .value.green { color: #10b981; }
-        .stat-card .value.yellow { color: #f59e0b; }
         .stat-card .value.blue { color: #0284c7; }
+        
+        /* Two Columns Layout */
+        .dashboard-two-columns {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 24px;
+        }
+        
+        /* Activity Feed */
+        .activity-feed {
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+        }
+        
+        .activity-feed h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: #0284c7;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .activity-list {
+            list-style: none;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .activity-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .activity-item:first-child {
+            animation: highlight 0.5s ease;
+        }
+        
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            background: #dbeafe;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0284c7;
+        }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-email {
+            font-weight: 600;
+            font-size: 14px;
+            color: #0f172a;
+        }
+        
+        .activity-amount {
+            font-size: 13px;
+            color: #10b981;
+            font-weight: 500;
+        }
+        
+        .activity-time {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes highlight {
+            0% {
+                background: #dbeafe;
+                border-radius: 8px;
+                padding: 12px;
+                margin: -12px 0;
+            }
+            100% {
+                background: transparent;
+            }
+        }
         
         /* VIP Grid */
         .vip-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 24px;
             margin-bottom: 48px;
         }
@@ -329,43 +461,6 @@
             border: 1px solid #e2e8f0;
         }
         
-        /* Investment Card */
-        .investment-card {
-            background: white;
-            border-radius: 24px;
-            padding: 24px;
-            margin-bottom: 32px;
-            border-left: 4px solid #0284c7;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-        
-        .countdown {
-            font-size: 28px;
-            font-weight: 700;
-            color: #0284c7;
-            text-align: center;
-            margin: 20px 0;
-            font-family: monospace;
-        }
-        
-        .btn-success {
-            background: linear-gradient(135deg, #10b981, #059669);
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
-        }
-        
         .btn-secondary {
             background: #f1f5f9;
             color: #64748b;
@@ -397,7 +492,7 @@
             border: 1px solid #bae6fd;
         }
         
-        /* Modern Toast Notification */
+        /* Toast Notification */
         .toast-container {
             position: fixed;
             top: 20px;
@@ -422,41 +517,18 @@
             border-left: 4px solid;
         }
         
-        .toast.success {
-            border-left-color: #10b981;
-        }
+        .toast.success { border-left-color: #10b981; }
+        .toast.error { border-left-color: #ef4444; }
+        .toast.info { border-left-color: #0284c7; }
         
-        .toast.error {
-            border-left-color: #ef4444;
-        }
-        
-        .toast.info {
-            border-left-color: #0284c7;
-        }
-        
-        .toast i {
-            font-size: 20px;
-        }
-        
+        .toast i { font-size: 20px; }
         .toast.success i { color: #10b981; }
         .toast.error i { color: #ef4444; }
         .toast.info i { color: #0284c7; }
         
-        .toast-content {
-            flex: 1;
-        }
-        
-        .toast-title {
-            font-weight: 600;
-            color: #0f172a;
-            margin-bottom: 4px;
-        }
-        
-        .toast-message {
-            font-size: 13px;
-            color: #64748b;
-        }
-        
+        .toast-content { flex: 1; }
+        .toast-title { font-weight: 600; color: #0f172a; margin-bottom: 4px; }
+        .toast-message { font-size: 13px; color: #64748b; }
         .toast-close {
             background: none;
             border: none;
@@ -468,25 +540,13 @@
         }
         
         @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
         
         @keyframes slideOutRight {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(100%);
-                opacity: 0;
-            }
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
         }
         
         /* Loading Overlay */
@@ -518,6 +578,46 @@
             margin-bottom: 12px;
         }
         
+        /* Install Prompt */
+        .install-prompt {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 20px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            z-index: 999;
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .install-prompt button {
+            background: #0284c7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 1024px) {
+            .dashboard-two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+        
         @media (max-width: 768px) {
             .container {
                 padding: 16px;
@@ -535,6 +635,9 @@
                 min-width: 280px;
                 right: 16px;
                 left: 16px;
+            }
+            .activity-feed {
+                order: -1;
             }
         }
     </style>
@@ -559,12 +662,100 @@
             GOLD: { name: "GOLD", cost: 4400, description: "Solar Diamond Package", isGold: true }
         };
         
+        // Random Email List for Activity Feed
+        const namePrefixes = ['john', 'sarah', 'mike', 'emma', 'david', 'lisa', 'alex', 'anna', 'kevin', 'julia', 'thomas', 'sophia', 'daniel', 'olivia', 'james', 'chloe', 'robert', 'isabella', 'william', 'mia'];
+        const nameSuffixes = ['smith', 'johnson', 'williams', 'brown', 'jones', 'garcia', 'miller', 'davis', 'rodriguez', 'martinez', 'anderson', 'taylor', 'thomas', 'moore', 'jackson', 'martin', 'lee', 'white', 'harris', 'clark'];
+        
+        function generateRandomEmail() {
+            const prefix = namePrefixes[Math.floor(Math.random() * namePrefixes.length)];
+            const suffix = nameSuffixes[Math.floor(Math.random() * nameSuffixes.length)];
+            const num = Math.floor(Math.random() * 1000);
+            const domains = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com'];
+            const domain = domains[Math.floor(Math.random() * domains.length)];
+            return `${prefix}.${suffix}${num}@${domain}`;
+        }
+        
+        function maskEmail(email) {
+            const [local, domain] = email.split('@');
+            if (local.length <= 3) return email;
+            const masked = local.substring(0, 3) + '****' + local.substring(local.length - 1);
+            return `${masked}@${domain}`;
+        }
+        
+        function generateRandomAmount() {
+            const amounts = [25, 42, 58, 73, 91, 44, 67, 82, 39, 56, 128, 95, 210, 175, 320];
+            return amounts[Math.floor(Math.random() * amounts.length)];
+        }
+        
+        // Activity Feed Manager
+        let activityInterval = null;
+        let activityList = [];
+        
+        function initActivityFeed() {
+            // Generate initial 10 random activities
+            for (let i = 0; i < 10; i++) {
+                const email = generateRandomEmail();
+                const amount = generateRandomAmount();
+                activityList.unshift({
+                    email: maskEmail(email),
+                    originalEmail: email,
+                    amount: amount,
+                    time: new Date().toLocaleTimeString()
+                });
+            }
+            
+            // Start rotating (every 10 seconds: remove last, add new at top)
+            activityInterval = setInterval(() => {
+                // Remove last item
+                activityList.pop();
+                
+                // Add new item at the beginning
+                const newEmail = generateRandomEmail();
+                const newAmount = generateRandomAmount();
+                activityList.unshift({
+                    email: maskEmail(newEmail),
+                    originalEmail: newEmail,
+                    amount: newAmount,
+                    time: new Date().toLocaleTimeString()
+                });
+                
+                // Update the feed display
+                updateActivityFeedDisplay();
+            }, 10000);
+        }
+        
+        function updateActivityFeedDisplay() {
+            const activityListElement = document.getElementById('activity-list');
+            if (!activityListElement) return;
+            
+            activityListElement.innerHTML = activityList.map(item => `
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-email">${item.email}</div>
+                        <div class="activity-amount">+${item.amount} USDT profit claimed</div>
+                        <div class="activity-time">${item.time}</div>
+                    </div>
+                    <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                </li>
+            `).join('');
+        }
+        
+        function stopActivityFeed() {
+            if (activityInterval) {
+                clearInterval(activityInterval);
+                activityInterval = null;
+            }
+        }
+        
         let userData = null;
         let userBalance = 0;
         let userTotalSpent = 0;
         let isLoading = false;
         
-        // Modern Toast Notification
+        // Toast Notification
         function showToast(message, type = "info", title = "") {
             const container = document.getElementById('toast-container') || (() => {
                 const div = document.createElement('div');
@@ -574,11 +765,7 @@
                 return div;
             })();
             
-            const titles = {
-                success: "Success",
-                error: "Error",
-                info: "Information"
-            };
+            const titles = { success: "Success", error: "Error", info: "Information" };
             
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
@@ -592,7 +779,6 @@
             `;
             
             container.appendChild(toast);
-            
             setTimeout(() => {
                 toast.style.animation = 'slideOutRight 0.3s ease';
                 setTimeout(() => toast.remove(), 300);
@@ -608,7 +794,6 @@
                 const text = await response.text();
                 return JSON.parse(text);
             } catch (error) {
-                console.error("API Error:", error);
                 return { error: error.message };
             }
         }
@@ -664,7 +849,7 @@
             
             localStorage.setItem('token', btoa(email));
             localStorage.setItem('email', email);
-            showToast(`Welcome back, ${email}!`, "success", "Login Successful");
+            showToast(`Welcome back!`, "success", "Login Successful");
             return { success: true };
         }
         
@@ -763,6 +948,7 @@
         }
         
         function logout() {
+            stopActivityFeed();
             localStorage.clear();
             render();
             showToast("You have been logged out successfully", "info", "Logged Out");
@@ -804,90 +990,150 @@
             });
         }
         
+        // Toggle Password Visibility
+        function setupPasswordToggles() {
+            document.querySelectorAll('.password-toggle').forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const input = this.parentElement.querySelector('input');
+                    const icon = this.querySelector('i');
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        icon.classList.remove('fa-eye');
+                        icon.classList.add('fa-eye-slash');
+                    } else {
+                        input.type = 'password';
+                        icon.classList.remove('fa-eye-slash');
+                        icon.classList.add('fa-eye');
+                    }
+                });
+            });
+        }
+        
+        // Smooth Tab Switching
+        function setupTabs() {
+            const loginTab = document.getElementById('login-tab');
+            const registerTab = document.getElementById('register-tab');
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            
+            if (loginTab && registerTab && loginForm && registerForm) {
+                loginTab.addEventListener('click', () => {
+                    loginTab.classList.add('active');
+                    registerTab.classList.remove('active');
+                    loginForm.style.display = 'block';
+                    registerForm.style.display = 'none';
+                });
+                
+                registerTab.addEventListener('click', () => {
+                    registerTab.classList.add('active');
+                    loginTab.classList.remove('active');
+                    loginForm.style.display = 'none';
+                    registerForm.style.display = 'block';
+                });
+            }
+        }
+        
         // ========== RENDER AUTH FORM ==========
         function renderAuthForm() {
-            let activeTab = 'login';
-            let email = '';
-            let password = '';
-            let retypePassword = '';
-            let loading = false;
-            
-            function handleSubmit() {
-                if (loading) return;
-                loading = true;
-                render();
-                
-                if (activeTab === 'login') {
-                    login(email, password).then(result => {
-                        loading = false;
-                        if (result.success) {
-                            render();
-                        } else {
-                            render();
-                        }
-                    });
-                } else {
-                    register(email, password, retypePassword).then(result => {
-                        loading = false;
-                        if (result.success) {
-                            render();
-                        } else {
-                            render();
-                        }
-                    });
-                }
-            }
-            
-            function render() {
-                const app = document.getElementById('app');
-                app.innerHTML = `
-                    <div class="form-container">
-                        <div class="form-card">
-                            <h1><i class="fas fa-solar-panel"></i> SolarInvest SA</h1>
-                            <div class="subtitle">Invest in Solar Energy</div>
-                            
-                            <div class="tab-buttons">
-                                <button class="tab-btn ${activeTab === 'login' ? 'active' : ''}" onclick="window.authHandler.setTab('login')">Login</button>
-                                <button class="tab-btn ${activeTab === 'register' ? 'active' : ''}" onclick="window.authHandler.setTab('register')">Register</button>
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="form-container">
+                    <div class="form-card">
+                        <h1><i class="fas fa-solar-panel"></i> SolarInvest SA</h1>
+                        <div class="subtitle">Invest in Solar Energy</div>
+                        
+                        <div class="tab-buttons">
+                            <button class="tab-btn active" id="login-tab">Login</button>
+                            <button class="tab-btn" id="register-tab">Register</button>
+                        </div>
+                        
+                        <div id="login-form" class="form-content">
+                            <input type="email" id="login-email" placeholder="Email Address">
+                            <div class="password-wrapper">
+                                <input type="password" id="login-password" placeholder="Password">
+                                <span class="password-toggle"><i class="fas fa-eye"></i></span>
                             </div>
-                            
-                            <input type="email" placeholder="Email Address" id="email" value="${escapeHtml(email)}">
-                            <input type="password" placeholder="Password" id="password" value="${escapeHtml(password)}">
-                            ${activeTab === 'register' ? `<input type="password" placeholder="Retype Password" id="retypePassword">` : ''}
-                            
-                            <button class="btn-primary" ${loading ? 'disabled' : ''} onclick="window.authHandler.submit()">
-                                ${loading ? 'Processing...' : (activeTab === 'login' ? 'Login' : 'Create Account')}
-                            </button>
-                            
-                            <div class="info-box" style="margin-top: 24px;">
-                                <i class="fas fa-shield-alt"></i> Secure platform • 25% profit on investments
+                            <button class="btn-primary" id="login-btn">Login</button>
+                        </div>
+                        
+                        <div id="register-form" class="form-content" style="display: none;">
+                            <input type="email" id="register-email" placeholder="Email Address">
+                            <div class="password-wrapper">
+                                <input type="password" id="register-password" placeholder="Password">
+                                <span class="password-toggle"><i class="fas fa-eye"></i></span>
                             </div>
+                            <div class="password-wrapper">
+                                <input type="password" id="register-retype" placeholder="Retype Password">
+                                <span class="password-toggle"><i class="fas fa-eye"></i></span>
+                            </div>
+                            <button class="btn-primary" id="register-btn">Create Account</button>
+                        </div>
+                        
+                        <div class="info-box" style="margin-top: 24px;">
+                            <i class="fas fa-shield-alt"></i> Secure platform • Instant deposits
                         </div>
                     </div>
-                `;
-                
-                const emailInput = document.getElementById('email');
-                const passwordInput = document.getElementById('password');
-                const retypeInput = document.getElementById('retypePassword');
-                if (emailInput) emailInput.addEventListener('input', (e) => email = e.target.value);
-                if (passwordInput) passwordInput.addEventListener('input', (e) => password = e.target.value);
-                if (retypeInput) retypeInput.addEventListener('input', (e) => retypePassword = e.target.value);
-            }
+                </div>
+            `;
             
-            window.authHandler = {
-                setTab: (tab) => {
-                    activeTab = tab;
-                    render();
-                },
-                submit: handleSubmit
-            };
+            // Setup password toggles
+            setupPasswordToggles();
             
-            render();
+            // Setup tabs
+            const loginTab = document.getElementById('login-tab');
+            const registerTab = document.getElementById('register-tab');
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            
+            loginTab.addEventListener('click', () => {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+            });
+            
+            registerTab.addEventListener('click', () => {
+                registerTab.classList.add('active');
+                loginTab.classList.remove('active');
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+            });
+            
+            // Login button
+            document.getElementById('login-btn').addEventListener('click', async () => {
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                if (!email || !password) {
+                    showToast("Please fill all fields", "error");
+                    return;
+                }
+                const result = await login(email, password);
+                if (result.success) render();
+            });
+            
+            // Register button
+            document.getElementById('register-btn').addEventListener('click', async () => {
+                const email = document.getElementById('register-email').value;
+                const password = document.getElementById('register-password').value;
+                const retype = document.getElementById('register-retype').value;
+                if (!email || !password || !retype) {
+                    showToast("Please fill all fields", "error");
+                    return;
+                }
+                const result = await register(email, password, retype);
+                if (result.success) render();
+            });
         }
         
         // ========== RENDER DASHBOARD ==========
         async function renderDashboard() {
             await fetchUser();
+            
+            // Initialize activity feed if not already running
+            if (!activityInterval) {
+                initActivityFeed();
+            }
+            updateActivityFeedDisplay();
             
             const app = document.getElementById('app');
             
@@ -945,20 +1191,29 @@
                         </div>
                     </div>
                     
-                    <div class="wallet-box">
-                        <div><i class="fas fa-qrcode"></i> Deposit USDT (TRC20) to this address:</div>
-                        <div class="wallet-address">${MAIN_WALLET}</div>
-                        <button class="btn-outline" onclick="window.dashboardHandler.copyAddress()" style="width: auto; padding: 8px 24px;">
-                            <i class="fas fa-copy"></i> Copy Address
-                        </button>
-                        <div class="info-box" style="margin-top: 16px;">
-                            <i class="fas fa-info-circle"></i> After sending USDT, click DEPOSIT and enter your Transaction ID (TX Hash).
+                    <div class="dashboard-two-columns">
+                        <div>
+                            <div class="wallet-box">
+                                <div><i class="fas fa-qrcode"></i> Deposit USDT (TRC20) to this address:</div>
+                                <div class="wallet-address">${MAIN_WALLET}</div>
+                                <button class="btn-outline" onclick="window.dashboardHandler.copyAddress()" style="width: auto; padding: 8px 24px;">
+                                    <i class="fas fa-copy"></i> Copy Address
+                                </button>
+                                <div class="info-box" style="margin-top: 16px;">
+                                    <i class="fas fa-info-circle"></i> After sending USDT, click DEPOSIT and enter your Transaction ID.
+                                </div>
+                            </div>
+                            
+                            <h2 style="margin-bottom: 20px;"><i class="fas fa-crown"></i> VIP Packages</h2>
+                            <div class="vip-grid">
+                                ${vipCardsHtml}
+                            </div>
                         </div>
-                    </div>
-                    
-                    <h2 style="margin-bottom: 20px;"><i class="fas fa-crown"></i> VIP Packages</h2>
-                    <div class="vip-grid">
-                        ${vipCardsHtml}
+                        
+                        <div class="activity-feed">
+                            <h3><i class="fas fa-bell"></i> Live Activity</h3>
+                            <ul class="activity-list" id="activity-list"></ul>
+                        </div>
                     </div>
                     
                     <div class="info-box">
@@ -978,6 +1233,8 @@
                 deposit: () => depositWithTX(),
                 copyAddress: () => copyWalletAddress()
             };
+            
+            updateActivityFeedDisplay();
         }
         
         async function render() {
@@ -987,6 +1244,36 @@
                 renderAuthForm();
             }
         }
+        
+        // PWA Install Prompt
+        let deferredPrompt = null;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            const installDiv = document.createElement('div');
+            installDiv.className = 'install-prompt';
+            installDiv.id = 'install-prompt';
+            installDiv.innerHTML = `
+                <div><i class="fas fa-download"></i> Install SolarInvest SA as an app!</div>
+                <button id="install-btn">Install</button>
+                <button id="close-install" style="background: transparent; color: #64748b; width: auto;">&times;</button>
+            `;
+            document.body.appendChild(installDiv);
+            
+            document.getElementById('install-btn').addEventListener('click', () => {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(() => {
+                    installDiv.remove();
+                    deferredPrompt = null;
+                });
+            });
+            
+            document.getElementById('close-install').addEventListener('click', () => {
+                installDiv.remove();
+            });
+        });
         
         render();
     </script>
