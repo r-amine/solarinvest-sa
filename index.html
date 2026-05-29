@@ -101,20 +101,6 @@
             box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
         }
         
-        /* Form Tabs Smooth Transition */
-        .form-content {
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-        
-        .form-content.login-active {
-            display: block;
-        }
-        
-        .form-content.register-active {
-            display: none;
-        }
-        
         /* Password Input with Eye */
         .password-wrapper {
             position: relative;
@@ -492,6 +478,133 @@
             border: 1px solid #bae6fd;
         }
         
+        /* Custom Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+            animation: fadeIn 0.2s ease;
+        }
+        
+        .modal {
+            background: white;
+            border-radius: 32px;
+            width: 90%;
+            max-width: 480px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .modal-header {
+            padding: 24px 24px 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            font-size: 24px;
+            color: #0284c7;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #94a3b8;
+            width: auto;
+            padding: 0;
+        }
+        
+        .modal-close:hover {
+            color: #ef4444;
+        }
+        
+        .modal-body {
+            padding: 24px;
+        }
+        
+        .modal-footer {
+            padding: 0 24px 24px 24px;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+        
+        .wallet-info-modal {
+            background: #f0f9ff;
+            padding: 16px;
+            border-radius: 16px;
+            margin: 16px 0;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 12px;
+            border: 1px solid #bae6fd;
+        }
+        
+        .input-group {
+            margin-bottom: 16px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        
+        .btn-cancel {
+            background: #f1f5f9;
+            color: #64748b;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .btn-confirm {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
         /* Toast Notification */
         .toast-container {
             position: fixed;
@@ -578,40 +691,6 @@
             margin-bottom: 12px;
         }
         
-        /* Install Prompt */
-        .install-prompt {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            background: white;
-            border-radius: 20px;
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            z-index: 999;
-            animation: slideUp 0.3s ease;
-        }
-        
-        @keyframes slideUp {
-            from { transform: translateY(100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        .install-prompt button {
-            background: #0284c7;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        
         @media (max-width: 1024px) {
             .dashboard-two-columns {
                 grid-template-columns: 1fr;
@@ -636,8 +715,9 @@
                 right: 16px;
                 left: 16px;
             }
-            .activity-feed {
-                order: -1;
+            .modal {
+                width: 95%;
+                margin: 16px;
             }
         }
     </style>
@@ -692,7 +772,6 @@
         let activityList = [];
         
         function initActivityFeed() {
-            // Generate initial 10 random activities
             for (let i = 0; i < 10; i++) {
                 const email = generateRandomEmail();
                 const amount = generateRandomAmount();
@@ -704,12 +783,8 @@
                 });
             }
             
-            // Start rotating (every 10 seconds: remove last, add new at top)
             activityInterval = setInterval(() => {
-                // Remove last item
                 activityList.pop();
-                
-                // Add new item at the beginning
                 const newEmail = generateRandomEmail();
                 const newAmount = generateRandomAmount();
                 activityList.unshift({
@@ -718,8 +793,6 @@
                     amount: newAmount,
                     time: new Date().toLocaleTimeString()
                 });
-                
-                // Update the feed display
                 updateActivityFeedDisplay();
             }, 10000);
         }
@@ -754,6 +827,153 @@
         let userBalance = 0;
         let userTotalSpent = 0;
         let isLoading = false;
+        
+        // Custom Modal Functions
+        function showDepositModal() {
+            const modalHTML = `
+                <div class="modal-overlay" id="deposit-modal">
+                    <div class="modal">
+                        <div class="modal-header">
+                            <h3><i class="fas fa-plus-circle"></i> Deposit USDT</h3>
+                            <button class="modal-close" onclick="closeModal('deposit-modal')">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="wallet-info-modal">
+                                <div style="margin-bottom: 8px;"><i class="fas fa-qrcode"></i> Send USDT (TRC20) to:</div>
+                                <div style="font-weight: bold; word-break: break-all;">${MAIN_WALLET}</div>
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-hash"></i> Transaction ID (TX Hash)</label>
+                                <input type="text" id="modal-txhash" placeholder="Enter your TX Hash" autocomplete="off">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-dollar-sign"></i> Amount (USDT)</label>
+                                <input type="number" id="modal-amount" placeholder="Enter amount" step="0.01" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn-cancel" onclick="closeModal('deposit-modal')">Cancel</button>
+                            <button class="btn-confirm" onclick="submitDeposit()">Verify & Add Balance</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            document.getElementById('modal-txhash')?.focus();
+        }
+        
+        function showPurchaseModal(vipKey) {
+            const vip = VIP_PACKAGES[vipKey];
+            const modalHTML = `
+                <div class="modal-overlay" id="purchase-modal">
+                    <div class="modal">
+                        <div class="modal-header">
+                            <h3><i class="fas fa-crown"></i> Confirm Purchase</h3>
+                            <button class="modal-close" onclick="closeModal('purchase-modal')">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div style="text-align: center; margin-bottom: 20px;">
+                                <div class="vip-name" style="background: linear-gradient(135deg, #0284c7, #0369a1); display: inline-block; padding: 8px 24px; border-radius: 40px; color: white;">${vip.name}</div>
+                            </div>
+                            <div class="info-box" style="margin: 0;">
+                                <div style="font-size: 32px; font-weight: 700; color: #0284c7;">${vip.cost} USDT</div>
+                                <div>${vip.description}</div>
+                            </div>
+                            <div style="margin-top: 16px; padding: 12px; background: #f0fdf4; border-radius: 16px;">
+                                <i class="fas fa-wallet"></i> Your balance: <strong>${userBalance.toFixed(2)} USDT</strong>
+                            </div>
+                            ${userBalance < vip.cost ? '<div style="color: #ef4444; margin-top: 12px; text-align: center;"><i class="fas fa-exclamation-circle"></i> Insufficient balance. Please deposit first.</div>' : ''}
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn-cancel" onclick="closeModal('purchase-modal')">Cancel</button>
+                            <button class="btn-confirm" onclick="confirmPurchase('${vipKey}', ${vip.cost})" ${userBalance < vip.cost ? 'disabled style="opacity:0.5;"' : ''}>Confirm Purchase</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+        
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) modal.remove();
+        }
+        
+        async function submitDeposit() {
+            const txHash = document.getElementById('modal-txhash')?.value.trim();
+            const amount = document.getElementById('modal-amount')?.value;
+            
+            if (!txHash || txHash.length < 20) {
+                showToast("Please enter a valid Transaction ID", "error");
+                return;
+            }
+            
+            if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
+                showToast("Please enter a valid amount", "error");
+                return;
+            }
+            
+            closeModal('deposit-modal');
+            
+            isLoading = true;
+            showLoading("Verifying transaction on blockchain...");
+            
+            const result = await callSheet('verifyTransaction', { 
+                email: localStorage.getItem('email'),
+                txHash: txHash,
+                amount: parseFloat(amount)
+            });
+            
+            hideLoading();
+            
+            if (result.success) {
+                await fetchUser();
+                showToast(`${result.amount} USDT has been added to your balance!`, "success", "Deposit Verified");
+                renderDashboard();
+            } else {
+                showToast(result.error || "Verification failed", "error");
+            }
+            isLoading = false;
+        }
+        
+        async function confirmPurchase(vipKey, cost) {
+            closeModal('purchase-modal');
+            
+            if (userBalance < cost) {
+                showToast(`Insufficient balance. Need ${cost} USDT.`, "error");
+                return;
+            }
+            
+            isLoading = true;
+            showLoading("Processing your purchase...");
+            
+            const result = await callSheet('buyVIP', { 
+                email: localStorage.getItem('email'), 
+                vipLevel: vipKey,
+                amount: cost
+            });
+            
+            hideLoading();
+            
+            if (result.success) {
+                await fetchUser();
+                showToast(`You have successfully purchased ${vipKey}!`, "success", "Purchase Complete");
+                renderDashboard();
+            } else {
+                showToast(result.error || "Purchase failed", "error");
+            }
+            
+            isLoading = false;
+        }
+        
+        // Make modal functions global
+        window.showDepositModal = showDepositModal;
+        window.showPurchaseModal = showPurchaseModal;
+        window.closeModal = closeModal;
+        window.submitDeposit = submitDeposit;
+        window.confirmPurchase = confirmPurchase;
         
         // Toast Notification
         function showToast(message, type = "info", title = "") {
@@ -867,81 +1087,6 @@
             return false;
         }
         
-        async function depositWithTX() {
-            const txHash = prompt(
-                "DEPOSIT USDT\n\n" +
-                "1. Send USDT (TRC20) to:\n" + MAIN_WALLET + "\n\n" +
-                "2. Enter your Transaction ID (TX Hash):"
-            );
-            
-            if (!txHash) return;
-            
-            if (txHash.length < 20) {
-                showToast("Invalid Transaction ID format", "error");
-                return;
-            }
-            
-            const amount = prompt("Enter the amount you sent (USDT):", "");
-            if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
-                showToast("Please enter a valid amount", "error");
-                return;
-            }
-            
-            isLoading = true;
-            showLoading("Verifying transaction on blockchain...");
-            
-            const result = await callSheet('verifyTransaction', { 
-                email: localStorage.getItem('email'),
-                txHash: txHash,
-                amount: parseFloat(amount)
-            });
-            
-            hideLoading();
-            
-            if (result.success) {
-                await fetchUser();
-                showToast(`${result.amount} USDT has been added to your balance!`, "success", "Deposit Verified");
-                renderDashboard();
-            } else {
-                showToast(result.error || "Verification failed", "error");
-            }
-            isLoading = false;
-        }
-        
-        async function buyVIP(vipKey) {
-            const vip = VIP_PACKAGES[vipKey];
-            
-            if (userBalance < vip.cost) {
-                showToast(`Insufficient balance. Need ${vip.cost} USDT.`, "error");
-                return;
-            }
-            
-            if (!confirm(`Purchase ${vip.name} for ${vip.cost} USDT?\n\nPackage: ${vip.description}\n\nClick OK to confirm your purchase.`)) {
-                return;
-            }
-            
-            isLoading = true;
-            showLoading("Processing your purchase...");
-            
-            const result = await callSheet('buyVIP', { 
-                email: localStorage.getItem('email'), 
-                vipLevel: vipKey,
-                amount: vip.cost
-            });
-            
-            hideLoading();
-            
-            if (result.success) {
-                await fetchUser();
-                showToast(`You have successfully purchased ${vip.name}!`, "success", "Purchase Complete");
-                renderDashboard();
-            } else {
-                showToast(result.error || "Purchase failed", "error");
-            }
-            
-            isLoading = false;
-        }
-        
         function copyWalletAddress() {
             navigator.clipboard.writeText(MAIN_WALLET);
             showToast("Wallet address copied to clipboard!", "success", "Copied!");
@@ -990,7 +1135,6 @@
             });
         }
         
-        // Toggle Password Visibility
         function setupPasswordToggles() {
             document.querySelectorAll('.password-toggle').forEach(toggle => {
                 toggle.addEventListener('click', function() {
@@ -1009,30 +1153,6 @@
             });
         }
         
-        // Smooth Tab Switching
-        function setupTabs() {
-            const loginTab = document.getElementById('login-tab');
-            const registerTab = document.getElementById('register-tab');
-            const loginForm = document.getElementById('login-form');
-            const registerForm = document.getElementById('register-form');
-            
-            if (loginTab && registerTab && loginForm && registerForm) {
-                loginTab.addEventListener('click', () => {
-                    loginTab.classList.add('active');
-                    registerTab.classList.remove('active');
-                    loginForm.style.display = 'block';
-                    registerForm.style.display = 'none';
-                });
-                
-                registerTab.addEventListener('click', () => {
-                    registerTab.classList.add('active');
-                    loginTab.classList.remove('active');
-                    loginForm.style.display = 'none';
-                    registerForm.style.display = 'block';
-                });
-            }
-        }
-        
         // ========== RENDER AUTH FORM ==========
         function renderAuthForm() {
             const app = document.getElementById('app');
@@ -1047,7 +1167,7 @@
                             <button class="tab-btn" id="register-tab">Register</button>
                         </div>
                         
-                        <div id="login-form" class="form-content">
+                        <div id="login-form">
                             <input type="email" id="login-email" placeholder="Email Address">
                             <div class="password-wrapper">
                                 <input type="password" id="login-password" placeholder="Password">
@@ -1056,7 +1176,7 @@
                             <button class="btn-primary" id="login-btn">Login</button>
                         </div>
                         
-                        <div id="register-form" class="form-content" style="display: none;">
+                        <div id="register-form" style="display: none;">
                             <input type="email" id="register-email" placeholder="Email Address">
                             <div class="password-wrapper">
                                 <input type="password" id="register-password" placeholder="Password">
@@ -1076,10 +1196,8 @@
                 </div>
             `;
             
-            // Setup password toggles
             setupPasswordToggles();
             
-            // Setup tabs
             const loginTab = document.getElementById('login-tab');
             const registerTab = document.getElementById('register-tab');
             const loginForm = document.getElementById('login-form');
@@ -1099,7 +1217,6 @@
                 registerForm.style.display = 'block';
             });
             
-            // Login button
             document.getElementById('login-btn').addEventListener('click', async () => {
                 const email = document.getElementById('login-email').value;
                 const password = document.getElementById('login-password').value;
@@ -1111,7 +1228,6 @@
                 if (result.success) render();
             });
             
-            // Register button
             document.getElementById('register-btn').addEventListener('click', async () => {
                 const email = document.getElementById('register-email').value;
                 const password = document.getElementById('register-password').value;
@@ -1129,7 +1245,6 @@
         async function renderDashboard() {
             await fetchUser();
             
-            // Initialize activity feed if not already running
             if (!activityInterval) {
                 initActivityFeed();
             }
@@ -1146,7 +1261,7 @@
                 
                 const isGold = vip === 'GOLD';
                 vipCardsHtml += `
-                    <div class="vip-card ${isGold ? 'gold' : ''}" onclick="window.dashboardHandler.buyVIP('${vip}')">
+                    <div class="vip-card ${isGold ? 'gold' : ''}">
                         <div class="vip-header ${isGold ? 'gold' : ''}">
                             <div class="vip-name">${config.name}</div>
                             ${isGold ? '<div class="gold-badge"><i class="fas fa-star"></i> Limited Offer</div>' : ''}
@@ -1154,7 +1269,7 @@
                         <div class="vip-body">
                             <div class="vip-price">${config.cost} USDT</div>
                             <div class="vip-description">${config.description}</div>
-                            <button class="btn-outline">Purchase Now</button>
+                            <button class="btn-outline" onclick="window.showPurchaseModal('${vip}')">Purchase Now</button>
                         </div>
                     </div>
                 `;
@@ -1167,10 +1282,10 @@
                             <i class="fas fa-solar-panel"></i> SolarInvest SA
                         </div>
                         <div class="flex-buttons">
-                            <button class="btn-secondary" onclick="window.dashboardHandler.deposit()">
+                            <button class="btn-secondary" onclick="window.showDepositModal()">
                                 <i class="fas fa-plus-circle"></i> Deposit
                             </button>
-                            <button class="btn-secondary" onclick="window.dashboardHandler.logout()">
+                            <button class="btn-secondary" onclick="window.logout()">
                                 <i class="fas fa-sign-out-alt"></i> Logout
                             </button>
                         </div>
@@ -1196,7 +1311,7 @@
                             <div class="wallet-box">
                                 <div><i class="fas fa-qrcode"></i> Deposit USDT (TRC20) to this address:</div>
                                 <div class="wallet-address">${MAIN_WALLET}</div>
-                                <button class="btn-outline" onclick="window.dashboardHandler.copyAddress()" style="width: auto; padding: 8px 24px;">
+                                <button class="btn-outline" onclick="window.copyWalletAddress()" style="width: auto; padding: 8px 24px;">
                                     <i class="fas fa-copy"></i> Copy Address
                                 </button>
                                 <div class="info-box" style="margin-top: 16px;">
@@ -1227,15 +1342,12 @@
                 </div>
             `;
             
-            window.dashboardHandler = {
-                buyVIP: (vip) => buyVIP(vip),
-                logout: () => logout(),
-                deposit: () => depositWithTX(),
-                copyAddress: () => copyWalletAddress()
-            };
-            
             updateActivityFeedDisplay();
         }
+        
+        // Make functions global for onclick
+        window.logout = logout;
+        window.copyWalletAddress = copyWalletAddress;
         
         async function render() {
             if (isLoggedIn()) {
@@ -1244,36 +1356,6 @@
                 renderAuthForm();
             }
         }
-        
-        // PWA Install Prompt
-        let deferredPrompt = null;
-        
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            
-            const installDiv = document.createElement('div');
-            installDiv.className = 'install-prompt';
-            installDiv.id = 'install-prompt';
-            installDiv.innerHTML = `
-                <div><i class="fas fa-download"></i> Install SolarInvest SA as an app!</div>
-                <button id="install-btn">Install</button>
-                <button id="close-install" style="background: transparent; color: #64748b; width: auto;">&times;</button>
-            `;
-            document.body.appendChild(installDiv);
-            
-            document.getElementById('install-btn').addEventListener('click', () => {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(() => {
-                    installDiv.remove();
-                    deferredPrompt = null;
-                });
-            });
-            
-            document.getElementById('close-install').addEventListener('click', () => {
-                installDiv.remove();
-            });
-        });
         
         render();
     </script>
