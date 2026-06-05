@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>SolarInvest SA - Solar Energy Investment</title>
+    <title>SolarInvest SA - Solar Panel Investment</title>
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="https://img.icons8.com/color/96/solar-panel.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -292,7 +292,7 @@
         
         .vip-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 24px;
             margin-bottom: 48px;
         }
@@ -331,6 +331,12 @@
             color: white;
         }
         
+        .vip-panels {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
         .gold-badge {
             background: rgba(255,255,255,0.2);
             font-size: 12px;
@@ -345,14 +351,22 @@
         }
         
         .vip-price {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: 700;
             text-align: center;
             color: #0284c7;
             margin-bottom: 8px;
         }
         
-        .vip-description {
+        .vip-daily {
+            text-align: center;
+            color: #10b981;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .vip-total {
             text-align: center;
             color: #64748b;
             font-size: 14px;
@@ -433,17 +447,16 @@
             border-radius: 24px;
             padding: 24px;
             margin-bottom: 32px;
-            border-left: 4px solid #0284c7;
+            border-left: 4px solid #10b981;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
         
-        .countdown {
-            font-size: 28px;
-            font-weight: 700;
-            color: #0284c7;
+        .daily-earn-card {
+            background: #f0fdf4;
+            border-radius: 16px;
+            padding: 16px;
+            margin: 15px 0;
             text-align: center;
-            margin: 20px 0;
-            font-family: monospace;
         }
         
         .withdraw-btn {
@@ -462,6 +475,25 @@
         .withdraw-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+        
+        .claim-btn {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+        
+        .claim-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);
         }
         
         .modal-overlay {
@@ -710,19 +742,20 @@
     
     <script>
         // ============================================================
-        // CONFIGURATION - UPDATE WITH YOUR APPS SCRIPT URL
+        // CONFIGURATION
         // ============================================================
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYEZmAvrtmf988DcFe1c7M0U3kcz3U4DPUnK1TjRtU8kgd4dBtPn-5w_iPMMx3ENRnzg/exec";
         const MAIN_WALLET = "TLi3ANb8GCJzypyBofqwvjqjXR1G8Hr1cN";
         
-        // VIP Packages (25% Profit)
+        // VIP Packages - Solar Panel Model
+        // 1 solar panel (550W) = 90 USDT, daily profit = 4 USDT, total in 30 days = 120 USDT
         const VIP_PACKAGES = {
-            VIP1: { name: "VIP1", cost: 44, description: "Solar Starter Package", return: 55 },
-            VIP2: { name: "VIP2", cost: 220, description: "Solar Bronze Package", return: 275 },
-            VIP3: { name: "VIP3", cost: 440, description: "Solar Silver Package", return: 550 },
-            VIP4: { name: "VIP4", cost: 1100, description: "Solar Gold Package", return: 1375 },
-            VIP5: { name: "VIP5", cost: 2200, description: "Solar Platinum Package", return: 2750 },
-            GOLD: { name: "GOLD", cost: 4400, description: "Solar Diamond Package", return: 5500, isGold: true }
+            VIP1: { name: "VIP1", panels: 1, price: 90, dailyProfit: 4, totalProfit: 120, duration: 30 },
+            VIP2: { name: "VIP2", panels: 2, price: 180, dailyProfit: 8, totalProfit: 240, duration: 30 },
+            VIP3: { name: "VIP3", panels: 3, price: 270, dailyProfit: 12, totalProfit: 360, duration: 30 },
+            VIP4: { name: "VIP4", panels: 4, price: 360, dailyProfit: 16, totalProfit: 480, duration: 30 },
+            VIP5: { name: "VIP5", panels: 5, price: 450, dailyProfit: 20, totalProfit: 600, duration: 30 },
+            GOLD: { name: "GOLD", panels: 10, price: 900, dailyProfit: 40, totalProfit: 1200, duration: 30, isGold: true }
         };
         
         // Activity Feed Data
@@ -746,7 +779,7 @@
         }
         
         function generateRandomAmount() {
-            const amounts = [25, 42, 58, 73, 91, 44, 67, 82, 39, 56, 128, 95, 210, 175, 320];
+            const amounts = [4, 8, 12, 16, 20, 40, 3, 7, 11, 15, 19, 38];
             return amounts[Math.floor(Math.random() * amounts.length)];
         }
         
@@ -781,10 +814,10 @@
             if (!activityListElement) return;
             activityListElement.innerHTML = activityList.map(item => `
                 <li class="activity-item">
-                    <div class="activity-icon"><i class="fas fa-user-check"></i></div>
+                    <div class="activity-icon"><i class="fas fa-solar-panel"></i></div>
                     <div class="activity-content">
                         <div class="activity-email">${item.email}</div>
-                        <div class="activity-amount">+${item.amount} USDT profit claimed</div>
+                        <div class="activity-amount">+${item.amount} USDT solar profit claimed</div>
                         <div class="activity-time">${item.time}</div>
                     </div>
                     <i class="fas fa-check-circle" style="color: #10b981;"></i>
@@ -799,7 +832,7 @@
         let userData = null;
         let userBalance = 0;
         let userTotalSpent = 0;
-        let withdrawalStatus = null;
+        let activeInvestment = null;
         let isLoading = false;
         let countdownInterval = null;
         
@@ -891,12 +924,12 @@
             return false;
         }
         
-        async function fetchWithdrawalStatus() {
+        async function fetchActiveInvestment() {
             const email = localStorage.getItem('email');
             if (!email) return null;
-            const result = await callSheet('checkWithdrawalStatus', { email });
-            withdrawalStatus = result;
-            return withdrawalStatus;
+            const result = await callSheet('getActiveInvestment', { email });
+            activeInvestment = result;
+            return activeInvestment;
         }
         
         function showDepositModal() {
@@ -946,7 +979,7 @@
             hideLoading();
             if (result.success) {
                 await fetchUser();
-                showToast(`${result.amount} USDT added!`, "success", "Deposit Verified");
+                showToast(`${result.amount} USDT added to your balance!`, "success", "Deposit Verified");
                 renderDashboard();
             } else {
                 showToast(result.error || "Verification failed", "error");
@@ -960,29 +993,31 @@
                 <div class="modal-overlay" id="purchase-modal">
                     <div class="modal">
                         <div class="modal-header">
-                            <h3><i class="fas fa-crown"></i> Confirm Purchase</h3>
+                            <h3><i class="fas fa-solar-panel"></i> Invest in Solar Panels</h3>
                             <button class="modal-close" onclick="closeModal('purchase-modal')">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div style="text-align: center; margin-bottom: 20px;">
                                 <div style="background: linear-gradient(135deg, #0284c7, #0369a1); display: inline-block; padding: 8px 24px; border-radius: 40px; color: white; font-weight: bold;">${vip.name}</div>
+                                <div class="vip-panels" style="margin-top: 8px;">${vip.panels} Solar Panel${vip.panels > 1 ? 's' : ''} (550W each)</div>
                             </div>
                             <div class="info-box" style="margin: 0;">
-                                <div style="font-size: 32px; font-weight: 700; color: #0284c7;">${vip.cost} USDT</div>
-                                <div>${vip.description}</div>
-                                <div style="margin-top: 8px; color: #10b981;">+${vip.return - vip.cost} USDT profit (25%)</div>
+                                <div style="font-size: 32px; font-weight: 700; color: #0284c7;">${vip.price} USDT</div>
+                                <div style="margin-top: 8px;"><i class="fas fa-sun"></i> Daily profit: <strong>${vip.dailyProfit} USDT</strong></div>
+                                <div style="margin-top: 4px;"><i class="fas fa-calendar-week"></i> First withdrawal after: <strong>3 days (${vip.dailyProfit * 3} USDT)</strong></div>
+                                <div style="margin-top: 4px;"><i class="fas fa-chart-line"></i> Total in 30 days: <strong>${vip.totalProfit} USDT</strong></div>
                             </div>
                             <div style="margin-top: 16px; padding: 12px; background: #f0fdf4; border-radius: 16px;">
                                 <i class="fas fa-wallet"></i> Your balance: <strong>${userBalance.toFixed(2)} USDT</strong>
                             </div>
                             <div style="margin-top: 16px; padding: 12px; background: #fef3c7; border-radius: 16px;">
-                                <i class="fas fa-shield-alt"></i> <strong>Security Notice:</strong> After purchase, you can withdraw your investment + profit after 3 days.
+                                <i class="fas fa-shield-alt"></i> <strong>Investment Security:</strong> First withdrawal after 3 days, then daily withdrawals available.
                             </div>
-                            ${userBalance < vip.cost ? '<div style="color: #ef4444; margin-top: 12px; text-align: center;"><i class="fas fa-exclamation-circle"></i> Insufficient balance. Please deposit first.</div>' : ''}
+                            ${userBalance < vip.price ? '<div style="color: #ef4444; margin-top: 12px; text-align: center;"><i class="fas fa-exclamation-circle"></i> Insufficient balance. Please deposit first.</div>' : ''}
                         </div>
                         <div class="modal-footer">
                             <button class="btn-cancel" onclick="closeModal('purchase-modal')">Cancel</button>
-                            <button class="btn-confirm" onclick="confirmPurchase('${vipKey}', ${vip.cost})" ${userBalance < vip.cost ? 'disabled' : ''}>Confirm Purchase</button>
+                            <button class="btn-confirm" onclick="confirmPurchase('${vipKey}', ${vip.price})" ${userBalance < vip.price ? 'disabled' : ''}>Invest Now</button>
                         </div>
                     </div>
                 </div>
@@ -990,43 +1025,55 @@
             document.body.insertAdjacentHTML('beforeend', modalHTML);
         }
         
-        async function confirmPurchase(vipKey, cost) {
+        async function confirmPurchase(vipKey, price) {
             closeModal('purchase-modal');
-            if (userBalance < cost) { showToast(`Insufficient balance. Need ${cost} USDT.`, "error"); return; }
+            if (userBalance < price) { showToast(`Insufficient balance. Need ${price} USDT.`, "error"); return; }
             isLoading = true;
-            showLoading("Processing your purchase...");
-            const result = await callSheet('buyVIP', { 
-                email: localStorage.getItem('email'), vipLevel: vipKey, amount: cost
+            showLoading("Processing your solar investment...");
+            const result = await callSheet('investSolar', { 
+                email: localStorage.getItem('email'), 
+                vipLevel: vipKey, 
+                amount: price,
+                panels: VIP_PACKAGES[vipKey].panels,
+                dailyProfit: VIP_PACKAGES[vipKey].dailyProfit,
+                totalProfit: VIP_PACKAGES[vipKey].totalProfit
             });
             hideLoading();
             if (result.success) {
                 await fetchUser();
-                await fetchWithdrawalStatus();
-                showToast(`✅ ${result.message}`, "success", "Purchase Complete");
+                await fetchActiveInvestment();
+                showToast(`✅ You invested in ${VIP_PACKAGES[vipKey].panels} solar panel(s)! First withdrawal available after 3 days.`, "success", "Investment Active");
                 renderDashboard();
             } else {
-                showToast(result.error || "Purchase failed", "error");
+                showToast(result.error || "Investment failed", "error");
             }
             isLoading = false;
         }
         
-        async function withdraw() {
-            if (!withdrawalStatus || !withdrawalStatus.canWithdraw) {
-                showToast("Withdrawal not available yet. Please wait.", "error");
+        async function claimDailyProfit() {
+            if (!activeInvestment || !activeInvestment.hasInvestment) {
+                showToast("No active investment found.", "error");
                 return;
             }
-            if (!confirm(`Withdraw ${withdrawalStatus.totalReturn} USDT?\n\nInvestment: ${withdrawalStatus.investedAmount} USDT\nProfit: +${withdrawalStatus.profit} USDT`)) return;
+            
+            if (!activeInvestment.canClaim) {
+                const remaining = activeInvestment.remainingDays;
+                showToast(`First withdrawal available in ${remaining} day(s). Please wait.`, "error");
+                return;
+            }
+            
             isLoading = true;
-            showLoading("Processing withdrawal...");
-            const result = await callSheet('withdraw', { email: localStorage.getItem('email') });
+            showLoading("Claiming your solar profit...");
+            const result = await callSheet('claimDailyProfit', { email: localStorage.getItem('email') });
             hideLoading();
+            
             if (result.success) {
                 await fetchUser();
-                await fetchWithdrawalStatus();
-                showToast(result.message, "success", "Withdrawal Complete");
+                await fetchActiveInvestment();
+                showToast(`✅ Claimed ${result.claimed} USDT from your solar panels!`, "success", "Profit Claimed");
                 renderDashboard();
             } else {
-                showToast(result.error || "Withdrawal failed", "error");
+                showToast(result.error || "Claim failed", "error");
             }
             isLoading = false;
         }
@@ -1078,29 +1125,6 @@
             if (modal) modal.remove();
         }
         
-        function startCountdown(withdrawalDate) {
-            if (countdownInterval) clearInterval(countdownInterval);
-            function updateCountdown() {
-                const countdownEl = document.getElementById('countdown');
-                if (!countdownEl) return;
-                const now = new Date();
-                const end = new Date(withdrawalDate);
-                const remaining = Math.max(0, end - now);
-                if (remaining <= 0) { clearInterval(countdownInterval); renderDashboard(); return; }
-                const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
-                if (days > 0) {
-                    countdownEl.innerHTML = `<i class="fas fa-clock"></i> Withdrawal available in: ${days}d ${hours}h ${minutes}m ${seconds}s`;
-                } else {
-                    countdownEl.innerHTML = `<i class="fas fa-clock"></i> Withdrawal available in: ${hours}h ${minutes}m ${seconds}s`;
-                }
-            }
-            updateCountdown();
-            countdownInterval = setInterval(updateCountdown, 1000);
-        }
-        
         function setupPasswordToggles() {
             document.querySelectorAll('.password-toggle').forEach(toggle => {
                 toggle.addEventListener('click', function() {
@@ -1125,7 +1149,7 @@
                 <div class="form-container">
                     <div class="form-card">
                         <h1><i class="fas fa-solar-panel"></i> SolarInvest SA</h1>
-                        <div class="subtitle">Invest in Solar Energy</div>
+                        <div class="subtitle">Invest in Real Solar Panels</div>
                         <div class="tab-buttons">
                             <button class="tab-btn active" id="login-tab">Login</button>
                             <button class="tab-btn" id="register-tab">Register</button>
@@ -1150,7 +1174,9 @@
                             </div>
                             <button class="btn-primary" id="register-btn">Create Account</button>
                         </div>
-                        <div class="info-box" style="margin-top: 24px;"><i class="fas fa-shield-alt"></i> Secure platform • 25% profit after 3 days</div>
+                        <div class="info-box" style="margin-top: 24px;">
+                            <i class="fas fa-solar-panel"></i> 1 Solar Panel (550W) = 90 USDT • 4 USDT/day profit
+                        </div>
                     </div>
                 </div>
             `;
@@ -1186,7 +1212,7 @@
         
         async function renderDashboard() {
             await fetchUser();
-            await fetchWithdrawalStatus();
+            await fetchActiveInvestment();
             if (!activityInterval) initActivityFeed();
             updateActivityFeedDisplay();
             
@@ -1202,48 +1228,53 @@
                     <div class="vip-card ${isGold ? 'gold' : ''}">
                         <div class="vip-header ${isGold ? 'gold' : ''}">
                             <div class="vip-name">${config.name}</div>
-                            ${isGold ? '<div class="gold-badge"><i class="fas fa-star"></i> Limited Offer</div>' : ''}
+                            <div class="vip-panels"><i class="fas fa-solar-panel"></i> ${config.panels} Solar Panel${config.panels > 1 ? 's' : ''} (550W)</div>
+                            ${isGold ? '<div class="gold-badge"><i class="fas fa-star"></i> Best Value</div>' : ''}
                         </div>
                         <div class="vip-body">
-                            <div class="vip-price">${config.cost} USDT</div>
-                            <div class="vip-description">${config.description}</div>
-                            <div style="text-align: center; color: #10b981; margin-bottom: 16px;">+25% Profit → ${config.return} USDT</div>
-                            <button class="btn-outline" onclick="showPurchaseModal('${vip}')">Purchase Now</button>
+                            <div class="vip-price">${config.price} USDT</div>
+                            <div class="vip-daily"><i class="fas fa-sun"></i> ${config.dailyProfit} USDT / day</div>
+                            <div class="vip-total"><i class="fas fa-calendar"></i> Total in 30 days: ${config.totalProfit} USDT</div>
+                            <button class="btn-outline" onclick="showPurchaseModal('${vip}')">Invest Now</button>
                         </div>
                     </div>
                 `;
             }
             
             let activeInvestmentHtml = '';
-            if (withdrawalStatus && withdrawalStatus.hasInvestment) {
-                const canWithdraw = withdrawalStatus.canWithdraw;
+            if (activeInvestment && activeInvestment.hasInvestment) {
+                const canClaim = activeInvestment.canClaim;
+                const remainingDays = activeInvestment.remainingDays;
+                const dailyProfit = activeInvestment.dailyProfit;
+                
                 activeInvestmentHtml = `
                     <div class="investment-card">
-                        <h3 style="margin-bottom: 15px;"><i class="fas fa-chart-simple"></i> Your Active Investment</h3>
-                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
-                            <div><strong>VIP Level:</strong> ${withdrawalStatus.vipLevel}</div>
-                            <div><strong>Invested:</strong> ${withdrawalStatus.investedAmount} USDT</div>
-                            <div><strong>Expected Return:</strong> ${withdrawalStatus.totalReturn} USDT</div>
-                            <div><strong>Profit:</strong> +${withdrawalStatus.profit} USDT (25%)</div>
+                        <h3 style="margin-bottom: 15px;"><i class="fas fa-solar-panel"></i> Your Solar Investment</h3>
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
+                            <div><strong>VIP Level:</strong> ${activeInvestment.vipLevel}</div>
+                            <div><strong>Panels:</strong> ${activeInvestment.panels} x 550W</div>
+                            <div><strong>Invested:</strong> ${activeInvestment.investedAmount} USDT</div>
                         </div>
-                        ${!canWithdraw ? `
-                            <div class="countdown" id="countdown"></div>
-                            <div style="text-align: center; color: #64748b; font-size: 14px;">
-                                <i class="fas fa-shield-alt"></i> For your security, withdrawal available after ${withdrawalStatus.lockDays} days
+                        <div class="daily-earn-card">
+                            <div><i class="fas fa-sun"></i> Daily Profit: <strong>${activeInvestment.dailyProfit} USDT</strong></div>
+                            <div><i class="fas fa-chart-line"></i> Total Expected: <strong>${activeInvestment.totalProfit} USDT</strong></div>
+                        </div>
+                        ${!canClaim ? `
+                            <div style="text-align: center; padding: 15px; background: #fef3c7; border-radius: 16px;">
+                                <i class="fas fa-clock"></i> First withdrawal available in: <strong>${remainingDays} day(s)</strong>
+                                <div style="font-size: 12px; margin-top: 5px;">After 3 days, you can withdraw ${dailyProfit * 3} USDT, then daily withdrawals</div>
                             </div>
                         ` : `
-                            <div style="text-align: center; color: #10b981; margin: 15px 0;">
-                                <i class="fas fa-check-circle"></i> Withdrawal is now available!
+                            <div style="text-align: center; padding: 15px; background: #d1fae5; border-radius: 16px;">
+                                <i class="fas fa-check-circle"></i> <strong>Withdrawal available!</strong>
+                                <div style="font-size: 12px; margin-top: 5px;">You can claim ${dailyProfit} USDT today</div>
                             </div>
-                            <button class="withdraw-btn" onclick="window.withdraw()">
-                                <i class="fas fa-money-bill-wave"></i> Withdraw ${withdrawalStatus.totalReturn} USDT
+                            <button class="claim-btn" onclick="claimDailyProfit()">
+                                <i class="fas fa-money-bill-wave"></i> Claim ${dailyProfit} USDT
                             </button>
                         `}
                     </div>
                 `;
-                if (!canWithdraw && withdrawalStatus.withdrawalDate) {
-                    setTimeout(() => startCountdown(withdrawalStatus.withdrawalDate), 100);
-                }
             }
             
             app.innerHTML = `
@@ -1257,8 +1288,8 @@
                     </div>
                     <div class="stats-grid">
                         <div class="stat-card"><div class="label"><i class="fas fa-wallet"></i> Your Balance</div><div class="value green">${userBalance.toFixed(2)} USDT</div></div>
-                        <div class="stat-card"><div class="label"><i class="fas fa-chart-line"></i> Total Spent</div><div class="value">${userTotalSpent.toFixed(2)} USDT</div></div>
-                        <div class="stat-card"><div class="label"><i class="fas fa-gem"></i> VIP Level</div><div class="value blue">${userData?.vipPurchased || 'None'}</div></div>
+                        <div class="stat-card"><div class="label"><i class="fas fa-chart-line"></i> Total Invested</div><div class="value">${userTotalSpent.toFixed(2)} USDT</div></div>
+                        <div class="stat-card"><div class="label"><i class="fas fa-solar-panel"></i> Active Panels</div><div class="value blue">${activeInvestment?.panels || 0}</div></div>
                     </div>
                     <div class="dashboard-two-columns">
                         <div>
@@ -1269,7 +1300,7 @@
                                 <div class="info-box" style="margin-top: 16px;"><i class="fas fa-info-circle"></i> After sending USDT, click DEPOSIT and enter your Transaction ID.</div>
                             </div>
                             ${activeInvestmentHtml}
-                            <h2 style="margin-bottom: 20px;"><i class="fas fa-crown"></i> VIP Packages (25% Profit)</h2>
+                            <h2 style="margin-bottom: 20px;"><i class="fas fa-solar-panel"></i> Solar Panel Packages (550W each)</h2>
                             <div class="vip-grid">${vipCardsHtml}</div>
                         </div>
                         <div class="activity-feed">
@@ -1279,11 +1310,11 @@
                     </div>
                     <div class="info-box">
                         <strong><i class="fas fa-list-check"></i> How it works:</strong><br><br>
-                        1. Copy wallet address and send USDT (TRC20)<br>
-                        2. Click DEPOSIT and enter your Transaction ID<br>
-                        3. Purchase any VIP package<br>
-                        4. Wait 3 days for security<br>
-                        5. Withdraw your investment + 25% profit
+                        1️⃣ Copy wallet address and send USDT (TRC20)<br>
+                        2️⃣ Click DEPOSIT and enter your Transaction ID<br>
+                        3️⃣ Invest in solar panels (1 panel = 90 USDT, 4 USDT/day profit)<br>
+                        4️⃣ First withdrawal after 3 days (12 USDT)<br>
+                        5️⃣ Then claim daily profits for 30 days!
                     </div>
                 </div>
             `;
@@ -1295,7 +1326,7 @@
         window.closeModal = closeModal;
         window.submitDeposit = submitDeposit;
         window.confirmPurchase = confirmPurchase;
-        window.withdraw = withdraw;
+        window.claimDailyProfit = claimDailyProfit;
         window.copyWalletAddress = copyWalletAddress;
         window.logout = logout;
         
