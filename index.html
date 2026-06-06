@@ -21,19 +21,8 @@
             color: #0f172a;
         }
         
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 24px;
-        }
-        
-        .form-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+        .form-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
         
         .form-card {
             background: white;
@@ -44,18 +33,8 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
         }
         
-        .form-card h1 {
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 8px;
-            color: #0284c7;
-        }
-        
-        .form-card .subtitle {
-            text-align: center;
-            color: #64748b;
-            margin-bottom: 32px;
-        }
+        .form-card h1 { text-align: center; font-size: 28px; margin-bottom: 8px; color: #0284c7; }
+        .form-card .subtitle { text-align: center; color: #64748b; margin-bottom: 32px; }
         
         .tab-buttons {
             display: flex;
@@ -79,56 +58,15 @@
             transition: all 0.3s;
         }
         
-        .tab-btn.active {
-            background: #0284c7;
-            color: white;
-            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
-        }
+        .tab-btn.active { background: #0284c7; color: white; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
         
-        .password-wrapper {
-            position: relative;
-            margin-bottom: 16px;
-        }
+        .password-wrapper { position: relative; margin-bottom: 16px; }
+        .password-wrapper input { width: 100%; padding: 14px 48px 14px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; font-size: 16px; }
+        .password-wrapper input:focus { outline: none; border-color: #0284c7; box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1); }
+        .password-toggle { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #94a3b8; }
         
-        .password-wrapper input {
-            width: 100%;
-            padding: 14px 48px 14px 16px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 14px;
-            font-size: 16px;
-        }
-        
-        .password-wrapper input:focus {
-            outline: none;
-            border-color: #0284c7;
-            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
-        }
-        
-        .password-toggle {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #94a3b8;
-        }
-        
-        input {
-            width: 100%;
-            padding: 14px 16px;
-            margin-bottom: 16px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 14px;
-            font-size: 16px;
-        }
-        
-        input:focus {
-            outline: none;
-            border-color: #0284c7;
-            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
-        }
+        input { width: 100%; padding: 14px 16px; margin-bottom: 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; font-size: 16px; }
+        input:focus { outline: none; border-color: #0284c7; box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1); }
         
         .btn-primary {
             width: 100%;
@@ -142,11 +80,7 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);
-        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3); }
         
         .header {
             background: white;
@@ -161,16 +95,8 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
         
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: #0284c7;
-        }
-        
-        .logo i {
-            margin-right: 10px;
-            color: #fbbf24;
-        }
+        .logo { font-size: 24px; font-weight: 700; color: #0284c7; }
+        .logo i { margin-right: 10px; color: #fbbf24; }
         
         .stats-grid {
             display: grid;
@@ -186,34 +112,13 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s;
         }
-        
-        .stat-card:hover {
-            transform: translateY(-4px);
-        }
-        
-        .stat-card .label {
-            font-size: 14px;
-            color: #64748b;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .stat-card .value {
-            font-size: 32px;
-            font-weight: 700;
-            color: #0f172a;
-        }
-        
+        .stat-card:hover { transform: translateY(-4px); }
+        .stat-card .label { font-size: 14px; color: #64748b; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .stat-card .value { font-size: 32px; font-weight: 700; color: #0f172a; }
         .stat-card .value.green { color: #10b981; }
         .stat-card .value.blue { color: #0284c7; }
         
-        .dashboard-two-columns {
-            display: grid;
-            grid-template-columns: 1fr 320px;
-            gap: 24px;
-        }
+        .dashboard-two-columns { display: grid; grid-template-columns: 1fr 320px; gap: 24px; }
         
         .activity-feed {
             background: white;
@@ -222,80 +127,18 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             height: fit-content;
         }
+        .activity-feed h3 { font-size: 18px; margin-bottom: 16px; color: #0284c7; display: flex; align-items: center; gap: 8px; }
+        .activity-list { list-style: none; max-height: 400px; overflow-y: auto; }
+        .activity-item { padding: 12px 0; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 12px; animation: slideIn 0.3s ease; }
+        .activity-icon { width: 36px; height: 36px; background: #dbeafe; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #0284c7; }
+        .activity-content { flex: 1; }
+        .activity-email { font-weight: 600; font-size: 14px; color: #0f172a; }
+        .activity-amount { font-size: 13px; color: #10b981; font-weight: 500; }
+        .activity-time { font-size: 11px; color: #94a3b8; }
         
-        .activity-feed h3 {
-            font-size: 18px;
-            margin-bottom: 16px;
-            color: #0284c7;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
         
-        .activity-list {
-            list-style: none;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        
-        .activity-item {
-            padding: 12px 0;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            animation: slideIn 0.3s ease;
-        }
-        
-        .activity-icon {
-            width: 36px;
-            height: 36px;
-            background: #dbeafe;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #0284c7;
-        }
-        
-        .activity-content {
-            flex: 1;
-        }
-        
-        .activity-email {
-            font-weight: 600;
-            font-size: 14px;
-            color: #0f172a;
-        }
-        
-        .activity-amount {
-            font-size: 13px;
-            color: #10b981;
-            font-weight: 500;
-        }
-        
-        .activity-time {
-            font-size: 11px;
-            color: #94a3b8;
-        }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        .vip-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin-bottom: 48px;
-        }
+        .vip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 48px; }
         
         .vip-card {
             background: white;
@@ -305,73 +148,23 @@
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
-        
-        .vip-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-        
-        .vip-card.gold {
-            border: 2px solid #fbbf24;
-        }
+        .vip-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); }
+        .vip-card.gold { border: 2px solid #fbbf24; }
         
         .vip-header {
             background: linear-gradient(135deg, #0284c7, #0369a1);
             padding: 20px;
             text-align: center;
         }
+        .vip-header.gold { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+        .vip-name { font-size: 28px; font-weight: 700; color: white; }
+        .vip-panels { font-size: 14px; opacity: 0.9; margin-top: 5px; }
+        .gold-badge { background: rgba(255,255,255,0.2); font-size: 12px; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 8px; }
         
-        .vip-header.gold {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-        }
-        
-        .vip-name {
-            font-size: 28px;
-            font-weight: 700;
-            color: white;
-        }
-        
-        .vip-panels {
-            font-size: 14px;
-            opacity: 0.9;
-            margin-top: 5px;
-        }
-        
-        .gold-badge {
-            background: rgba(255,255,255,0.2);
-            font-size: 12px;
-            padding: 4px 12px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-top: 8px;
-        }
-        
-        .vip-body {
-            padding: 24px;
-        }
-        
-        .vip-price {
-            font-size: 32px;
-            font-weight: 700;
-            text-align: center;
-            color: #0284c7;
-            margin-bottom: 8px;
-        }
-        
-        .vip-daily {
-            text-align: center;
-            color: #10b981;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        
-        .vip-total {
-            text-align: center;
-            color: #64748b;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
+        .vip-body { padding: 24px; }
+        .vip-price { font-size: 32px; font-weight: 700; text-align: center; color: #0284c7; margin-bottom: 8px; }
+        .vip-daily { text-align: center; color: #10b981; font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .vip-total { text-align: center; color: #64748b; font-size: 14px; margin-bottom: 20px; }
         
         .btn-outline {
             width: 100%;
@@ -385,11 +178,7 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        
-        .btn-outline:hover {
-            background: #0284c7;
-            color: white;
-        }
+        .btn-outline:hover { background: #0284c7; color: white; }
         
         .wallet-box {
             background: white;
@@ -405,7 +194,7 @@
             padding: 14px;
             border-radius: 16px;
             font-family: monospace;
-            font-size: 14px;
+            font-size: 12px;
             word-break: break-all;
             margin: 16px 0;
             border: 1px solid #e2e8f0;
@@ -421,16 +210,9 @@
             cursor: pointer;
             transition: all 0.3s;
         }
+        .btn-secondary:hover { background: #e2e8f0; }
         
-        .btn-secondary:hover {
-            background: #e2e8f0;
-        }
-        
-        .flex-buttons {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
+        .flex-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
         
         .info-box {
             background: #f0f9ff;
@@ -451,187 +233,11 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
         
-        .daily-earn-card {
-            background: #f0fdf4;
-            border-radius: 16px;
-            padding: 16px;
-            margin: 15px 0;
-            text-align: center;
-        }
+        .daily-earn-card { background: #f0fdf4; border-radius: 16px; padding: 16px; margin: 15px 0; text-align: center; }
+        .claim-btn { background: linear-gradient(135deg, #10b981, #059669); width: 100%; padding: 12px; border: none; border-radius: 14px; font-size: 16px; font-weight: 600; color: white; cursor: pointer; margin-top: 10px; transition: all 0.3s; }
+        .claim-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3); }
         
-        .withdraw-btn {
-            background: linear-gradient(135deg, #10b981, #059669);
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .withdraw-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
-        }
-        
-        .claim-btn {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: all 0.3s;
-        }
-        
-        .claim-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);
-        }
-        
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10001;
-            animation: fadeIn 0.2s ease;
-        }
-        
-        .modal {
-            background: white;
-            border-radius: 32px;
-            width: 90%;
-            max-width: 480px;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: modalSlideIn 0.3s ease;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-        
-        .modal-header {
-            padding: 24px 24px 0 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .modal-header h3 {
-            font-size: 24px;
-            color: #0284c7;
-        }
-        
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            color: #94a3b8;
-            width: auto;
-            padding: 0;
-        }
-        
-        .modal-close:hover {
-            color: #ef4444;
-        }
-        
-        .modal-body {
-            padding: 24px;
-        }
-        
-        .modal-footer {
-            padding: 0 24px 24px 24px;
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
-        }
-        
-        .wallet-info-modal {
-            background: #f0f9ff;
-            padding: 16px;
-            border-radius: 16px;
-            margin: 16px 0;
-            word-break: break-all;
-            font-family: monospace;
-            font-size: 12px;
-            border: 1px solid #bae6fd;
-        }
-        
-        .input-group {
-            margin-bottom: 16px;
-        }
-        
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #0f172a;
-        }
-        
-        .btn-cancel {
-            background: #f1f5f9;
-            color: #64748b;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 14px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        
-        .btn-confirm {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 14px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        
-        .btn-confirm:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
+        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 12px; }
         .toast {
             background: white;
             border-radius: 16px;
@@ -645,38 +251,20 @@
             gap: 12px;
             border-left: 4px solid;
         }
-        
         .toast.success { border-left-color: #10b981; }
         .toast.error { border-left-color: #ef4444; }
         .toast.info { border-left-color: #0284c7; }
-        
         .toast i { font-size: 20px; }
         .toast.success i { color: #10b981; }
         .toast.error i { color: #ef4444; }
         .toast.info i { color: #0284c7; }
-        
         .toast-content { flex: 1; }
         .toast-title { font-weight: 600; color: #0f172a; margin-bottom: 4px; }
         .toast-message { font-size: 13px; color: #64748b; }
-        .toast-close {
-            background: none;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            color: #94a3b8;
-            padding: 0;
-            width: auto;
-        }
+        .toast-close { background: none; border: none; font-size: 18px; cursor: pointer; color: #94a3b8; padding: 0; width: auto; }
         
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        @keyframes slideOutRight {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
+        @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideOutRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
         
         .loading-overlay {
             position: fixed;
@@ -699,41 +287,15 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+        .loading-spinner i { font-size: 32px; color: #0284c7; margin-bottom: 12px; }
         
-        .loading-spinner i {
-            font-size: 32px;
-            color: #0284c7;
-            margin-bottom: 12px;
-        }
-        
-        @media (max-width: 1024px) {
-            .dashboard-two-columns {
-                grid-template-columns: 1fr;
-            }
-        }
-        
+        @media (max-width: 1024px) { .dashboard-two-columns { grid-template-columns: 1fr; } }
         @media (max-width: 768px) {
-            .container {
-                padding: 16px;
-            }
-            .form-card {
-                padding: 24px;
-            }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .vip-grid {
-                grid-template-columns: 1fr;
-            }
-            .toast {
-                min-width: 280px;
-                right: 16px;
-                left: 16px;
-            }
-            .modal {
-                width: 95%;
-                margin: 16px;
-            }
+            .container { padding: 16px; }
+            .form-card { padding: 24px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .vip-grid { grid-template-columns: 1fr; }
+            .toast { min-width: 280px; right: 16px; left: 16px; }
         }
     </style>
 </head>
@@ -742,31 +304,21 @@
     
     <script>
         // ============================================================
-        // CONFIGURATION
+        // CONFIGURATION - YOUR APPS SCRIPT URL
         // ============================================================
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYEZmAvrtmf988DcFe1c7M0U3kcz3U4DPUnK1TjRtU8kgd4dBtPn-5w_iPMMx3ENRnzg/exec";
-        const MAIN_WALLET = "TLi3ANb8GCJzypyBofqwvjqjXR1G8Hr1cN";
-        
-        // VIP Packages - Solar Panel Model
-        // 1 solar panel (550W) = 90 USDT, daily profit = 4 USDT, total in 30 days = 120 USDT
-        const VIP_PACKAGES = {
-            VIP1: { name: "VIP1", panels: 1, price: 90, dailyProfit: 4, totalProfit: 120, duration: 30 },
-            VIP2: { name: "VIP2", panels: 2, price: 180, dailyProfit: 8, totalProfit: 240, duration: 30 },
-            VIP3: { name: "VIP3", panels: 3, price: 270, dailyProfit: 12, totalProfit: 360, duration: 30 },
-            VIP4: { name: "VIP4", panels: 4, price: 360, dailyProfit: 16, totalProfit: 480, duration: 30 },
-            VIP5: { name: "VIP5", panels: 5, price: 450, dailyProfit: 20, totalProfit: 600, duration: 30 },
-            GOLD: { name: "GOLD", panels: 10, price: 900, dailyProfit: 40, totalProfit: 1200, duration: 30, isGold: true }
-        };
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvp7sDnmBDA56GbgZuLd375yrbYO8waIh43vhYN-xElhDtP62v2hoPSa5WY_vNoXtMwQ/exec";
+        const PANEL_PRICE = 90;
+        const DAILY_PROFIT_PER_PANEL = 4;
         
         // Activity Feed Data
-        const namePrefixes = ['john', 'sarah', 'mike', 'emma', 'david', 'lisa', 'alex', 'anna', 'kevin', 'julia', 'thomas', 'sophia', 'daniel', 'olivia', 'james', 'chloe', 'robert', 'isabella', 'william', 'mia'];
-        const nameSuffixes = ['smith', 'johnson', 'williams', 'brown', 'jones', 'garcia', 'miller', 'davis', 'rodriguez', 'martinez', 'anderson', 'taylor', 'thomas', 'moore', 'jackson', 'martin', 'lee', 'white', 'harris', 'clark'];
+        const namePrefixes = ['john', 'sarah', 'mike', 'emma', 'david', 'lisa', 'alex', 'anna', 'kevin', 'julia'];
+        const nameSuffixes = ['smith', 'johnson', 'williams', 'brown', 'jones', 'garcia', 'miller', 'davis'];
         
         function generateRandomEmail() {
             const prefix = namePrefixes[Math.floor(Math.random() * namePrefixes.length)];
             const suffix = nameSuffixes[Math.floor(Math.random() * nameSuffixes.length)];
             const num = Math.floor(Math.random() * 1000);
-            const domains = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com'];
+            const domains = ['gmail.com', 'yahoo.com', 'outlook.com'];
             const domain = domains[Math.floor(Math.random() * domains.length)];
             return `${prefix}.${suffix}${num}@${domain}`;
         }
@@ -774,12 +326,11 @@
         function maskEmail(email) {
             const [local, domain] = email.split('@');
             if (local.length <= 3) return email;
-            const masked = local.substring(0, 3) + '****' + local.substring(local.length - 1);
-            return `${masked}@${domain}`;
+            return local.substring(0, 3) + '****' + local.substring(local.length - 1) + '@' + domain;
         }
         
         function generateRandomAmount() {
-            const amounts = [4, 8, 12, 16, 20, 40, 3, 7, 11, 15, 19, 38];
+            const amounts = [4, 8, 12, 16, 20, 24, 28, 32, 36, 40];
             return amounts[Math.floor(Math.random() * amounts.length)];
         }
         
@@ -788,21 +339,17 @@
         
         function initActivityFeed() {
             for (let i = 0; i < 10; i++) {
-                const email = generateRandomEmail();
-                const amount = generateRandomAmount();
                 activityList.unshift({
-                    email: maskEmail(email),
-                    amount: amount,
+                    email: maskEmail(generateRandomEmail()),
+                    amount: generateRandomAmount(),
                     time: new Date().toLocaleTimeString()
                 });
             }
             activityInterval = setInterval(() => {
                 activityList.pop();
-                const newEmail = generateRandomEmail();
-                const newAmount = generateRandomAmount();
                 activityList.unshift({
-                    email: maskEmail(newEmail),
-                    amount: newAmount,
+                    email: maskEmail(generateRandomEmail()),
+                    amount: generateRandomAmount(),
                     time: new Date().toLocaleTimeString()
                 });
                 updateActivityFeedDisplay();
@@ -810,14 +357,14 @@
         }
         
         function updateActivityFeedDisplay() {
-            const activityListElement = document.getElementById('activity-list');
-            if (!activityListElement) return;
-            activityListElement.innerHTML = activityList.map(item => `
+            const el = document.getElementById('activity-list');
+            if (!el) return;
+            el.innerHTML = activityList.map(item => `
                 <li class="activity-item">
                     <div class="activity-icon"><i class="fas fa-solar-panel"></i></div>
                     <div class="activity-content">
                         <div class="activity-email">${item.email}</div>
-                        <div class="activity-amount">+${item.amount} USDT solar profit claimed</div>
+                        <div class="activity-amount">+${item.amount} USDT profit claimed</div>
                         <div class="activity-time">${item.time}</div>
                     </div>
                     <i class="fas fa-check-circle" style="color: #10b981;"></i>
@@ -825,16 +372,12 @@
             `).join('');
         }
         
-        function stopActivityFeed() {
-            if (activityInterval) { clearInterval(activityInterval); activityInterval = null; }
-        }
-        
         let userData = null;
         let userBalance = 0;
-        let userTotalSpent = 0;
+        let userTotalInvested = 0;
+        let userWalletAddress = "";
         let activeInvestment = null;
         let isLoading = false;
-        let countdownInterval = null;
         
         function showToast(message, type = "info", title = "") {
             const container = document.getElementById('toast-container') || (() => {
@@ -871,7 +414,6 @@
                 const text = await response.text();
                 return JSON.parse(text);
             } catch (error) {
-                console.error("API Error:", error);
                 return { error: error.message };
             }
         }
@@ -893,7 +435,8 @@
             if (result.success) {
                 localStorage.setItem('token', btoa(email));
                 localStorage.setItem('email', email);
-                showToast("Welcome to SolarInvest SA!", "success", "Registration Complete");
+                localStorage.setItem('walletAddress', result.walletAddress);
+                showToast("Welcome! Your personal wallet has been created.", "success", "Registration Complete");
                 return { success: true };
             }
             showToast(result.error || "Registration failed", "error");
@@ -907,6 +450,7 @@
             if (result.password_hash !== hashedPassword) { showToast("Incorrect password", "error"); return { success: false }; }
             localStorage.setItem('token', btoa(email));
             localStorage.setItem('email', email);
+            localStorage.setItem('walletAddress', result.walletAddress);
             showToast(`Welcome back!`, "success", "Login Successful");
             return { success: true };
         }
@@ -918,7 +462,8 @@
             if (result.email) {
                 userData = result;
                 userBalance = result.balance || 0;
-                userTotalSpent = result.totalSpent || 0;
+                userTotalInvested = result.totalInvested || 0;
+                userWalletAddress = result.walletAddress;
                 return true;
             }
             return false;
@@ -932,117 +477,58 @@
             return activeInvestment;
         }
         
-        function showDepositModal() {
-            const modalHTML = `
-                <div class="modal-overlay" id="deposit-modal">
-                    <div class="modal">
-                        <div class="modal-header">
-                            <h3><i class="fas fa-plus-circle"></i> Deposit USDT</h3>
-                            <button class="modal-close" onclick="closeModal('deposit-modal')">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="wallet-info-modal">
-                                <div style="margin-bottom: 8px;"><i class="fas fa-qrcode"></i> Send USDT (TRC20) to:</div>
-                                <div style="font-weight: bold; word-break: break-all;">${MAIN_WALLET}</div>
-                            </div>
-                            <div class="input-group">
-                                <label><i class="fas fa-hash"></i> Transaction ID (TX Hash)</label>
-                                <input type="text" id="modal-txhash" placeholder="Enter your TX Hash" autocomplete="off">
-                            </div>
-                            <div class="input-group">
-                                <label><i class="fas fa-dollar-sign"></i> Amount (USDT)</label>
-                                <input type="number" id="modal-amount" placeholder="Enter amount" step="0.01" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn-cancel" onclick="closeModal('deposit-modal')">Cancel</button>
-                            <button class="btn-confirm" onclick="submitDeposit()">Verify & Add Balance</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.body.insertAdjacentHTML('beforeend', modalHTML);
-            document.getElementById('modal-txhash')?.focus();
-        }
-        
-        async function submitDeposit() {
-            const txHash = document.getElementById('modal-txhash')?.value.trim();
-            const amount = document.getElementById('modal-amount')?.value;
-            if (!txHash || txHash.length < 20) { showToast("Invalid Transaction ID", "error"); return; }
-            if (!amount || isNaN(amount) || parseFloat(amount) <= 0) { showToast("Invalid amount", "error"); return; }
-            closeModal('deposit-modal');
+        async function checkWalletForDeposits() {
+            const email = localStorage.getItem('email');
+            if (!email) return;
+            
             isLoading = true;
-            showLoading("Verifying transaction...");
-            const result = await callSheet('verifyTransaction', { 
-                email: localStorage.getItem('email'), txHash: txHash, amount: parseFloat(amount)
+            showLoading("Checking your wallet for deposits...");
+            
+            const result = await callSheet('checkUserWallet', { 
+                email: email,
+                walletAddress: userWalletAddress
             });
+            
             hideLoading();
-            if (result.success) {
+            
+            if (result.success && result.amount > 0) {
                 await fetchUser();
-                showToast(`${result.amount} USDT added to your balance!`, "success", "Deposit Verified");
+                showToast(`Found ${result.deposits} new deposit(s)! ${result.amount} USDT added to your balance.`, "success", "Deposit Detected");
                 renderDashboard();
+            } else if (result.success) {
+                showToast("No new deposits found. Send USDT to your personal wallet above.", "info");
             } else {
-                showToast(result.error || "Verification failed", "error");
+                showToast(result.error || "Check failed", "error");
             }
             isLoading = false;
         }
         
-        function showPurchaseModal(vipKey) {
-            const vip = VIP_PACKAGES[vipKey];
-            const modalHTML = `
-                <div class="modal-overlay" id="purchase-modal">
-                    <div class="modal">
-                        <div class="modal-header">
-                            <h3><i class="fas fa-solar-panel"></i> Invest in Solar Panels</h3>
-                            <button class="modal-close" onclick="closeModal('purchase-modal')">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <div style="text-align: center; margin-bottom: 20px;">
-                                <div style="background: linear-gradient(135deg, #0284c7, #0369a1); display: inline-block; padding: 8px 24px; border-radius: 40px; color: white; font-weight: bold;">${vip.name}</div>
-                                <div class="vip-panels" style="margin-top: 8px;">${vip.panels} Solar Panel${vip.panels > 1 ? 's' : ''} (550W each)</div>
-                            </div>
-                            <div class="info-box" style="margin: 0;">
-                                <div style="font-size: 32px; font-weight: 700; color: #0284c7;">${vip.price} USDT</div>
-                                <div style="margin-top: 8px;"><i class="fas fa-sun"></i> Daily profit: <strong>${vip.dailyProfit} USDT</strong></div>
-                                <div style="margin-top: 4px;"><i class="fas fa-calendar-week"></i> First withdrawal after: <strong>3 days (${vip.dailyProfit * 3} USDT)</strong></div>
-                                <div style="margin-top: 4px;"><i class="fas fa-chart-line"></i> Total in 30 days: <strong>${vip.totalProfit} USDT</strong></div>
-                            </div>
-                            <div style="margin-top: 16px; padding: 12px; background: #f0fdf4; border-radius: 16px;">
-                                <i class="fas fa-wallet"></i> Your balance: <strong>${userBalance.toFixed(2)} USDT</strong>
-                            </div>
-                            <div style="margin-top: 16px; padding: 12px; background: #fef3c7; border-radius: 16px;">
-                                <i class="fas fa-shield-alt"></i> <strong>Investment Security:</strong> First withdrawal after 3 days, then daily withdrawals available.
-                            </div>
-                            ${userBalance < vip.price ? '<div style="color: #ef4444; margin-top: 12px; text-align: center;"><i class="fas fa-exclamation-circle"></i> Insufficient balance. Please deposit first.</div>' : ''}
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn-cancel" onclick="closeModal('purchase-modal')">Cancel</button>
-                            <button class="btn-confirm" onclick="confirmPurchase('${vipKey}', ${vip.price})" ${userBalance < vip.price ? 'disabled' : ''}>Invest Now</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.body.insertAdjacentHTML('beforeend', modalHTML);
-        }
-        
-        async function confirmPurchase(vipKey, price) {
-            closeModal('purchase-modal');
-            if (userBalance < price) { showToast(`Insufficient balance. Need ${price} USDT.`, "error"); return; }
+        async function investInPanels(panels) {
+            const cost = panels * PANEL_PRICE;
+            
+            if (userBalance < cost) {
+                showToast(`Insufficient balance. Need ${cost} USDT for ${panels} panel(s).`, "error");
+                return;
+            }
+            
+            if (!confirm(`Invest in ${panels} solar panel(s) for ${cost} USDT?\n\nDaily profit: ${panels * DAILY_PROFIT_PER_PANEL} USDT\nTotal in 30 days: ${panels * 120} USDT\n\nFirst withdrawal available after 3 days.\n\nProceed?`)) {
+                return;
+            }
+            
             isLoading = true;
-            showLoading("Processing your solar investment...");
+            showLoading("Processing your investment...");
+            
             const result = await callSheet('investSolar', { 
-                email: localStorage.getItem('email'), 
-                vipLevel: vipKey, 
-                amount: price,
-                panels: VIP_PACKAGES[vipKey].panels,
-                dailyProfit: VIP_PACKAGES[vipKey].dailyProfit,
-                totalProfit: VIP_PACKAGES[vipKey].totalProfit
+                email: localStorage.getItem('email'),
+                panels: panels
             });
+            
             hideLoading();
+            
             if (result.success) {
                 await fetchUser();
                 await fetchActiveInvestment();
-                showToast(`✅ You invested in ${VIP_PACKAGES[vipKey].panels} solar panel(s)! First withdrawal available after 3 days.`, "success", "Investment Active");
+                showToast(result.message, "success", "Investment Active");
                 renderDashboard();
             } else {
                 showToast(result.error || "Investment failed", "error");
@@ -1057,20 +543,21 @@
             }
             
             if (!activeInvestment.canClaim) {
-                const remaining = activeInvestment.remainingDays;
-                showToast(`First withdrawal available in ${remaining} day(s). Please wait.`, "error");
+                showToast(`First withdrawal available in ${activeInvestment.remainingDays} day(s).`, "error");
                 return;
             }
             
             isLoading = true;
             showLoading("Claiming your solar profit...");
+            
             const result = await callSheet('claimDailyProfit', { email: localStorage.getItem('email') });
+            
             hideLoading();
             
             if (result.success) {
                 await fetchUser();
                 await fetchActiveInvestment();
-                showToast(`✅ Claimed ${result.claimed} USDT from your solar panels!`, "success", "Profit Claimed");
+                showToast(result.message, "success", "Profit Claimed");
                 renderDashboard();
             } else {
                 showToast(result.error || "Claim failed", "error");
@@ -1079,13 +566,12 @@
         }
         
         function copyWalletAddress() {
-            navigator.clipboard.writeText(MAIN_WALLET);
-            showToast("Wallet address copied!", "success", "Copied!");
+            navigator.clipboard.writeText(userWalletAddress);
+            showToast("Your personal wallet address copied!", "success", "Copied!");
         }
         
         function logout() {
-            stopActivityFeed();
-            if (countdownInterval) clearInterval(countdownInterval);
+            if (activityInterval) clearInterval(activityInterval);
             localStorage.clear();
             render();
             showToast("Logged out successfully", "info", "Logged Out");
@@ -1118,11 +604,6 @@
                 if (m === '>') return '&gt;';
                 return m;
             });
-        }
-        
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) modal.remove();
         }
         
         function setupPasswordToggles() {
@@ -1175,24 +656,33 @@
                             <button class="btn-primary" id="register-btn">Create Account</button>
                         </div>
                         <div class="info-box" style="margin-top: 24px;">
-                            <i class="fas fa-solar-panel"></i> 1 Solar Panel (550W) = 90 USDT • 4 USDT/day profit
+                            <i class="fas fa-solar-panel"></i> Each user gets their own personal wallet!<br>
+                            1 Solar Panel (550W) = 90 USDT • 4 USDT/day profit
                         </div>
                     </div>
                 </div>
             `;
             setupPasswordToggles();
+            
             const loginTab = document.getElementById('login-tab');
             const registerTab = document.getElementById('register-tab');
             const loginForm = document.getElementById('login-form');
             const registerForm = document.getElementById('register-form');
+            
             loginTab.addEventListener('click', () => {
-                loginTab.classList.add('active'); registerTab.classList.remove('active');
-                loginForm.style.display = 'block'; registerForm.style.display = 'none';
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
             });
+            
             registerTab.addEventListener('click', () => {
-                registerTab.classList.add('active'); loginTab.classList.remove('active');
-                loginForm.style.display = 'none'; registerForm.style.display = 'block';
+                registerTab.classList.add('active');
+                loginTab.classList.remove('active');
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
             });
+            
             document.getElementById('login-btn').addEventListener('click', async () => {
                 const email = document.getElementById('login-email').value;
                 const password = document.getElementById('login-password').value;
@@ -1200,6 +690,7 @@
                 const result = await login(email, password);
                 if (result.success) render();
             });
+            
             document.getElementById('register-btn').addEventListener('click', async () => {
                 const email = document.getElementById('register-email').value;
                 const password = document.getElementById('register-password').value;
@@ -1218,24 +709,27 @@
             
             const app = document.getElementById('app');
             
-            let vipCardsHtml = '';
-            const vipList = ['VIP1', 'VIP2', 'VIP3', 'VIP4', 'VIP5', 'GOLD'];
-            for (const vip of vipList) {
-                const config = VIP_PACKAGES[vip];
-                if (!config) continue;
-                const isGold = vip === 'GOLD';
-                vipCardsHtml += `
-                    <div class="vip-card ${isGold ? 'gold' : ''}">
+            const panelOptions = [1, 2, 3, 4, 5, 10];
+            let panelCardsHtml = '';
+            
+            for (const panels of panelOptions) {
+                const cost = panels * PANEL_PRICE;
+                const dailyProfit = panels * DAILY_PROFIT_PER_PANEL;
+                const totalProfit = panels * 120;
+                const isGold = panels === 10;
+                
+                panelCardsHtml += `
+                    <div class="vip-card ${isGold ? 'gold' : ''}" onclick="window.investInPanels(${panels})">
                         <div class="vip-header ${isGold ? 'gold' : ''}">
-                            <div class="vip-name">${config.name}</div>
-                            <div class="vip-panels"><i class="fas fa-solar-panel"></i> ${config.panels} Solar Panel${config.panels > 1 ? 's' : ''} (550W)</div>
+                            <div class="vip-name">${panels} Panel${panels > 1 ? 's' : ''}</div>
+                            <div class="vip-panels"><i class="fas fa-solar-panel"></i> ${panels} x 550W</div>
                             ${isGold ? '<div class="gold-badge"><i class="fas fa-star"></i> Best Value</div>' : ''}
                         </div>
                         <div class="vip-body">
-                            <div class="vip-price">${config.price} USDT</div>
-                            <div class="vip-daily"><i class="fas fa-sun"></i> ${config.dailyProfit} USDT / day</div>
-                            <div class="vip-total"><i class="fas fa-calendar"></i> Total in 30 days: ${config.totalProfit} USDT</div>
-                            <button class="btn-outline" onclick="showPurchaseModal('${vip}')">Invest Now</button>
+                            <div class="vip-price">${cost} USDT</div>
+                            <div class="vip-daily"><i class="fas fa-sun"></i> ${dailyProfit} USDT / day</div>
+                            <div class="vip-total"><i class="fas fa-calendar"></i> Total in 30 days: ${totalProfit} USDT</div>
+                            <button class="btn-outline">Invest Now</button>
                         </div>
                     </div>
                 `;
@@ -1246,18 +740,15 @@
                 const canClaim = activeInvestment.canClaim;
                 const remainingDays = activeInvestment.remainingDays;
                 const dailyProfit = activeInvestment.dailyProfit;
+                const panels = activeInvestment.panels;
                 
                 activeInvestmentHtml = `
                     <div class="investment-card">
                         <h3 style="margin-bottom: 15px;"><i class="fas fa-solar-panel"></i> Your Solar Investment</h3>
                         <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
-                            <div><strong>VIP Level:</strong> ${activeInvestment.vipLevel}</div>
-                            <div><strong>Panels:</strong> ${activeInvestment.panels} x 550W</div>
-                            <div><strong>Invested:</strong> ${activeInvestment.investedAmount} USDT</div>
-                        </div>
-                        <div class="daily-earn-card">
-                            <div><i class="fas fa-sun"></i> Daily Profit: <strong>${activeInvestment.dailyProfit} USDT</strong></div>
-                            <div><i class="fas fa-chart-line"></i> Total Expected: <strong>${activeInvestment.totalProfit} USDT</strong></div>
+                            <div><strong>Active Panels:</strong> ${panels} x 550W</div>
+                            <div><strong>Daily Profit:</strong> ${dailyProfit} USDT</div>
+                            <div><strong>Total Expected:</strong> ${panels * 120} USDT</div>
                         </div>
                         ${!canClaim ? `
                             <div style="text-align: center; padding: 15px; background: #fef3c7; border-radius: 16px;">
@@ -1269,7 +760,7 @@
                                 <i class="fas fa-check-circle"></i> <strong>Withdrawal available!</strong>
                                 <div style="font-size: 12px; margin-top: 5px;">You can claim ${dailyProfit} USDT today</div>
                             </div>
-                            <button class="claim-btn" onclick="claimDailyProfit()">
+                            <button class="claim-btn" onclick="window.claimDailyProfit()">
                                 <i class="fas fa-money-bill-wave"></i> Claim ${dailyProfit} USDT
                             </button>
                         `}
@@ -1282,26 +773,29 @@
                     <div class="header">
                         <div class="logo"><i class="fas fa-solar-panel"></i> SolarInvest SA</div>
                         <div class="flex-buttons">
-                            <button class="btn-secondary" onclick="showDepositModal()"><i class="fas fa-plus-circle"></i> Deposit</button>
-                            <button class="btn-secondary" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                            <button class="btn-secondary" onclick="window.checkWalletForDeposits()"><i class="fas fa-sync-alt"></i> Check Wallet</button>
+                            <button class="btn-secondary" onclick="window.logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
                         </div>
                     </div>
                     <div class="stats-grid">
                         <div class="stat-card"><div class="label"><i class="fas fa-wallet"></i> Your Balance</div><div class="value green">${userBalance.toFixed(2)} USDT</div></div>
-                        <div class="stat-card"><div class="label"><i class="fas fa-chart-line"></i> Total Invested</div><div class="value">${userTotalSpent.toFixed(2)} USDT</div></div>
+                        <div class="stat-card"><div class="label"><i class="fas fa-chart-line"></i> Total Invested</div><div class="value">${userTotalInvested.toFixed(2)} USDT</div></div>
                         <div class="stat-card"><div class="label"><i class="fas fa-solar-panel"></i> Active Panels</div><div class="value blue">${activeInvestment?.panels || 0}</div></div>
                     </div>
                     <div class="dashboard-two-columns">
                         <div>
                             <div class="wallet-box">
-                                <div><i class="fas fa-qrcode"></i> Deposit USDT (TRC20) to:</div>
-                                <div class="wallet-address">${MAIN_WALLET}</div>
-                                <button class="btn-outline" onclick="copyWalletAddress()" style="width: auto; padding: 8px 24px;"><i class="fas fa-copy"></i> Copy Address</button>
-                                <div class="info-box" style="margin-top: 16px;"><i class="fas fa-info-circle"></i> After sending USDT, click DEPOSIT and enter your Transaction ID.</div>
+                                <div><i class="fas fa-qrcode"></i> YOUR PERSONAL USDT (TRC20) WALLET:</div>
+                                <div class="wallet-address">${userWalletAddress}</div>
+                                <button class="btn-outline" onclick="window.copyWalletAddress()" style="width: auto; padding: 8px 24px;"><i class="fas fa-copy"></i> Copy Address</button>
+                                <div class="info-box" style="margin-top: 16px;">
+                                    <i class="fas fa-info-circle"></i> Send USDT to YOUR personal wallet above.<br>
+                                    Then click "Check Wallet" to update your balance automatically.
+                                </div>
                             </div>
                             ${activeInvestmentHtml}
                             <h2 style="margin-bottom: 20px;"><i class="fas fa-solar-panel"></i> Solar Panel Packages (550W each)</h2>
-                            <div class="vip-grid">${vipCardsHtml}</div>
+                            <div class="vip-grid">${panelCardsHtml}</div>
                         </div>
                         <div class="activity-feed">
                             <h3><i class="fas fa-bell"></i> Live Activity</h3>
@@ -1310,23 +804,20 @@
                     </div>
                     <div class="info-box">
                         <strong><i class="fas fa-list-check"></i> How it works:</strong><br><br>
-                        1️⃣ Copy wallet address and send USDT (TRC20)<br>
-                        2️⃣ Click DEPOSIT and enter your Transaction ID<br>
-                        3️⃣ Invest in solar panels (1 panel = 90 USDT, 4 USDT/day profit)<br>
-                        4️⃣ First withdrawal after 3 days (12 USDT)<br>
-                        5️⃣ Then claim daily profits for 30 days!
+                        1️⃣ Copy YOUR personal wallet address above<br>
+                        2️⃣ Send USDT (TRC20) to YOUR wallet<br>
+                        3️⃣ Click "Check Wallet" to update your balance<br>
+                        4️⃣ Invest in solar panels (1 panel = 90 USDT, 4 USDT/day profit)<br>
+                        5️⃣ First withdrawal after 3 days, then daily withdrawals for 30 days!
                     </div>
                 </div>
             `;
             updateActivityFeedDisplay();
         }
         
-        window.showDepositModal = showDepositModal;
-        window.showPurchaseModal = showPurchaseModal;
-        window.closeModal = closeModal;
-        window.submitDeposit = submitDeposit;
-        window.confirmPurchase = confirmPurchase;
+        window.investInPanels = investInPanels;
         window.claimDailyProfit = claimDailyProfit;
+        window.checkWalletForDeposits = checkWalletForDeposits;
         window.copyWalletAddress = copyWalletAddress;
         window.logout = logout;
         
