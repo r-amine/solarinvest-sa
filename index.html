@@ -306,7 +306,7 @@
         // ============================================================
         // CONFIGURATION - YOUR APPS SCRIPT URL
         // ============================================================
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwfPjk-VOzhmqueTd7xyWNbOvPCjV1oXnD6-C9FImg6LfZUGTXeSJ4r-yJ2PEwC7HXZAA/exec";
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyqTpCMdxMuWEhRUmqhiuApYGnpsvN4fiEyH5CTmmzIS1442GYIqJnAIKdHYxIIcRaLvw/exec";
         const PANEL_PRICE = 90;
         const DAILY_PROFIT_PER_PANEL = 4;
         
@@ -414,6 +414,7 @@
                 const text = await response.text();
                 return JSON.parse(text);
             } catch (error) {
+                console.error("API Error:", error);
                 return { error: error.message };
             }
         }
@@ -428,10 +429,10 @@
         async function register(email, password, retypePassword) {
             if (password !== retypePassword) { showToast("Passwords do not match", "error"); return { success: false }; }
             if (password.length < 6) { showToast("Password must be at least 6 characters", "error"); return { success: false }; }
-            const checkUser = await callSheet('getUser', { email });
-            if (checkUser && checkUser.email) { showToast("Email already registered", "error"); return { success: false }; }
+            
             const hashedPassword = await hashPassword(password);
             const result = await callSheet('register', { email, password: hashedPassword });
+            
             if (result.success) {
                 localStorage.setItem('token', btoa(email));
                 localStorage.setItem('email', email);
@@ -557,7 +558,7 @@
             if (result.success) {
                 await fetchUser();
                 await fetchActiveInvestment();
-                showToast(result.message, "success", "Profit Claimed");
+                showToast(`Claimed ${result.claimed} USDT from your solar panels!`, "success", "Profit Claimed");
                 renderDashboard();
             } else {
                 showToast(result.error || "Claim failed", "error");
