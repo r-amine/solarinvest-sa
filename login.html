@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>SolarInvest SA - Login</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%);
+            min-height: 100vh;
+            color: #0f172a;
+        }
+        
+        .form-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .form-card {
+            background: white;
+            padding: 40px;
+            border-radius: 32px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-card h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: #0284c7;
+        }
+        
+        .form-card .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            background: #f1f5f9;
+            padding: 6px;
+            border-radius: 16px;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.2s;
+        }
+        
+        .tab-btn.active {
+            background: #0284c7;
+            color: white;
+            box-shadow: 0 2px 8px rgba(2,132,199,0.3);
+        }
+        
+        .password-wrapper {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        
+        .password-wrapper input {
+            width: 100%;
+            padding: 14px 48px 14px 16px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        
+        .password-wrapper input:focus {
+            outline: none;
+            border-color: #0284c7;
+            box-shadow: 0 0 0 3px rgba(2,132,199,0.1);
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #94a3b8;
+            transition: color 0.2s;
+        }
+        
+        .password-toggle:hover {
+            color: #0284c7;
+        }
+        
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #0284c7;
+            box-shadow: 0 0 0 3px rgba(2,132,199,0.1);
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(2,132,199,0.3);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .info-box {
+            background: #f0f9ff;
+            padding: 20px;
+            border-radius: 20px;
+            margin-top: 24px;
+            font-size: 14px;
+            text-align: center;
+            border: 1px solid #bae6fd;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .toast.success { background: #10b981; }
+        .toast.error { background: #ef4444; }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid white;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .form-card { padding: 24px; margin: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    
+    <script>
+        // ============================================================
+        // CONFIGURATION
+        // ============================================================
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyyh0B1oBOwPNIZoxB1fxAsfdob4Ovtnmqo_bID86gSs4pJy2pMnxdw-C0byxyv0XijTQ/exec";
+        
+        function showToast(message, type = "info") {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+        
+        async function callAPI(action, data = {}) {
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action, ...data })
+                });
+                const text = await response.text();
+                return JSON.parse(text);
+            } catch (error) {
+                return { success: false, error: error.message };
+            }
+        }
+        
+        function setButtonLoading(buttonId, isLoading, originalText) {
+            const btn = document.getElementById(buttonId);
+            if (!btn) return;
+            if (isLoading) {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="loading-spinner"></span> Processing...';
+            } else {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+        
+        async function handleRegister(email, password, retype) {
+            if (password !== retype) {
+                showToast("Passwords do not match", "error");
+                return false;
+            }
+            if (password.length < 6) {
+                showToast("Password must be at least 6 characters", "error");
+                return false;
+            }
+            
+            const result = await callAPI('register', { email, password });
+            
+            if (result.success) {
+                localStorage.setItem('userEmail', email);
+                localStorage.setItem('userPassword', password);
+                showToast("Registration successful! Redirecting...", "success");
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 1000);
+                return true;
+            } else {
+                showToast(result.error || "Registration failed", "error");
+                return false;
+            }
+        }
+        
+        async function handleLogin(email, password) {
+            const result = await callAPI('login', { email, password });
+            
+            if (result.success) {
+                localStorage.setItem('userEmail', email);
+                localStorage.setItem('userPassword', password);
+                localStorage.setItem('userBalance', result.balance);
+                localStorage.setItem('userPanels', result.panels);
+                localStorage.setItem('userDailyProfit', result.dailyProfit);
+                localStorage.setItem('userTotalInvested', result.totalInvested);
+                showToast("Login successful! Redirecting...", "success");
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 500);
+                return true;
+            } else {
+                showToast(result.error || "Login failed", "error");
+                return false;
+            }
+        }
+        
+        function renderAuthForm() {
+            let activeTab = 'login';
+            let email = '', password = '', retype = '';
+            let isLoading = false;
+            
+            const app = document.getElementById('app');
+            
+            function render() {
+                app.innerHTML = `
+                    <div class="form-container">
+                        <div class="form-card">
+                            <h1><i class="fas fa-solar-panel"></i> SolarInvest SA</h1>
+                            <div class="subtitle">Invest in Solar Energy • Earn Daily Profits</div>
+                            <div class="tab-buttons">
+                                <button class="tab-btn ${activeTab === 'login' ? 'active' : ''}" onclick="window.switchTab('login')">Login</button>
+                                <button class="tab-btn ${activeTab === 'register' ? 'active' : ''}" onclick="window.switchTab('register')">Register</button>
+                            </div>
+                            ${activeTab === 'login' ? `
+                                <input type="email" id="email" placeholder="Email Address" value="${email.replace(/"/g, '&quot;')}">
+                                <div class="password-wrapper">
+                                    <input type="password" id="password" placeholder="Password" value="${password.replace(/"/g, '&quot;')}">
+                                    <span class="password-toggle" onclick="togglePassword('password')"><i class="fas fa-eye"></i></span>
+                                </div>
+                                <button class="btn-primary" id="action-btn">Login</button>
+                            ` : `
+                                <input type="email" id="email" placeholder="Email Address" value="${email.replace(/"/g, '&quot;')}">
+                                <div class="password-wrapper">
+                                    <input type="password" id="password" placeholder="Password" value="${password.replace(/"/g, '&quot;')}">
+                                    <span class="password-toggle" onclick="togglePassword('password')"><i class="fas fa-eye"></i></span>
+                                </div>
+                                <div class="password-wrapper">
+                                    <input type="password" id="retype" placeholder="Retype Password" value="${retype.replace(/"/g, '&quot;')}">
+                                    <span class="password-toggle" onclick="togglePassword('retype')"><i class="fas fa-eye"></i></span>
+                                </div>
+                                <button class="btn-primary" id="action-btn">Create Account</button>
+                            `}
+                            <div class="info-box">
+                                <i class="fas fa-solar-panel"></i> 1 Solar Panel (550W) = 90 USDT<br>
+                                Daily profit: 4 USDT • Total in 30 days: 120 USDT
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add input listeners
+                const emailInput = document.getElementById('email');
+                const passwordInput = document.getElementById('password');
+                const retypeInput = document.getElementById('retype');
+                
+                if (emailInput) emailInput.addEventListener('input', (e) => email = e.target.value);
+                if (passwordInput) passwordInput.addEventListener('input', (e) => password = e.target.value);
+                if (retypeInput) retypeInput.addEventListener('input', (e) => retype = e.target.value);
+                
+                // Add button handler
+                const actionBtn = document.getElementById('action-btn');
+                if (actionBtn) {
+                    const originalText = actionBtn.innerText;
+                    actionBtn.addEventListener('click', async () => {
+                        if (isLoading) return;
+                        isLoading = true;
+                        setButtonLoading('action-btn', true, originalText);
+                        
+                        if (activeTab === 'login') {
+                            await handleLogin(email, password);
+                        } else {
+                            await handleRegister(email, password, retype);
+                        }
+                        
+                        setButtonLoading('action-btn', false, originalText);
+                        isLoading = false;
+                    });
+                }
+            }
+            
+            window.switchTab = (tab) => {
+                activeTab = tab;
+                render();
+            };
+            
+            window.togglePassword = (id) => {
+                const input = document.getElementById(id);
+                const icon = input.nextElementSibling.querySelector('i');
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            };
+            
+            render();
+        }
+        
+        // Check if already logged in
+        if (localStorage.getItem('userEmail')) {
+            window.location.href = "index.html";
+        } else {
+            renderAuthForm();
+        }
+    </script>
+</body>
+</html>
