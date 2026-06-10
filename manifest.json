@@ -1,8 +1,8 @@
 {
   "name": "SolarInvest SA",
   "short_name": "SolarInvest",
-  "description": "Invest in Solar Energy - 25% Profit",
-  "start_url": "/",
+  "description": "Invest in Solar Energy",
+  "start_url": "/login.html",
   "display": "standalone",
   "theme_color": "#0284c7",
   "background_color": "#e0f2fe",
