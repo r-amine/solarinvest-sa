@@ -20,7 +20,6 @@
             color: #0f172a;
         }
         
-        /* Smooth animations */
         .fade-in {
             animation: fadeIn 0.3s ease;
         }
@@ -36,7 +35,6 @@
             padding: 20px;
         }
         
-        /* Form Container */
         .form-container {
             min-height: 100vh;
             display: flex;
@@ -161,18 +159,26 @@
             color: white;
             cursor: pointer;
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
-        .btn-primary:hover {
+        .btn-primary:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(2,132,199,0.3);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
         
         .btn-primary:active {
             transform: translateY(0);
         }
         
-        /* Header */
         .header {
             background: white;
             padding: 16px 24px;
@@ -197,7 +203,6 @@
             color: #fbbf24;
         }
         
-        /* Stats Cards */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -235,14 +240,12 @@
         .value.green { color: #10b981; }
         .value.blue { color: #0284c7; }
         
-        /* Two columns layout */
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr 320px;
             gap: 24px;
         }
         
-        /* Activity Feed */
         .activity-feed {
             background: white;
             border-radius: 24px;
@@ -306,7 +309,6 @@
             color: #94a3b8;
         }
         
-        /* Panel Cards */
         .panel-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -341,7 +343,7 @@
         }
         
         .panel-card.gold::before {
-            content: "🌟 BEST VALUE";
+            content: "BEST VALUE";
             position: absolute;
             top: 12px;
             right: -30px;
@@ -404,7 +406,6 @@
             background: #e2e8f0;
         }
         
-        /* Wallet Box */
         .wallet-box {
             background: white;
             padding: 20px;
@@ -425,7 +426,6 @@
             border: 1px solid #e2e8f0;
         }
         
-        /* Investment Card */
         .investment-card {
             background: white;
             border-radius: 24px;
@@ -446,6 +446,10 @@
             width: 100%;
             margin-top: 15px;
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
         .claim-btn:hover {
@@ -453,7 +457,6 @@
             box-shadow: 0 8px 20px rgba(16,185,129,0.3);
         }
         
-        /* Info Box */
         .info-box {
             background: #f0f9ff;
             padding: 20px;
@@ -464,7 +467,6 @@
             border: 1px solid #bae6fd;
         }
         
-        /* Project Description */
         .project-description {
             background: linear-gradient(135deg, #0284c7, #0369a1);
             color: white;
@@ -513,7 +515,6 @@
             opacity: 0.8;
         }
         
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -527,6 +528,9 @@
             animation: slideUp 0.3s ease;
             font-size: 14px;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .toast.success { background: #10b981; }
@@ -545,13 +549,12 @@
         
         .loading-spinner {
             display: inline-block;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border: 2px solid white;
             border-top-color: transparent;
             border-radius: 50%;
             animation: spin 0.6s linear infinite;
-            margin-right: 8px;
         }
         
         @keyframes spin {
@@ -586,7 +589,6 @@
         const MAIN_WALLET = "TLi3ANb8GCJzypyBofqwvjqjXR1G8Hr1cN";
         const PANEL_PRICE = 90;
         
-        // Cache user data
         let userEmail = null;
         let userBalance = 0;
         let userPanels = 0;
@@ -595,7 +597,6 @@
         let activeInvestment = null;
         let isLoading = false;
         
-        // Activity Feed (static for demo, updates every 10s)
         const demoEmails = [
             "sarah.j**@gmail.com", "mike.w**@yahoo.com", "emma.b**@outlook.com",
             "david.m**@gmail.com", "lisa.k**@yahoo.com", "alex.r**@gmail.com",
@@ -670,7 +671,7 @@
             if (result.success) {
                 localStorage.setItem('userEmail', email);
                 localStorage.setItem('userPassword', password);
-                showToast("Registration successful! Welcome to SolarInvest SA 🌞", "success");
+                showToast("Registration successful! Welcome to SolarInvest SA", "success");
                 return true;
             } else {
                 showToast(result.error || "Registration failed", "error");
@@ -688,7 +689,7 @@
                 userPanels = result.panels;
                 userDailyProfit = result.dailyProfit;
                 userTotalInvested = result.totalInvested;
-                showToast(`Welcome back, ${email.split('@')[0]}! 🌞`, "success");
+                showToast(`Welcome back, ${email.split('@')[0]}!`, "success");
                 return true;
             } else {
                 showToast(result.error || "Login failed", "error");
@@ -728,7 +729,7 @@
                 return;
             }
             
-            if (!confirm(`🌞 Invest in ${panels} solar panel(s) for ${cost} USDT?\n\n📈 Daily profit: ${panels * 4} USDT\n💰 Total in 30 days: ${panels * 120} USDT\n⏰ First withdrawal after 3 days.\n\nProceed?`)) {
+            if (!confirm(`Invest in ${panels} solar panel(s) for ${cost} USDT?\n\nDaily profit: ${panels * 4} USDT\nTotal in 30 days: ${panels * 120} USDT\nFirst withdrawal after 3 days.\n\nProceed?`)) {
                 return;
             }
             
@@ -746,7 +747,7 @@
                 userBalance = result.newBalance;
                 userPanels = result.newPanels;
                 userDailyProfit = result.newDailyProfit;
-                showToast(`✅ Invested in ${panels} panel(s)! Daily profit: ${result.newDailyProfit} USDT`, "success");
+                showToast(`Invested in ${panels} panel(s)! Daily profit: ${result.newDailyProfit} USDT`, "success");
                 renderDashboard();
             } else {
                 showToast(result.error || "Investment failed", "error");
@@ -766,7 +767,7 @@
             
             if (result.success) {
                 userBalance = result.newBalance;
-                showToast(`🎉 Claimed ${result.claimed} USDT!`, "success");
+                showToast(`Claimed ${result.claimed} USDT!`, "success");
                 renderDashboard();
             } else {
                 showToast(result.error || "Claim failed", "error");
@@ -775,16 +776,16 @@
         
         function copyWalletAddress() {
             navigator.clipboard.writeText(MAIN_WALLET);
-            showToast("Wallet address copied! 📋", "success");
+            showToast("Wallet address copied!", "success");
         }
         
         function showDepositInfo() {
             alert(
-                "📋 DEPOSIT USDT\n\n" +
-                "1️⃣ Send USDT (TRC20) to:\n" + MAIN_WALLET + "\n\n" +
-                "2️⃣ Send the Transaction ID (TX Hash) to the admin\n\n" +
-                "3️⃣ Admin will add balance to your account\n\n" +
-                "📧 Contact admin: [your contact info]"
+                "DEPOSIT USDT\n\n" +
+                "1. Send USDT (TRC20) to:\n" + MAIN_WALLET + "\n\n" +
+                "2. Send the Transaction ID (TX Hash) to the admin\n\n" +
+                "3. Admin will add balance to your account\n\n" +
+                "Contact admin: [your contact info]"
             );
         }
         
@@ -796,6 +797,19 @@
         }
         
         function isLoggedIn() { return !!localStorage.getItem('userEmail'); }
+        
+        // Loading button states
+        function setButtonLoading(buttonId, isLoading) {
+            const btn = document.getElementById(buttonId);
+            if (!btn) return;
+            if (isLoading) {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="loading-spinner"></span> Processing...';
+            } else {
+                btn.disabled = false;
+                btn.innerHTML = btn.getAttribute('data-original-text') || 'Login';
+            }
+        }
         
         function renderAuthForm() {
             let activeTab = 'login';
@@ -819,7 +833,7 @@
                                     <input type="password" id="password" placeholder="Password" value="${password}">
                                     <span class="password-toggle" onclick="togglePassword('password')"><i class="fas fa-eye"></i></span>
                                 </div>
-                                <button class="btn-primary" onclick="window.submitLogin()">Login</button>
+                                <button class="btn-primary" id="login-btn" data-original-text="Login">Login</button>
                             ` : `
                                 <input type="email" id="email" placeholder="Email Address" value="${email}">
                                 <div class="password-wrapper">
@@ -830,11 +844,11 @@
                                     <input type="password" id="retype" placeholder="Retype Password" value="${retype}">
                                     <span class="password-toggle" onclick="togglePassword('retype')"><i class="fas fa-eye"></i></span>
                                 </div>
-                                <button class="btn-primary" onclick="window.submitRegister()">Create Account</button>
+                                <button class="btn-primary" id="register-btn" data-original-text="Create Account">Create Account</button>
                             `}
                             <div class="info-box">
                                 <i class="fas fa-solar-panel"></i> 1 Solar Panel (550W) = 90 USDT<br>
-                                📈 Daily profit: 4 USDT • 💰 Total in 30 days: 120 USDT
+                                Daily profit: 4 USDT • Total in 30 days: 120 USDT
                             </div>
                         </div>
                     </div>
@@ -845,19 +859,39 @@
                 if (activeTab === 'register') {
                     document.getElementById('retype')?.addEventListener('input', (e) => retype = e.target.value);
                 }
+                
+                // Attach login button handler
+                const loginBtn = document.getElementById('login-btn');
+                if (loginBtn) {
+                    loginBtn.addEventListener('click', async () => {
+                        if (isLoading) return;
+                        isLoading = true;
+                        setButtonLoading('login-btn', true);
+                        const success = await login(email, password);
+                        setButtonLoading('login-btn', false);
+                        isLoading = false;
+                        if (success) render();
+                    });
+                }
+                
+                // Attach register button handler
+                const registerBtn = document.getElementById('register-btn');
+                if (registerBtn) {
+                    registerBtn.addEventListener('click', async () => {
+                        if (isLoading) return;
+                        isLoading = true;
+                        setButtonLoading('register-btn', true);
+                        const success = await register(email, password, retype);
+                        setButtonLoading('register-btn', false);
+                        isLoading = false;
+                        if (success) render();
+                    });
+                }
             }
             
             window.switchTab = (tab) => {
                 activeTab = tab;
                 render();
-            };
-            
-            window.submitLogin = async () => {
-                if (await login(email, password)) render();
-            };
-            
-            window.submitRegister = async () => {
-                if (await register(email, password, retype)) render();
             };
             
             window.togglePassword = (id) => {
@@ -924,7 +958,7 @@
                         </div>
                         ${!canClaim ? `
                             <div style="text-align: center; padding: 15px; background: #fef3c7; border-radius: 16px;">
-                                <i class="fas fa-clock"></i> 🔒 First withdrawal available in: <strong>${remainingDays} day(s)</strong>
+                                <i class="fas fa-clock"></i> First withdrawal available in: <strong>${remainingDays} day(s)</strong>
                                 <div style="font-size: 12px; margin-top: 5px;">For your security, withdrawals are locked for 3 days</div>
                             </div>
                         ` : `
@@ -984,7 +1018,6 @@
                         </div>
                     </div>
                     
-                    <!-- Project Description Paragraph -->
                     <div class="project-description">
                         <h3><i class="fas fa-solar-panel"></i> Why Invest in SolarInvest SA?</h3>
                         <p>
@@ -1009,21 +1042,21 @@
                             </div>
                             <div class="stat-item">
                                 <div class="stat-number">50+</div>
-                                <div class="stat-label">Tons CO₂ Saved</div>
+                                <div class="stat-label">Tons CO2 Saved</div>
                             </div>
                         </div>
                         <p style="margin-top: 20px; font-size: 14px;">
-                            🌍 <strong>Join the green energy revolution today!</strong> Earn 33% profit in 30 days while making a positive impact on the environment.
+                            <i class="fas fa-leaf"></i> <strong>Join the green energy revolution today!</strong> Earn 33% profit in 30 days while making a positive impact on the environment.
                         </p>
                     </div>
                     
                     <div class="info-box">
                         <strong><i class="fas fa-list-check"></i> How it works:</strong><br><br>
-                        1️⃣ Copy wallet address and send USDT (TRC20)<br>
-                        2️⃣ Contact admin with your Transaction ID (TX Hash)<br>
-                        3️⃣ Admin adds balance to your account<br>
-                        4️⃣ Buy solar panels (1 panel = 90 USDT, 4 USDT/day profit)<br>
-                        5️⃣ First withdrawal after 3 days, then daily withdrawals for 30 days!<br>
+                        1. Copy wallet address and send USDT (TRC20)<br>
+                        2. Contact admin with your Transaction ID (TX Hash)<br>
+                        3. Admin adds balance to your account<br>
+                        4. Buy solar panels (1 panel = 90 USDT, 4 USDT/day profit)<br>
+                        5. First withdrawal after 3 days, then daily withdrawals for 30 days<br>
                         <br>
                         <i class="fas fa-shield-alt"></i> <strong>Your investment is secured by real solar assets in South Africa.</strong>
                     </div>
