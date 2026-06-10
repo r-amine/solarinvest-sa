@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>SolarInvest SA - Invest in Solar Energy</title>
+    <title>SolarInvest SA - Dashboard</title>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -33,150 +33,6 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
-        }
-        
-        .form-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-        }
-        
-        .form-card {
-            background: white;
-            padding: 40px;
-            border-radius: 32px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
-        
-        .form-card h1 {
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 8px;
-            color: #0284c7;
-        }
-        
-        .form-card .subtitle {
-            text-align: center;
-            color: #64748b;
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
-        
-        .tab-buttons {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 30px;
-            background: #f1f5f9;
-            padding: 6px;
-            border-radius: 16px;
-        }
-        
-        .tab-btn {
-            flex: 1;
-            padding: 12px;
-            background: transparent;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            color: #64748b;
-            transition: all 0.2s;
-        }
-        
-        .tab-btn.active {
-            background: #0284c7;
-            color: white;
-            box-shadow: 0 2px 8px rgba(2,132,199,0.3);
-        }
-        
-        .password-wrapper {
-            position: relative;
-            margin-bottom: 16px;
-        }
-        
-        .password-wrapper input {
-            width: 100%;
-            padding: 14px 48px 14px 16px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 14px;
-            font-size: 16px;
-            transition: all 0.2s;
-        }
-        
-        .password-wrapper input:focus {
-            outline: none;
-            border-color: #0284c7;
-            box-shadow: 0 0 0 3px rgba(2,132,199,0.1);
-        }
-        
-        .password-toggle {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #94a3b8;
-            transition: color 0.2s;
-        }
-        
-        .password-toggle:hover {
-            color: #0284c7;
-        }
-        
-        input {
-            width: 100%;
-            padding: 14px 16px;
-            margin-bottom: 16px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 14px;
-            font-size: 16px;
-            transition: all 0.2s;
-        }
-        
-        input:focus {
-            outline: none;
-            border-color: #0284c7;
-            box-shadow: 0 0 0 3px rgba(2,132,199,0.1);
-        }
-        
-        .btn-primary {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #0284c7, #0369a1);
-            border: none;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .btn-primary:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(2,132,199,0.3);
-        }
-        
-        .btn-primary:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-        
-        .btn-primary:active {
-            transform: translateY(0);
         }
         
         .header {
@@ -331,10 +187,6 @@
         .panel-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 12px 24px rgba(0,0,0,0.1);
-        }
-        
-        .panel-card:active {
-            transform: translateY(0);
         }
         
         .panel-card.gold {
@@ -527,7 +379,6 @@
             z-index: 1000;
             animation: slideUp 0.3s ease;
             font-size: 14px;
-            white-space: nowrap;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -539,12 +390,6 @@
         @keyframes slideUp {
             from { opacity: 0; transform: translateX(-50%) translateY(20px); }
             to { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-        
-        .flex-buttons {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
         }
         
         .loading-spinner {
@@ -561,6 +406,12 @@
             to { transform: rotate(360deg); }
         }
         
+        .flex-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
         @media (max-width: 1024px) {
             .dashboard-grid {
                 grid-template-columns: 1fr;
@@ -569,12 +420,10 @@
         
         @media (max-width: 768px) {
             .container { padding: 16px; }
-            .form-card { padding: 24px; margin: 16px; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .panel-grid { grid-template-columns: 1fr; }
             .project-description { padding: 20px; }
             .project-description .stats { gap: 20px; }
-            .toast { white-space: normal; text-align: center; max-width: 90%; }
         }
     </style>
 </head>
@@ -662,54 +511,31 @@
             }
         }
         
-        async function register(email, password, retype) {
-            if (password !== retype) { showToast("Passwords do not match", "error"); return false; }
-            if (password.length < 6) { showToast("Password must be at least 6 characters", "error"); return false; }
-            
-            const result = await callAPI('register', { email, password });
-            
-            if (result.success) {
-                localStorage.setItem('userEmail', email);
-                localStorage.setItem('userPassword', password);
-                showToast("Registration successful! Welcome to SolarInvest SA", "success");
-                return true;
-            } else {
-                showToast(result.error || "Registration failed", "error");
-                return false;
-            }
-        }
-        
-        async function login(email, password) {
-            const result = await callAPI('login', { email, password });
-            
-            if (result.success) {
-                localStorage.setItem('userEmail', email);
-                localStorage.setItem('userPassword', password);
-                userBalance = result.balance;
-                userPanels = result.panels;
-                userDailyProfit = result.dailyProfit;
-                userTotalInvested = result.totalInvested;
-                showToast(`Welcome back, ${email.split('@')[0]}!`, "success");
-                return true;
-            } else {
-                showToast(result.error || "Login failed", "error");
-                return false;
-            }
-        }
-        
         async function loadUserData() {
             const email = localStorage.getItem('userEmail');
             if (!email) return false;
             
+            // Try to get from cache first
+            userEmail = email;
+            userBalance = parseFloat(localStorage.getItem('userBalance') || 0);
+            userPanels = parseInt(localStorage.getItem('userPanels') || 0);
+            userDailyProfit = parseFloat(localStorage.getItem('userDailyProfit') || 0);
+            userTotalInvested = parseFloat(localStorage.getItem('userTotalInvested') || 0);
+            
+            // Refresh from server in background
             const result = await callAPI('getUser', { email });
             if (result && result.email) {
                 userBalance = result.balance || 0;
                 userPanels = result.panels || 0;
                 userDailyProfit = result.dailyProfit || 0;
                 userTotalInvested = result.totalInvested || 0;
-                return true;
+                // Update cache
+                localStorage.setItem('userBalance', userBalance);
+                localStorage.setItem('userPanels', userPanels);
+                localStorage.setItem('userDailyProfit', userDailyProfit);
+                localStorage.setItem('userTotalInvested', userTotalInvested);
             }
-            return false;
+            return true;
         }
         
         async function loadActiveInvestment() {
@@ -747,6 +573,9 @@
                 userBalance = result.newBalance;
                 userPanels = result.newPanels;
                 userDailyProfit = result.newDailyProfit;
+                localStorage.setItem('userBalance', userBalance);
+                localStorage.setItem('userPanels', userPanels);
+                localStorage.setItem('userDailyProfit', userDailyProfit);
                 showToast(`Invested in ${panels} panel(s)! Daily profit: ${result.newDailyProfit} USDT`, "success");
                 renderDashboard();
             } else {
@@ -767,6 +596,7 @@
             
             if (result.success) {
                 userBalance = result.newBalance;
+                localStorage.setItem('userBalance', userBalance);
                 showToast(`Claimed ${result.claimed} USDT!`, "success");
                 renderDashboard();
             } else {
@@ -792,123 +622,7 @@
         function logout() {
             if (activityInterval) clearInterval(activityInterval);
             localStorage.clear();
-            render();
-            showToast("Logged out successfully", "success");
-        }
-        
-        function isLoggedIn() { return !!localStorage.getItem('userEmail'); }
-        
-        // Loading button states
-        function setButtonLoading(buttonId, isLoading) {
-            const btn = document.getElementById(buttonId);
-            if (!btn) return;
-            if (isLoading) {
-                btn.disabled = true;
-                btn.innerHTML = '<span class="loading-spinner"></span> Processing...';
-            } else {
-                btn.disabled = false;
-                btn.innerHTML = btn.getAttribute('data-original-text') || 'Login';
-            }
-        }
-        
-        function renderAuthForm() {
-            let activeTab = 'login';
-            let email = '', password = '', retype = '';
-            
-            const app = document.getElementById('app');
-            
-            function render() {
-                app.innerHTML = `
-                    <div class="form-container">
-                        <div class="form-card fade-in">
-                            <h1><i class="fas fa-solar-panel"></i> SolarInvest SA</h1>
-                            <div class="subtitle">Invest in Solar Energy • Earn Daily Profits</div>
-                            <div class="tab-buttons">
-                                <button class="tab-btn ${activeTab === 'login' ? 'active' : ''}" onclick="window.switchTab('login')">Login</button>
-                                <button class="tab-btn ${activeTab === 'register' ? 'active' : ''}" onclick="window.switchTab('register')">Register</button>
-                            </div>
-                            ${activeTab === 'login' ? `
-                                <input type="email" id="email" placeholder="Email Address" value="${email}">
-                                <div class="password-wrapper">
-                                    <input type="password" id="password" placeholder="Password" value="${password}">
-                                    <span class="password-toggle" onclick="togglePassword('password')"><i class="fas fa-eye"></i></span>
-                                </div>
-                                <button class="btn-primary" id="login-btn" data-original-text="Login">Login</button>
-                            ` : `
-                                <input type="email" id="email" placeholder="Email Address" value="${email}">
-                                <div class="password-wrapper">
-                                    <input type="password" id="password" placeholder="Password" value="${password}">
-                                    <span class="password-toggle" onclick="togglePassword('password')"><i class="fas fa-eye"></i></span>
-                                </div>
-                                <div class="password-wrapper">
-                                    <input type="password" id="retype" placeholder="Retype Password" value="${retype}">
-                                    <span class="password-toggle" onclick="togglePassword('retype')"><i class="fas fa-eye"></i></span>
-                                </div>
-                                <button class="btn-primary" id="register-btn" data-original-text="Create Account">Create Account</button>
-                            `}
-                            <div class="info-box">
-                                <i class="fas fa-solar-panel"></i> 1 Solar Panel (550W) = 90 USDT<br>
-                                Daily profit: 4 USDT • Total in 30 days: 120 USDT
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                document.getElementById('email')?.addEventListener('input', (e) => email = e.target.value);
-                document.getElementById('password')?.addEventListener('input', (e) => password = e.target.value);
-                if (activeTab === 'register') {
-                    document.getElementById('retype')?.addEventListener('input', (e) => retype = e.target.value);
-                }
-                
-                // Attach login button handler
-                const loginBtn = document.getElementById('login-btn');
-                if (loginBtn) {
-                    loginBtn.addEventListener('click', async () => {
-                        if (isLoading) return;
-                        isLoading = true;
-                        setButtonLoading('login-btn', true);
-                        const success = await login(email, password);
-                        setButtonLoading('login-btn', false);
-                        isLoading = false;
-                        if (success) render();
-                    });
-                }
-                
-                // Attach register button handler
-                const registerBtn = document.getElementById('register-btn');
-                if (registerBtn) {
-                    registerBtn.addEventListener('click', async () => {
-                        if (isLoading) return;
-                        isLoading = true;
-                        setButtonLoading('register-btn', true);
-                        const success = await register(email, password, retype);
-                        setButtonLoading('register-btn', false);
-                        isLoading = false;
-                        if (success) render();
-                    });
-                }
-            }
-            
-            window.switchTab = (tab) => {
-                activeTab = tab;
-                render();
-            };
-            
-            window.togglePassword = (id) => {
-                const input = document.getElementById(id);
-                const icon = input.nextElementSibling.querySelector('i');
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    icon.classList.remove('fa-eye');
-                    icon.classList.add('fa-eye-slash');
-                } else {
-                    input.type = 'password';
-                    icon.classList.remove('fa-eye-slash');
-                    icon.classList.add('fa-eye');
-                }
-            };
-            
-            render();
+            window.location.href = "login.html";
         }
         
         async function renderDashboard() {
@@ -1072,15 +786,12 @@
         window.copyWalletAddress = copyWalletAddress;
         window.logout = logout;
         
-        async function render() {
-            if (isLoggedIn()) {
-                await renderDashboard();
-            } else {
-                renderAuthForm();
-            }
+        // Check if logged in
+        if (!localStorage.getItem('userEmail')) {
+            window.location.href = "login.html";
+        } else {
+            renderDashboard();
         }
-        
-        render();
     </script>
 </body>
 </html>
