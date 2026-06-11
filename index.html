@@ -105,7 +105,6 @@
             gap: 24px;
         }
         
-        /* Profile Modal */
         .profile-section {
             background: white;
             border-radius: 24px;
@@ -145,7 +144,6 @@
             background: #e2e8f0;
         }
         
-        /* Chart Container */
         .chart-container {
             background: white;
             border-radius: 24px;
@@ -167,13 +165,13 @@
             width: 100%;
         }
         
-        /* Leaderboard */
         .leaderboard {
             background: white;
             border-radius: 24px;
             padding: 20px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             height: fit-content;
+            margin-bottom: 24px;
         }
         
         .leaderboard h3 {
@@ -240,7 +238,6 @@
             padding: 20px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             height: fit-content;
-            margin-top: 24px;
         }
         
         .activity-feed h3 {
@@ -254,7 +251,7 @@
         
         .activity-list {
             list-style: none;
-            max-height: 300px;
+            max-height: 400px;
             overflow-y: auto;
         }
         
@@ -291,6 +288,11 @@
             font-size: 13px;
             color: #10b981;
             font-weight: 500;
+        }
+        
+        .activity-detail {
+            font-size: 11px;
+            color: #94a3b8;
         }
         
         .activity-time {
@@ -522,7 +524,6 @@
             margin-top: 5px;
         }
         
-        /* Modals */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -555,14 +556,8 @@
         }
         
         @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .modal-header {
@@ -697,12 +692,6 @@
             margin-top: 5px;
         }
         
-        .success-text {
-            color: #10b981;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-        
         .toast-container {
             position: fixed;
             top: 20px;
@@ -801,6 +790,9 @@
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyyh0B1oBOwPNIZoxB1fxAsfdob4Ovtnmqo_bID86gSs4pJy2pMnxdw-C0byxyv0XijTQ/exec";
         const MAIN_WALLET = "TLi3ANb8GCJzypyBofqwvjqjXR1G8Hr1cN";
         const PANEL_PRICE = 90;
+        const DAILY_PROFIT_PER_PANEL = 4;
+        const TOTAL_PROFIT_30_DAYS = 120;
+        const ROI_PERCENT = 33.33;
         
         let userEmail = null;
         let userBalance = 0;
@@ -812,69 +804,170 @@
         let countdownInterval = null;
         let profitChart = null;
         
-        // Random leaderboard data
-        const leaderboardNames = [
-            "SolarKing", "GreenEnergy", "SunPower", "EcoInvestor", "SolarQueen",
-            "FutureEnergy", "CleanPower", "SunCatcher", "PowerTrader", "EnergyMaster"
+        // Realistic investor names
+        const investorNames = [
+            "SolarWhale", "GreenGiant", "SunKing", "EcoRich", "PowerInvestor",
+            "FutureFund", "CleanCapital", "SolarTycoon", "EnergyElite", "GreenWealth",
+            "SunHunter", "EcoProsper", "SolarDream", "PowerProfit", "GreenGains"
         ];
         
-        let leaderboardData = [];
-        
-        function generateLeaderboard() {
-            leaderboardData = [];
+        // Generate realistic leaderboard based on panel count and profit
+        function generateRealisticLeaderboard() {
+            const leaderboard = [];
             for (let i = 0; i < 10; i++) {
-                leaderboardData.push({
-                    name: leaderboardNames[Math.floor(Math.random() * leaderboardNames.length)] + (Math.floor(Math.random() * 100) + 1),
-                    panels: Math.floor(Math.random() * 50) + 1,
-                    profit: (Math.random() * 5000 + 100).toFixed(0)
+                // Random panels between 1 and 100
+                const panels = Math.floor(Math.random() * 100) + 1;
+                // Calculate realistic profit: panels * 120 USDT (total for 30 days) + some random
+                const profit = panels * TOTAL_PROFIT_30_DAYS + Math.floor(Math.random() * 500);
+                const invested = panels * PANEL_PRICE;
+                const roi = ((profit - invested) / invested * 100).toFixed(1);
+                
+                leaderboard.push({
+                    name: investorNames[Math.floor(Math.random() * investorNames.length)] + (Math.floor(Math.random() * 100) + 1),
+                    panels: panels,
+                    invested: invested,
+                    profit: profit,
+                    roi: roi
                 });
             }
-            leaderboardData.sort((a, b) => b.panels - a.panels);
+            // Sort by profit (highest first)
+            leaderboard.sort((a, b) => b.profit - a.profit);
+            return leaderboard;
         }
         
-        // Random activity feed
-        const demoEmails = [
-            "sarah.j**@gmail.com", "mike.w**@yahoo.com", "emma.b**@outlook.com",
-            "david.m**@gmail.com", "lisa.k**@yahoo.com", "alex.r**@gmail.com",
-            "anna.s**@outlook.com", "kevin.t**@gmail.com", "julia.l**@yahoo.com"
+        let leaderboardData = generateRealisticLeaderboard();
+        
+        // Refresh leaderboard every 30 seconds
+        setInterval(() => {
+            leaderboardData = generateRealisticLeaderboard();
+            updateLeaderboardDisplay();
+        }, 30000);
+        
+        function updateLeaderboardDisplay() {
+            const leaderboardList = document.getElementById('leaderboard-list');
+            if (!leaderboardList) return;
+            
+            let html = '';
+            leaderboardData.forEach((item, index) => {
+                let rankClass = '';
+                if (index === 0) rankClass = 'rank-1';
+                else if (index === 1) rankClass = 'rank-2';
+                else if (index === 2) rankClass = 'rank-3';
+                
+                html += `
+                    <li class="leaderboard-item">
+                        <div class="leaderboard-rank ${rankClass}">${index + 1}</div>
+                        <div class="leaderboard-info">
+                            <div class="leaderboard-name">${item.name}</div>
+                            <div class="leaderboard-panels"><i class="fas fa-solar-panel"></i> ${item.panels} panels (${item.invested} USDT)</div>
+                        </div>
+                        <div class="leaderboard-profit">+${item.profit.toFixed(0)} USDT</div>
+                    </li>
+                `;
+            });
+            leaderboardList.innerHTML = html;
+        }
+        
+        // Generate realistic activity feed based on actual profit amounts
+        const activityNames = [
+            "SolarGuru", "EcoInvestor", "SunChaser", "GreenTrader", "PowerMaker",
+            "CleanEnergy", "FutureSolar", "WealthSun", "ProfitPanel", "SolarStar"
         ];
+        
         let activityList = [];
         let activityInterval = null;
         
-        function initActivityFeed() {
-            const amounts = [4, 8, 12, 16, 20, 24, 28, 32, 36, 40];
-            for (let i = 0; i < 8; i++) {
-                activityList.unshift({
-                    email: demoEmails[Math.floor(Math.random() * demoEmails.length)],
-                    amount: amounts[Math.floor(Math.random() * amounts.length)],
+        function generateRealisticActivity() {
+            const newActivities = [];
+            // Possible profit amounts (multiples of 4 USDT - daily profit per panel)
+            const profitAmounts = [4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60];
+            // Possible investment amounts (multiples of 90 USDT)
+            const investAmounts = [90, 180, 270, 360, 450, 540, 630, 720, 810, 900];
+            const types = ['profit', 'investment', 'withdrawal'];
+            
+            for (let i = 0; i < 5; i++) {
+                const type = types[Math.floor(Math.random() * types.length)];
+                let amount, detail, icon;
+                
+                if (type === 'profit') {
+                    amount = profitAmounts[Math.floor(Math.random() * profitAmounts.length)];
+                    const panels = amount / 4;
+                    detail = `claimed ${amount} USDT profit from ${panels} panel(s)`;
+                    icon = 'fa-sun';
+                } else if (type === 'investment') {
+                    amount = investAmounts[Math.floor(Math.random() * investAmounts.length)];
+                    const panels = amount / 90;
+                    detail = `invested ${amount} USDT in ${panels} solar panel(s)`;
+                    icon = 'fa-chart-line';
+                } else {
+                    amount = profitAmounts[Math.floor(Math.random() * profitAmounts.length)] * 2;
+                    detail = `withdrew ${amount} USDT profit`;
+                    icon = 'fa-money-bill-wave';
+                }
+                
+                newActivities.push({
+                    name: activityNames[Math.floor(Math.random() * activityNames.length)] + Math.floor(Math.random() * 100),
+                    type: type,
+                    amount: amount,
+                    detail: detail,
+                    icon: icon,
                     time: new Date().toLocaleTimeString()
                 });
             }
-            activityInterval = setInterval(() => {
-                activityList.pop();
-                activityList.unshift({
-                    email: demoEmails[Math.floor(Math.random() * demoEmails.length)],
-                    amount: amounts[Math.floor(Math.random() * amounts.length)],
-                    time: new Date().toLocaleTimeString()
-                });
-                updateActivityFeed();
-            }, 15000);
+            return newActivities;
         }
         
-        function updateActivityFeed() {
+        function initActivityFeed() {
+            // Initial 10 activities
+            for (let i = 0; i < 10; i++) {
+                const newActs = generateRealisticActivity();
+                activityList.unshift(...newActs);
+            }
+            activityList = activityList.slice(0, 20);
+            
+            activityInterval = setInterval(() => {
+                const newActs = generateRealisticActivity();
+                activityList.unshift(...newActs);
+                activityList = activityList.slice(0, 20);
+                updateActivityFeedDisplay();
+            }, 10000);
+        }
+        
+        function updateActivityFeedDisplay() {
             const el = document.getElementById('activity-list');
             if (!el) return;
-            el.innerHTML = activityList.map(item => `
-                <li class="activity-item">
-                    <div class="activity-icon"><i class="fas fa-solar-panel"></i></div>
-                    <div class="activity-content">
-                        <div class="activity-email">${item.email}</div>
-                        <div class="activity-amount">+${item.amount} USDT profit claimed</div>
+            
+            let iconClass = '';
+            el.innerHTML = activityList.map(item => {
+                if (item.type === 'profit') iconClass = 'fa-sun';
+                else if (item.type === 'investment') iconClass = 'fa-chart-line';
+                else iconClass = 'fa-money-bill-wave';
+                
+                let amountClass = '';
+                let amountPrefix = '';
+                if (item.type === 'profit') {
+                    amountClass = 'profit';
+                    amountPrefix = '+';
+                } else if (item.type === 'investment') {
+                    amountClass = 'investment';
+                    amountPrefix = '-';
+                } else {
+                    amountClass = 'withdrawal';
+                    amountPrefix = '+';
+                }
+                
+                return `
+                    <li class="activity-item">
+                        <div class="activity-icon"><i class="fas ${item.icon || iconClass}"></i></div>
+                        <div class="activity-content">
+                            <div class="activity-email">${item.name}</div>
+                            <div class="activity-amount ${amountClass}">${amountPrefix}${item.amount} USDT</div>
+                            <div class="activity-detail">${item.detail}</div>
+                        </div>
                         <div class="activity-time">${item.time}</div>
-                    </div>
-                    <i class="fas fa-check-circle" style="color: #10b981; font-size: 14px;"></i>
-                </li>
-            `).join('');
+                    </li>
+                `;
+            }).join('');
         }
         
         function showToast(message, type = "info", title = "") {
@@ -911,7 +1004,6 @@
             if (modal) modal.remove();
         }
         
-        // ========== CHANGE PASSWORD MODAL ==========
         function showChangePasswordModal() {
             let oldPassword = '';
             let newPassword = '';
@@ -974,7 +1066,6 @@
                     return;
                 }
                 
-                // Verify old password
                 const hashedOld = await hashPassword(oldPwd);
                 const userData = await callAPI('getUser', { email: userEmail });
                 
@@ -983,7 +1074,6 @@
                     return;
                 }
                 
-                // Update password
                 const hashedNew = await hashPassword(newPwd);
                 const result = await callAPI('updatePassword', { email: userEmail, password: hashedNew });
                 
@@ -997,8 +1087,11 @@
             });
         }
         
-        // ========== SHOW PROFILE MODAL ==========
         function showProfileModal() {
+            const totalExpected = userPanels * TOTAL_PROFIT_30_DAYS;
+            const profit = totalExpected - userTotalInvested;
+            const roi = userTotalInvested > 0 ? ((profit / userTotalInvested) * 100).toFixed(1) : 0;
+            
             const content = `
                 <div class="modal-info">
                     <div class="modal-info-row">
@@ -1018,8 +1111,12 @@
                         <span class="modal-info-value" style="color: #10b981;">${userBalance.toFixed(2)} USDT</span>
                     </div>
                     <div class="modal-info-row">
-                        <span class="modal-info-label"><i class="fas fa-calendar"></i> Member Since</span>
-                        <span class="modal-info-value">${new Date().toLocaleDateString()}</span>
+                        <span class="modal-info-label"><i class="fas fa-chart-line"></i> Total Expected</span>
+                        <span class="modal-info-value">${totalExpected.toFixed(2)} USDT</span>
+                    </div>
+                    <div class="modal-info-row">
+                        <span class="modal-info-label"><i class="fas fa-percent"></i> ROI (30 days)</span>
+                        <span class="modal-info-value" style="color: #10b981;">+${roi}%</span>
                     </div>
                 </div>
                 <div style="display: flex; gap: 12px; margin-top: 16px;">
@@ -1074,8 +1171,10 @@
         
         function showInvestmentModal(panels) {
             const cost = panels * PANEL_PRICE;
-            const dailyProfit = panels * 4;
-            const totalProfit = panels * 120;
+            const dailyProfit = panels * DAILY_PROFIT_PER_PANEL;
+            const totalProfit = panels * TOTAL_PROFIT_30_DAYS;
+            const profitAmount = totalProfit - cost;
+            const roi = ((profitAmount / cost) * 100).toFixed(1);
             
             const content = `
                 <div class="modal-info">
@@ -1093,11 +1192,11 @@
                     </div>
                     <div class="modal-info-row">
                         <span class="modal-info-label"><i class="fas fa-chart-line"></i> Your Profit</span>
-                        <span class="modal-info-value" style="color: #10b981;">+${totalProfit - cost} USDT</span>
+                        <span class="modal-info-value" style="color: #10b981;">+${profitAmount} USDT (${roi}% ROI)</span>
                     </div>
                 </div>
                 <div style="margin-top: 16px; padding: 12px; background: #dbeafe; border-radius: 12px; font-size: 13px;">
-                    <i class="fas fa-shield-alt"></i> Your investment is secured by real solar assets.
+                    <i class="fas fa-shield-alt"></i> Your investment is secured by real solar assets in South Africa.
                 </div>
             `;
             
@@ -1198,10 +1297,9 @@
             const ctx = document.getElementById('profitChart')?.getContext('2d');
             if (!ctx) return;
             
-            // Generate last 7 days of profit data
             const labels = [];
             const profits = [];
-            const daily = userDailyProfit || 4;
+            const daily = userDailyProfit || DAILY_PROFIT_PER_PANEL;
             
             for (let i = 6; i >= 0; i--) {
                 const date = new Date();
@@ -1359,10 +1457,10 @@
         async function renderDashboard() {
             await loadUserData();
             await loadActiveInvestment();
-            generateLeaderboard();
             
             if (!activityInterval) initActivityFeed();
-            updateActivityFeed();
+            updateActivityFeedDisplay();
+            updateLeaderboardDisplay();
             
             const app = document.getElementById('app');
             
@@ -1371,41 +1469,20 @@
             
             for (const panels of panelOptions) {
                 const cost = panels * PANEL_PRICE;
-                const daily = panels * 4;
-                const total = panels * 120;
+                const daily = panels * DAILY_PROFIT_PER_PANEL;
+                const total = panels * TOTAL_PROFIT_30_DAYS;
                 const isGold = panels === 10;
                 
                 panelsHtml += `
                     <div class="panel-card ${isGold ? 'gold' : ''}" onclick="window.showInvestmentModal(${panels})">
                         <div class="panel-price">${cost} USDT</div>
                         <div class="panel-daily"><i class="fas fa-sun"></i> ${daily} USDT / day</div>
-                        <div class="panel-total"><i class="fas fa-calendar"></i> Total in 30 days: ${total} USDT</div>
+                        <div class="panel-total"><i class="fas fa-calendar"></i> Total in 30 days: ${total} USDT (${ROI_PERCENT}% ROI)</div>
                         <button class="btn-outline">Invest Now</button>
                     </div>
                 `;
             }
             
-            // Leaderboard HTML
-            let leaderboardHtml = '';
-            leaderboardData.forEach((item, index) => {
-                let rankClass = '';
-                if (index === 0) rankClass = 'rank-1';
-                else if (index === 1) rankClass = 'rank-2';
-                else if (index === 2) rankClass = 'rank-3';
-                
-                leaderboardHtml += `
-                    <li class="leaderboard-item">
-                        <div class="leaderboard-rank ${rankClass}">${index + 1}</div>
-                        <div class="leaderboard-info">
-                            <div class="leaderboard-name">${item.name}</div>
-                            <div class="leaderboard-panels"><i class="fas fa-solar-panel"></i> ${item.panels} panels</div>
-                        </div>
-                        <div class="leaderboard-profit">+${item.profit} USDT</div>
-                    </li>
-                `;
-            });
-            
-            // Investment section
             let investmentHtml = '';
             if (activeInvestment && activeInvestment.hasInvestment) {
                 const canClaim = activeInvestment.canClaim;
@@ -1421,13 +1498,16 @@
                     clearInterval(countdownInterval);
                 }
                 
+                const totalExpected = panels * TOTAL_PROFIT_30_DAYS;
+                const profit = totalExpected - (panels * PANEL_PRICE);
+                
                 investmentHtml = `
                     <div class="investment-card fade-in">
                         <h3><i class="fas fa-solar-panel"></i> Your Solar Investment</h3>
                         <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin: 15px 0;">
                             <div><strong>Active Panels:</strong> ${panels} x 550W</div>
                             <div><strong>Daily Profit:</strong> ${dailyProfit} USDT</div>
-                            <div><strong>Total Expected:</strong> ${panels * 120} USDT</div>
+                            <div><strong>Total Expected:</strong> ${totalExpected} USDT (+${profit} USDT profit)</div>
                         </div>
                         ${!canClaim ? `
                             <div class="countdown-timer" id="countdown-timer">
@@ -1507,9 +1587,7 @@
                         <div>
                             <div class="leaderboard">
                                 <h3><i class="fas fa-trophy"></i> Top Investors</h3>
-                                <ul class="leaderboard-list">
-                                    ${leaderboardHtml}
-                                </ul>
+                                <ul class="leaderboard-list" id="leaderboard-list"></ul>
                             </div>
                             
                             <div class="activity-feed">
@@ -1548,15 +1626,15 @@
                         1. Copy wallet address and send USDT (TRC20)<br>
                         2. Click DEPOSIT and send TX Hash to admin<br>
                         3. Admin adds balance to your account<br>
-                        4. Buy solar panels (1 panel = 90 USDT, 4 USDT/day profit)
+                        4. Buy solar panels (1 panel = 90 USDT, 4 USDT/day profit, 33.33% ROI)
                     </div>
                 </div>
             `;
             
-            updateActivityFeed();
+            updateActivityFeedDisplay();
+            updateLeaderboardDisplay();
             initProfitChart();
             
-            // Restart countdown if needed
             if (activeInvestment && activeInvestment.hasInvestment && !activeInvestment.canClaim && activeInvestment.startDate) {
                 const lockEnd = new Date(activeInvestment.startDate);
                 lockEnd.setDate(lockEnd.getDate() + 3);
@@ -1564,7 +1642,6 @@
             }
         }
         
-        // Expose functions globally
         window.showInvestmentModal = showInvestmentModal;
         window.showDepositModal = showDepositModal;
         window.showProfileModal = showProfileModal;
