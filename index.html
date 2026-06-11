@@ -21,6 +21,7 @@
             color: #0f172a;
         }
         
+        /* Smooth transitions */
         * {
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -32,6 +33,15 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
         
         .container {
@@ -52,6 +62,7 @@
             flex-wrap: wrap;
             gap: 15px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s;
         }
         
         .header:hover {
@@ -64,6 +75,7 @@
             font-weight: 700;
             color: #0284c7;
             cursor: pointer;
+            transition: transform 0.2s;
         }
         
         .logo:hover {
@@ -109,6 +121,7 @@
         .stat-card .value {
             font-size: 32px;
             font-weight: 700;
+            transition: all 0.2s;
         }
         
         .value.green { color: #10b981; }
@@ -159,6 +172,7 @@
             cursor: pointer;
             color: #0284c7;
             font-weight: 600;
+            transition: all 0.2s;
         }
         
         .edit-profile-btn:hover {
@@ -169,6 +183,7 @@
         canvas {
             max-height: 250px;
             width: 100%;
+            transition: all 0.3s;
         }
         
         .leaderboard, .activity-feed {
@@ -320,6 +335,7 @@
             color: #0284c7;
             cursor: pointer;
             margin-top: 16px;
+            transition: all 0.2s;
         }
         
         .btn-outline:hover {
@@ -336,6 +352,7 @@
             border-radius: 14px;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.2s;
         }
         
         .btn-secondary:hover {
@@ -352,6 +369,7 @@
             word-break: break-all;
             margin: 16px 0;
             border: 1px solid #e2e8f0;
+            transition: all 0.2s;
         }
         
         .wallet-address:hover {
@@ -368,6 +386,7 @@
             cursor: pointer;
             width: 100%;
             margin-top: 15px;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -389,6 +408,21 @@
             border: 1px solid #bae6fd;
         }
         
+        .project-description {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: white;
+            padding: 30px;
+            border-radius: 28px;
+            margin: 30px 0 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .project-description:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(2,132,199,0.3);
+        }
+        
         .countdown-timer {
             background: #fef3c7;
             border-radius: 16px;
@@ -405,141 +439,7 @@
             letter-spacing: 2px;
         }
         
-        /* Announcement Modal */
-        .announcement-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 20000;
-            animation: fadeInModal 0.3s ease;
-        }
-        
-        .announcement-modal {
-            background: white;
-            border-radius: 32px;
-            width: 90%;
-            max-width: 700px;
-            max-height: 85vh;
-            overflow-y: auto;
-            animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
-        }
-        
-        .announcement-header {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
-            padding: 24px;
-            border-radius: 32px 32px 0 0;
-            color: white;
-            text-align: center;
-        }
-        
-        .announcement-header h2 {
-            font-size: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .announcement-header p {
-            font-size: 14px;
-            opacity: 0.9;
-            margin-top: 8px;
-        }
-        
-        .announcement-body {
-            padding: 24px;
-        }
-        
-        .vip-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        
-        .vip-table th {
-            background: #f1f5f9;
-            padding: 12px;
-            text-align: center;
-            font-weight: 600;
-            color: #0284c7;
-            border-bottom: 2px solid #e2e8f0;
-        }
-        
-        .vip-table td {
-            padding: 10px;
-            text-align: center;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        
-        .vip-table tr:hover {
-            background: #f8fafc;
-        }
-        
-        .commission-box {
-            background: linear-gradient(135deg, #fef3c7, #fffbeb);
-            border-radius: 20px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
-            border: 1px solid #fbbf24;
-        }
-        
-        .commission-box h4 {
-            color: #d97706;
-            margin-bottom: 10px;
-        }
-        
-        .commission-box .percentage {
-            font-size: 28px;
-            font-weight: 700;
-            color: #f59e0b;
-        }
-        
-        .recruit-text {
-            background: #dbeafe;
-            border-radius: 20px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
-        }
-        
-        .recruit-text i {
-            color: #0284c7;
-            margin-right: 8px;
-        }
-        
-        .announcement-footer {
-            padding: 20px 24px 24px;
-            text-align: center;
-            border-top: 1px solid #e2e8f0;
-        }
-        
-        .btn-know {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
-            color: white;
-            padding: 14px 40px;
-            border: none;
-            border-radius: 40px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .btn-know:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 20px rgba(2,132,199,0.3);
-        }
-        
-        /* Regular Modal */
+        /* Modal animations */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -596,6 +496,7 @@
             font-size: 28px;
             cursor: pointer;
             color: #94a3b8;
+            transition: all 0.2s;
         }
         .modal-close:hover { color: #ef4444; transform: scale(1.1); }
         
@@ -629,6 +530,7 @@
             border: 1px solid #e2e8f0;
             border-radius: 14px;
             font-size: 14px;
+            transition: all 0.2s;
         }
         .input-group input:focus {
             outline: none;
@@ -644,6 +546,7 @@
             border-radius: 14px;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.2s;
         }
         .btn-cancel:hover { background: #e2e8f0; transform: scale(1.02); }
         
@@ -655,6 +558,7 @@
             border-radius: 14px;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.2s;
         }
         .btn-confirm:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(2,132,199,0.3); }
         
@@ -702,6 +606,7 @@
             font-size: 18px;
             cursor: pointer;
             color: #94a3b8;
+            transition: all 0.2s;
         }
         .toast-close:hover { color: #ef4444; transform: scale(1.1); }
         
@@ -734,10 +639,9 @@
             .container { padding: 16px; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .panel-grid { grid-template-columns: 1fr; }
+            .project-description { padding: 20px; }
             .toast { min-width: 280px; right: 16px; left: 16px; }
             .modal { width: 95%; margin: 16px; }
-            .vip-table th, .vip-table td { font-size: 11px; padding: 6px; }
-            .announcement-modal { width: 95%; }
         }
     </style>
 </head>
@@ -755,20 +659,6 @@
         const TOTAL_PROFIT_30_DAYS = 120;
         const ROI_PERCENT = 33.33;
         
-        // Announcement data - VIP packages (without VIP0)
-        const VIP_ANNOUNCEMENT = [
-            { name: "VIP1", deposit: 15, dailyEarn: 9.9, profitPercent: 66 },
-            { name: "VIP2", deposit: 45, dailyEarn: 30, profitPercent: 66 },
-            { name: "VIP3", deposit: 135, dailyEarn: 90, profitPercent: 66 },
-            { name: "VIP4", deposit: 378, dailyEarn: 272, profitPercent: 72 },
-            { name: "VIP5", deposit: 756, dailyEarn: 567, profitPercent: 75 },
-            { name: "VIP6", deposit: 1386, dailyEarn: 1068, profitPercent: 77 },
-            { name: "VIP7", deposit: 2910, dailyEarn: 2473, profitPercent: 85 },
-            { name: "VIP8", deposit: 5820, dailyEarn: 5179, profitPercent: 89 },
-            { name: "VIP9", deposit: 9312, dailyEarn: 8194, profitPercent: 88 },
-            { name: "VIP10", deposit: 15830, dailyEarn: 14088, profitPercent: 89 }
-        ];
-        
         let userEmail = null;
         let userBalance = 0;
         let userPanels = 0;
@@ -778,7 +668,6 @@
         let isLoading = false;
         let countdownInterval = null;
         let profitChart = null;
-        let announcementShown = false;
         
         const investorNames = ["SolarWhale", "GreenGiant", "SunKing", "EcoRich", "PowerInvestor", "FutureFund", "CleanCapital", "SolarTycoon", "EnergyElite", "GreenWealth", "SunHunter", "EcoProsper", "SolarDream", "PowerProfit", "GreenGains"];
         
@@ -889,65 +778,6 @@
         }
         
         function closeModal() { const modal = document.getElementById('custom-modal'); if (modal) modal.remove(); }
-        
-        function closeAnnouncement() {
-            const modal = document.getElementById('announcement-modal');
-            if (modal) modal.remove();
-            announcementShown = true;
-            localStorage.setItem('announcementShown', 'true');
-        }
-        
-        function showAnnouncement() {
-            if (announcementShown) return;
-            const saved = localStorage.getItem('announcementShown');
-            if (saved === 'true') return;
-            
-            let tableRows = '';
-            VIP_ANNOUNCEMENT.forEach(vip => {
-                tableRows += `<tr><td>${vip.name}</td><td>${vip.deposit} USDT</td><td>${vip.dailyEarn} USDT</td><td>+${vip.profitPercent}%</td></tr>`;
-            });
-            
-            const modalHTML = `
-                <div class="announcement-overlay" id="announcement-modal">
-                    <div class="announcement-modal">
-                        <div class="announcement-header">
-                            <h2><i class="fas fa-bullhorn"></i> Announcement</h2>
-                            <p>Welcome to SolarInvest SA - Your Solar Investment Platform</p>
-                        </div>
-                        <div class="announcement-body">
-                            <table class="vip-table">
-                                <thead>
-                                    <tr><th>VIP Level</th><th>Deposit</th><th>Daily Earnings</th><th>Profit</th></tr>
-                                </thead>
-                                <tbody>
-                                    ${tableRows}
-                                </tbody>
-                            </table>
-                            <div class="commission-box">
-                                <h4><i class="fas fa-handshake"></i> Team Leader Benefits</h4>
-                                <div class="percentage">Earn up to 14% Commission</div>
-                                <div style="margin-top: 8px;">10% + 3% + 1% on referrals</div>
-                            </div>
-                            <div class="recruit-text">
-                                <i class="fas fa-users"></i> <strong>We are recruiting outstanding team leaders!</strong><br>
-                                Whether you want to earn extra money part-time or build a team to earn a high salary,<br>
-                                we welcome you to join us!
-                            </div>
-                            <div class="info-box" style="margin-top: 16px;">
-                                <i class="fas fa-solar-panel"></i> <strong>Why invest in SolarInvest SA?</strong><br><br>
-                                South Africa faces an energy crisis with daily load shedding. Solar energy is the sustainable solution. 
-                                By investing in our solar panel project, you earn passive income while helping power South African homes 
-                                with clean, renewable energy. Each panel produces 550W, reducing carbon emissions by 500kg per year.
-                            </div>
-                        </div>
-                        <div class="announcement-footer">
-                            <button class="btn-know" onclick="closeAnnouncement()"><i class="fas fa-check-circle"></i> I know</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.body.insertAdjacentHTML('beforeend', modalHTML);
-        }
         
         function showChangePasswordModal() {
             const content = `<div class="input-group"><label><i class="fas fa-key"></i> Current Password</label><input type="password" id="old-password" placeholder="Enter your current password"></div><div class="input-group"><label><i class="fas fa-lock"></i> New Password</label><input type="password" id="new-password" placeholder="Enter new password (min 6 characters)"></div><div class="input-group"><label><i class="fas fa-lock"></i> Retype New Password</label><input type="password" id="retype-password" placeholder="Retype new password"></div><div id="password-error" class="error-text"></div>`;
@@ -1157,7 +987,7 @@
                 investmentHtml = `<div class="investment-card fade-in"><h3><i class="fas fa-solar-panel"></i> Your Solar Investment</h3><div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin: 15px 0;"><div><strong>Active Panels:</strong> ${panels} x 550W</div><div><strong>Daily Profit:</strong> ${dailyProfit} USDT</div><div><strong>Total Expected:</strong> ${totalExpected} USDT (+${profit} USDT profit)</div></div>${!canClaim ? `<div class="countdown-timer" id="countdown-timer"><div class="timer">Loading...</div><div class="label">Time remaining until withdrawal available</div></div>` : `<button class="claim-btn" onclick="window.claimProfit()"><i class="fas fa-money-bill-wave"></i> Claim Daily Profit (${dailyProfit} USDT)</button>`}</div>`;
             }
             
-            app.innerHTML = `<div class="container fade-in"><div class="header"><div class="logo" onclick="window.showProfileModal()"><i class="fas fa-solar-panel"></i> SolarInvest SA</div><div class="flex-buttons"><button class="btn-secondary" onclick="window.showDepositModal()"><i class="fas fa-plus-circle"></i> Deposit</button><button class="btn-secondary" onclick="window.logout()"><i class="fas fa-sign-out-alt"></i> Logout</button></div></div><div class="stats-grid"><div class="stat-card"><div class="label"><i class="fas fa-wallet"></i> Your Balance</div><div class="value green">${userBalance.toFixed(2)} USDT</div></div><div class="stat-card"><div class="label"><i class="fas fa-solar-panel"></i> Active Panels</div><div class="value blue">${userPanels}</div></div><div class="stat-card"><div class="label"><i class="fas fa-chart-line"></i> Total Invested</div><div class="value">${userTotalInvested.toFixed(2)} USDT</div></div></div><div class="dashboard-grid"><div><div class="profile-section"><div class="profile-header"><div><h3><i class="fas fa-user-circle"></i> My Account</h3><div class="profile-email"><i class="fas fa-envelope"></i> ${userEmail}</div></div><button class="edit-profile-btn" onclick="window.showProfileModal()"><i class="fas fa-edit"></i> View Profile</button></div></div><div class="chart-container"><h3><i class="fas fa-chart-line"></i> Profit Forecast (7 days)</h3><canvas id="profitChart"></canvas></div><div class="wallet-box"><div><i class="fas fa-qrcode"></i> DEPOSIT USDT (TRC20) TO:</div><div class="wallet-address">${MAIN_WALLET}</div><button class="btn-outline" onclick="window.copyWalletAddress()" style="width: auto; padding: 8px 24px;"><i class="fas fa-copy"></i> Copy Address</button><div class="info-box" style="margin-top: 16px;"><i class="fas fa-info-circle"></i> After sending USDT, click DEPOSIT and send TX Hash to admin.</div></div>${investmentHtml}<h2 style="margin: 30px 0 20px 0;"><i class="fas fa-solar-panel"></i> Solar Panel Packages</h2><div class="panel-grid">${panelsHtml}</div></div><div><div class="leaderboard"><h3><i class="fas fa-trophy"></i> Top Investors</h3><ul class="leaderboard-list" id="leaderboard-list"></ul></div><div class="activity-feed"><h3><i class="fas fa-bell"></i> Live Activity</h3><ul class="activity-list" id="activity-list"></ul></div></div></div><div class="info-box" style="margin-top: 20px;"><strong><i class="fas fa-list-check"></i> How it works:</strong><br><br>1. Copy wallet address and send USDT (TRC20)<br>2. Click DEPOSIT and send TX Hash to admin<br>3. Admin adds balance to your account<br>4. Buy solar panels (1 panel = 90 USDT, 4 USDT/day profit, 33.33% ROI)</div></div>`;
+            app.innerHTML = `<div class="container fade-in"><div class="header"><div class="logo" onclick="window.showProfileModal()"><i class="fas fa-solar-panel"></i> SolarInvest SA</div><div class="flex-buttons"><button class="btn-secondary" onclick="window.showDepositModal()"><i class="fas fa-plus-circle"></i> Deposit</button><button class="btn-secondary" onclick="window.logout()"><i class="fas fa-sign-out-alt"></i> Logout</button></div></div><div class="stats-grid"><div class="stat-card"><div class="label"><i class="fas fa-wallet"></i> Your Balance</div><div class="value green">${userBalance.toFixed(2)} USDT</div></div><div class="stat-card"><div class="label"><i class="fas fa-solar-panel"></i> Active Panels</div><div class="value blue">${userPanels}</div></div><div class="stat-card"><div class="label"><i class="fas fa-chart-line"></i> Total Invested</div><div class="value">${userTotalInvested.toFixed(2)} USDT</div></div></div><div class="dashboard-grid"><div><div class="profile-section"><div class="profile-header"><div><h3><i class="fas fa-user-circle"></i> My Account</h3><div class="profile-email"><i class="fas fa-envelope"></i> ${userEmail}</div></div><button class="edit-profile-btn" onclick="window.showProfileModal()"><i class="fas fa-edit"></i> View Profile</button></div></div><div class="chart-container"><h3><i class="fas fa-chart-line"></i> Profit Forecast (7 days)</h3><canvas id="profitChart"></canvas></div><div class="wallet-box"><div><i class="fas fa-qrcode"></i> DEPOSIT USDT (TRC20) TO:</div><div class="wallet-address">${MAIN_WALLET}</div><button class="btn-outline" onclick="window.copyWalletAddress()" style="width: auto; padding: 8px 24px;"><i class="fas fa-copy"></i> Copy Address</button><div class="info-box" style="margin-top: 16px;"><i class="fas fa-info-circle"></i> After sending USDT, click DEPOSIT and send TX Hash to admin.</div></div>${investmentHtml}<h2 style="margin: 30px 0 20px 0;"><i class="fas fa-solar-panel"></i> Solar Panel Packages</h2><div class="panel-grid">${panelsHtml}</div></div><div><div class="leaderboard"><h3><i class="fas fa-trophy"></i> Top Investors</h3><ul class="leaderboard-list" id="leaderboard-list"></ul></div><div class="activity-feed"><h3><i class="fas fa-bell"></i> Live Activity</h3><ul class="activity-list" id="activity-list"></ul></div></div></div><div class="project-description"><h3><i class="fas fa-solar-panel"></i> Why Invest in SolarInvest SA?</h3><p>South Africa faces an energy crisis with daily load shedding affecting businesses and families. Solar energy is the sustainable solution. By investing in our solar panel project, you're not just earning passive income — you're helping power South African homes and businesses with clean, renewable energy.</p><div class="stats"><div class="stat-item"><div class="stat-number">500+</div><div class="stat-label">Solar Panels Installed</div></div><div class="stat-item"><div class="stat-number">250+</div><div class="stat-label">Happy Investors</div></div><div class="stat-item"><div class="stat-number">150+</div><div class="stat-label">Homes Powered</div></div></div></div><div class="info-box"><strong><i class="fas fa-list-check"></i> How it works:</strong><br><br>1. Copy wallet address and send USDT (TRC20)<br>2. Click DEPOSIT and send TX Hash to admin<br>3. Admin adds balance to your account<br>4. Buy solar panels (1 panel = 90 USDT, 4 USDT/day profit, 33.33% ROI)</div></div>`;
             
             updateActivityFeedDisplay();
             updateLeaderboardDisplay();
@@ -1167,9 +997,6 @@
                 lockEnd.setDate(lockEnd.getDate() + 3);
                 startCountdownTimer(lockEnd);
             }
-            
-            // Show announcement modal after dashboard loads
-            setTimeout(() => showAnnouncement(), 500);
         }
         
         window.showInvestmentModal = showInvestmentModal;
@@ -1178,7 +1005,6 @@
         window.claimProfit = claimProfit;
         window.copyWalletAddress = copyWalletAddress;
         window.logout = logout;
-        window.closeAnnouncement = closeAnnouncement;
         
         if (!localStorage.getItem('userEmail')) { window.location.href = "login.html"; }
         else { renderDashboard(); }
