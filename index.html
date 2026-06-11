@@ -367,29 +367,205 @@
             opacity: 0.8;
         }
         
-        .toast {
+        /* Custom Modal Styles */
+        .modal-overlay {
             position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1e293b;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 50px;
-            z-index: 1000;
-            animation: slideUp 0.3s ease;
-            font-size: 14px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+            animation: fadeInModal 0.2s ease;
+        }
+        
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal {
+            background: white;
+            border-radius: 32px;
+            width: 90%;
+            max-width: 460px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            padding: 24px 24px 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            font-size: 24px;
+            color: #0284c7;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .toast.success { background: #10b981; }
-        .toast.error { background: #ef4444; }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #94a3b8;
+            width: auto;
+            padding: 0;
+            transition: color 0.2s;
+        }
         
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .modal-close:hover {
+            color: #ef4444;
+        }
+        
+        .modal-body {
+            padding: 24px;
+        }
+        
+        .modal-footer {
+            padding: 0 24px 24px 24px;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+        
+        .modal-info {
+            background: #f0f9ff;
+            padding: 16px;
+            border-radius: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+        
+        .modal-info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .modal-info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .modal-info-label {
+            font-weight: 600;
+            color: #64748b;
+        }
+        
+        .modal-info-value {
+            font-weight: 700;
+            color: #0284c7;
+        }
+        
+        .btn-cancel {
+            background: #f1f5f9;
+            color: #64748b;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-cancel:hover {
+            background: #e2e8f0;
+        }
+        
+        .btn-confirm {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(2,132,199,0.3);
+        }
+        
+        .btn-confirm:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* Toast Notification */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .toast {
+            background: white;
+            border-radius: 16px;
+            padding: 16px 20px;
+            min-width: 320px;
+            max-width: 420px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            animation: slideInRight 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid;
+        }
+        
+        .toast.success { border-left-color: #10b981; }
+        .toast.error { border-left-color: #ef4444; }
+        .toast.info { border-left-color: #0284c7; }
+        
+        .toast i { font-size: 20px; }
+        .toast.success i { color: #10b981; }
+        .toast.error i { color: #ef4444; }
+        .toast.info i { color: #0284c7; }
+        
+        .toast-content { flex: 1; }
+        .toast-title { font-weight: 600; color: #0f172a; margin-bottom: 4px; }
+        .toast-message { font-size: 13px; color: #64748b; }
+        .toast-close {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #94a3b8;
+            padding: 0;
+            width: auto;
+        }
+        
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
         
         .loading-spinner {
@@ -424,6 +600,8 @@
             .panel-grid { grid-template-columns: 1fr; }
             .project-description { padding: 20px; }
             .project-description .stats { gap: 20px; }
+            .toast { min-width: 280px; right: 16px; left: 16px; }
+            .modal { width: 95%; margin: 16px; }
         }
     </style>
 </head>
@@ -453,6 +631,146 @@
         ];
         let activityList = [];
         let activityInterval = null;
+        
+        // ========== CUSTOM MODAL FUNCTIONS ==========
+        
+        function showModal(title, content, onConfirm = null, onCancel = null, confirmText = "Confirm", cancelText = "Cancel") {
+            const modalHTML = `
+                <div class="modal-overlay" id="custom-modal">
+                    <div class="modal">
+                        <div class="modal-header">
+                            <h3><i class="fas fa-solar-panel"></i> ${title}</h3>
+                            <button class="modal-close" onclick="closeModal()">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            ${content}
+                        </div>
+                        <div class="modal-footer">
+                            ${onCancel ? `<button class="btn-cancel" onclick="closeModalAndCancel()">${cancelText}</button>` : ''}
+                            ${onConfirm ? `<button class="btn-confirm" id="modal-confirm-btn">${confirmText}</button>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            
+            if (onConfirm) {
+                const confirmBtn = document.getElementById('modal-confirm-btn');
+                if (confirmBtn) {
+                    confirmBtn.addEventListener('click', () => {
+                        closeModal();
+                        onConfirm();
+                    });
+                }
+            }
+            
+            window.closeModalAndCancel = () => {
+                closeModal();
+                if (onCancel) onCancel();
+            };
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('custom-modal');
+            if (modal) modal.remove();
+        }
+        
+        function showDepositModal() {
+            const content = `
+                <div class="modal-info">
+                    <div style="font-size: 14px; margin-bottom: 12px;"><i class="fas fa-qrcode"></i> Send USDT (TRC20) to:</div>
+                    <div style="background: #f8fafc; padding: 12px; border-radius: 12px; font-family: monospace; font-size: 12px; word-break: break-all; border: 1px solid #e2e8f0;">
+                        ${MAIN_WALLET}
+                    </div>
+                    <button onclick="copyWalletAddressAndClose()" style="margin-top: 12px; background: #0284c7; color: white; border: none; padding: 8px 16px; border-radius: 12px; cursor: pointer; width: 100%;">
+                        <i class="fas fa-copy"></i> Copy Address
+                    </button>
+                </div>
+                <div style="margin-top: 16px; padding: 12px; background: #fef3c7; border-radius: 12px; font-size: 13px;">
+                    <i class="fas fa-info-circle"></i> After sending USDT, contact admin with your Transaction ID (TX Hash) to add balance.
+                </div>
+            `;
+            
+            showModal("Deposit USDT", content, null, null, "", "");
+        }
+        
+        function copyWalletAddressAndClose() {
+            navigator.clipboard.writeText(MAIN_WALLET);
+            closeModal();
+            showToast("Wallet address copied!", "success");
+        }
+        
+        function showInvestmentModal(panels) {
+            const cost = panels * PANEL_PRICE;
+            const dailyProfit = panels * 4;
+            const totalProfit = panels * 120;
+            
+            const content = `
+                <div class="modal-info">
+                    <div class="modal-info-row">
+                        <span class="modal-info-label"><i class="fas fa-tag"></i> Investment Amount</span>
+                        <span class="modal-info-value">${cost} USDT</span>
+                    </div>
+                    <div class="modal-info-row">
+                        <span class="modal-info-label"><i class="fas fa-sun"></i> Daily Profit</span>
+                        <span class="modal-info-value">${dailyProfit} USDT</span>
+                    </div>
+                    <div class="modal-info-row">
+                        <span class="modal-info-label"><i class="fas fa-calendar"></i> Total in 30 Days</span>
+                        <span class="modal-info-value">${totalProfit} USDT</span>
+                    </div>
+                    <div class="modal-info-row">
+                        <span class="modal-info-label"><i class="fas fa-clock"></i> First Withdrawal</span>
+                        <span class="modal-info-value">After 3 days</span>
+                    </div>
+                    <div class="modal-info-row">
+                        <span class="modal-info-label"><i class="fas fa-chart-line"></i> Your Profit</span>
+                        <span class="modal-info-value" style="color: #10b981;">+${totalProfit - cost} USDT (${((totalProfit - cost) / cost * 100).toFixed(0)}%)</span>
+                    </div>
+                </div>
+                <div style="margin-top: 16px; padding: 12px; background: #dbeafe; border-radius: 12px; font-size: 13px;">
+                    <i class="fas fa-shield-alt"></i> Your investment is secured by real solar assets in South Africa.
+                </div>
+            `;
+            
+            showModal(`Invest in ${panels} Solar Panel${panels > 1 ? 's' : ''}`, content, () => {
+                confirmInvestment(panels);
+            }, null, "Confirm Investment", "");
+        }
+        
+        async function confirmInvestment(panels) {
+            await buyPanels(panels);
+        }
+        
+        function showToast(message, type = "info", title = "") {
+            const container = document.getElementById('toast-container') || (() => {
+                const div = document.createElement('div');
+                div.id = 'toast-container';
+                div.className = 'toast-container';
+                document.body.appendChild(div);
+                return div;
+            })();
+            
+            const titles = { success: "Success", error: "Error", info: "Information" };
+            const icons = { success: "fa-check-circle", error: "fa-exclamation-circle", info: "fa-info-circle" };
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas ${icons[type]}"></i>
+                <div class="toast-content">
+                    <div class="toast-title">${title || titles[type]}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+            `;
+            
+            container.appendChild(toast);
+            setTimeout(() => {
+                if (toast.parentElement) toast.remove();
+            }, 4000);
+        }
         
         function initActivityFeed() {
             const amounts = [4, 8, 12, 16, 20, 24, 28, 32, 36, 40];
@@ -490,14 +808,6 @@
             `).join('');
         }
         
-        function showToast(message, type = "info") {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-        
         async function callAPI(action, data = {}) {
             try {
                 const response = await fetch(APPS_SCRIPT_URL, {
@@ -515,21 +825,18 @@
             const email = localStorage.getItem('userEmail');
             if (!email) return false;
             
-            // Try to get from cache first
             userEmail = email;
             userBalance = parseFloat(localStorage.getItem('userBalance') || 0);
             userPanels = parseInt(localStorage.getItem('userPanels') || 0);
             userDailyProfit = parseFloat(localStorage.getItem('userDailyProfit') || 0);
             userTotalInvested = parseFloat(localStorage.getItem('userTotalInvested') || 0);
             
-            // Refresh from server in background
             const result = await callAPI('getUser', { email });
             if (result && result.email) {
                 userBalance = result.balance || 0;
                 userPanels = result.panels || 0;
                 userDailyProfit = result.dailyProfit || 0;
                 userTotalInvested = result.totalInvested || 0;
-                // Update cache
                 localStorage.setItem('userBalance', userBalance);
                 localStorage.setItem('userPanels', userPanels);
                 localStorage.setItem('userDailyProfit', userDailyProfit);
@@ -552,10 +859,6 @@
             
             if (userBalance < cost) {
                 showToast(`Insufficient balance. Need ${cost} USDT`, "error");
-                return;
-            }
-            
-            if (!confirm(`Invest in ${panels} solar panel(s) for ${cost} USDT?\n\nDaily profit: ${panels * 4} USDT\nTotal in 30 days: ${panels * 120} USDT\nFirst withdrawal after 3 days.\n\nProceed?`)) {
                 return;
             }
             
@@ -609,16 +912,6 @@
             showToast("Wallet address copied!", "success");
         }
         
-        function showDepositInfo() {
-            alert(
-                "DEPOSIT USDT\n\n" +
-                "1. Send USDT (TRC20) to:\n" + MAIN_WALLET + "\n\n" +
-                "2. Send the Transaction ID (TX Hash) to the admin\n\n" +
-                "3. Admin will add balance to your account\n\n" +
-                "Contact admin: [your contact info]"
-            );
-        }
-        
         function logout() {
             if (activityInterval) clearInterval(activityInterval);
             localStorage.clear();
@@ -646,7 +939,7 @@
                 const isGold = panels === 10;
                 
                 panelsHtml += `
-                    <div class="panel-card ${isGold ? 'gold' : ''}" onclick="window.buyPanels(${panels})">
+                    <div class="panel-card ${isGold ? 'gold' : ''}" onclick="window.showInvestmentModal(${panels})">
                         <div class="panel-price">${cost} USDT</div>
                         <div class="panel-daily"><i class="fas fa-sun"></i> ${daily} USDT / day</div>
                         <div class="panel-total"><i class="fas fa-calendar"></i> Total in 30 days: ${total} USDT</div>
@@ -689,7 +982,7 @@
                     <div class="header">
                         <div class="logo"><i class="fas fa-solar-panel"></i> SolarInvest SA</div>
                         <div class="flex-buttons">
-                            <button class="btn-secondary" onclick="window.showDepositInfo()"><i class="fas fa-plus-circle"></i> Deposit</button>
+                            <button class="btn-secondary" onclick="window.showDepositModal()"><i class="fas fa-plus-circle"></i> Deposit</button>
                             <button class="btn-secondary" onclick="window.logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
                         </div>
                     </div>
@@ -716,7 +1009,7 @@
                                 <div class="wallet-address">${MAIN_WALLET}</div>
                                 <button class="btn-outline" onclick="window.copyWalletAddress()" style="width: auto; padding: 8px 24px;"><i class="fas fa-copy"></i> Copy Address</button>
                                 <div class="info-box" style="margin-top: 16px;">
-                                    <i class="fas fa-info-circle"></i> After sending USDT, contact admin with your Transaction ID (TX Hash) to add balance.
+                                    <i class="fas fa-info-circle"></i> After sending USDT, click DEPOSIT button and send TX Hash to admin.
                                 </div>
                             </div>
                             
@@ -767,7 +1060,7 @@
                     <div class="info-box">
                         <strong><i class="fas fa-list-check"></i> How it works:</strong><br><br>
                         1. Copy wallet address and send USDT (TRC20)<br>
-                        2. Contact admin with your Transaction ID (TX Hash)<br>
+                        2. Click DEPOSIT and send TX Hash to admin<br>
                         3. Admin adds balance to your account<br>
                         4. Buy solar panels (1 panel = 90 USDT, 4 USDT/day profit)<br>
                         5. First withdrawal after 3 days, then daily withdrawals for 30 days<br>
@@ -780,13 +1073,12 @@
             updateActivityFeed();
         }
         
-        window.buyPanels = buyPanels;
+        window.showInvestmentModal = showInvestmentModal;
+        window.showDepositModal = showDepositModal;
         window.claimProfit = claimProfit;
-        window.showDepositInfo = showDepositInfo;
         window.copyWalletAddress = copyWalletAddress;
         window.logout = logout;
         
-        // Check if logged in
         if (!localStorage.getItem('userEmail')) {
             window.location.href = "login.html";
         } else {
