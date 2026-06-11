@@ -137,6 +137,19 @@
             box-shadow: 0 0 0 3px rgba(2,132,199,0.1);
         }
         
+        input.error {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+        
+        .error-message {
+            color: #ef4444;
+            font-size: 12px;
+            margin-top: -12px;
+            margin-bottom: 12px;
+            display: block;
+        }
+        
         .btn-primary {
             width: 100%;
             padding: 14px;
@@ -174,7 +187,6 @@
             border: 1px solid #bae6fd;
         }
         
-        /* Toast Notification */
         .toast-container {
             position: fixed;
             top: 20px;
@@ -252,6 +264,15 @@
     <script>
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyyh0B1oBOwPNIZoxB1fxAsfdob4Ovtnmqo_bID86gSs4pJy2pMnxdw-C0byxyv0XijTQ/exec";
         
+        // Allowed email domains
+        const ALLOWED_DOMAINS = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com'];
+        
+        function validateEmail(email) {
+            if (!email) return false;
+            const domain = email.split('@')[1];
+            return domain && ALLOWED_DOMAINS.includes(domain.toLowerCase());
+        }
+        
         function showToast(message, type = "info", title = "") {
             const container = document.getElementById('toast-container') || (() => {
                 const div = document.createElement('div');
@@ -307,6 +328,12 @@
         }
         
         async function handleRegister(email, password, retype) {
+            // Email validation
+            if (!validateEmail(email)) {
+                showToast("Please use a valid email address (gmail.com, yahoo.com, outlook.com, hotmail.com)", "error");
+                return false;
+            }
+            
             if (password !== retype) {
                 showToast("Passwords do not match", "error");
                 return false;
@@ -333,6 +360,11 @@
         }
         
         async function handleLogin(email, password) {
+            if (!validateEmail(email)) {
+                showToast("Please use a valid email address", "error");
+                return false;
+            }
+            
             const result = await callAPI('login', { email, password });
             
             if (result.success) {
@@ -356,9 +388,19 @@
         function renderAuthForm() {
             let activeTab = 'login';
             let email = '', password = '', retype = '';
+            let emailError = '';
             let isLoading = false;
             
             const app = document.getElementById('app');
+            
+            function validateEmailField(value) {
+                if (value && !validateEmail(value)) {
+                    emailError = "Please use a valid email (gmail.com, yahoo.com, outlook.com, hotmail.com)";
+                } else {
+                    emailError = '';
+                }
+                render();
+            }
             
             function render() {
                 app.innerHTML = `
@@ -371,14 +413,16 @@
                                 <button class="tab-btn ${activeTab === 'register' ? 'active' : ''}" onclick="window.switchTab('register')">Register</button>
                             </div>
                             ${activeTab === 'login' ? `
-                                <input type="email" id="email" placeholder="Email Address" value="${email.replace(/"/g, '&quot;')}">
+                                <input type="email" id="email" placeholder="Email Address (example@gmail.com)" value="${email.replace(/"/g, '&quot;')}" class="${emailError ? 'error' : ''}">
+                                ${emailError ? `<span class="error-message">${emailError}</span>` : ''}
                                 <div class="password-wrapper">
                                     <input type="password" id="password" placeholder="Password" value="${password.replace(/"/g, '&quot;')}">
                                     <span class="password-toggle" onclick="togglePassword('password')"><i class="fas fa-eye"></i></span>
                                 </div>
                                 <button class="btn-primary" id="action-btn">Login</button>
                             ` : `
-                                <input type="email" id="email" placeholder="Email Address" value="${email.replace(/"/g, '&quot;')}">
+                                <input type="email" id="email" placeholder="Email Address (example@gmail.com)" value="${email.replace(/"/g, '&quot;')}" class="${emailError ? 'error' : ''}">
+                                ${emailError ? `<span class="error-message">${emailError}</span>` : ''}
                                 <div class="password-wrapper">
                                     <input type="password" id="password" placeholder="Password" value="${password.replace(/"/g, '&quot;')}">
                                     <span class="password-toggle" onclick="togglePassword('password')"><i class="fas fa-eye"></i></span>
@@ -401,7 +445,12 @@
                 const passwordInput = document.getElementById('password');
                 const retypeInput = document.getElementById('retype');
                 
-                if (emailInput) emailInput.addEventListener('input', (e) => email = e.target.value);
+                if (emailInput) {
+                    emailInput.addEventListener('input', (e) => {
+                        email = e.target.value;
+                        validateEmailField(email);
+                    });
+                }
                 if (passwordInput) passwordInput.addEventListener('input', (e) => password = e.target.value);
                 if (retypeInput) retypeInput.addEventListener('input', (e) => retype = e.target.value);
                 
@@ -410,6 +459,12 @@
                     const originalText = actionBtn.innerText;
                     actionBtn.addEventListener('click', async () => {
                         if (isLoading) return;
+                        
+                        if (activeTab === 'register' && !validateEmail(email)) {
+                            showToast("Please use a valid email address (gmail.com, yahoo.com, outlook.com, hotmail.com)", "error");
+                            return;
+                        }
+                        
                         isLoading = true;
                         setButtonLoading('action-btn', true, originalText);
                         
@@ -427,6 +482,7 @@
             
             window.switchTab = (tab) => {
                 activeTab = tab;
+                emailError = '';
                 render();
             };
             
