@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Why Us? - SolarInvest SA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%);
+            min-height: 100vh;
+            color: #0f172a;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .page-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 16px 24px;
+            border-radius: 24px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0284c7;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo i {
+            color: #fbbf24;
+        }
+        
+        .back-btn {
+            background: #f1f5f9;
+            color: #64748b;
+            padding: 8px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        
+        .back-btn:hover {
+            background: #e2e8f0;
+            transform: scale(1.02);
+        }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: white;
+            padding: 40px 24px;
+            border-radius: 28px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        .hero h1 {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+        
+        .hero p {
+            font-size: 15px;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .hero .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .hero .stat-item {
+            text-align: center;
+        }
+        
+        .hero .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .hero .stat-label {
+            font-size: 12px;
+            opacity: 0.85;
+        }
+        
+        /* Sections */
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 28px 24px;
+            border-radius: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        
+        .section h2 {
+            font-size: 22px;
+            color: #0284c7;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section p {
+            color: #334155;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+        
+        /* Objectives Grid */
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        
+        .objective-card {
+            background: #f0f9ff;
+            padding: 20px;
+            border-radius: 18px;
+            border-left: 4px solid #0284c7;
+        }
+        
+        .objective-card i {
+            font-size: 24px;
+            color: #0284c7;
+            margin-bottom: 10px;
+        }
+        
+        .objective-card h3 {
+            font-size: 16px;
+            margin-bottom: 6px;
+            color: #0f172a;
+        }
+        
+        .objective-card p {
+            font-size: 13px;
+            color: #64748b;
+            margin: 0;
+        }
+        
+        /* Charts */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 16px;
+        }
+        
+        .chart-box {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 18px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .chart-box h3 {
+            font-size: 15px;
+            color: #0f172a;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .chart-box canvas {
+            max-height: 240px;
+        }
+        
+        /* Profit Table */
+        .profit-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        
+        .profit-table th {
+            background: #0284c7;
+            color: white;
+            padding: 12px 10px;
+            font-size: 13px;
+            text-align: center;
+        }
+        
+        .profit-table td {
+            padding: 10px;
+            text-align: center;
+            font-size: 13px;
+            border-bottom: 1px solid #e2e8f0;
+            background: white;
+        }
+        
+        .profit-table tr:hover td {
+            background: #f0f9ff;
+        }
+        
+        .profit-table .highlight {
+            color: #10b981;
+            font-weight: 700;
+        }
+        
+        /* CTA */
+        .cta {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 30px 24px;
+            border-radius: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        .cta h2 {
+            color: white;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .cta p {
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 20px;
+        }
+        
+        .cta-btn {
+            background: white;
+            color: #059669;
+            padding: 12px 32px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #64748b;
+            font-size: 12px;
+        }
+        
+        /* Mobile */
+        @media (max-width: 768px) {
+            .container { padding: 12px; }
+            .hero { padding: 28px 18px; }
+            .hero h1 { font-size: 24px; }
+            .hero .stats-row { gap: 20px; }
+            .hero .stat-number { font-size: 24px; }
+            .section { padding: 20px 16px; }
+            .section h2 { font-size: 18px; }
+            .page-header { padding: 12px 16px; }
+            .logo { font-size: 17px; }
+            .profit-table th, .profit-table td { padding: 8px 4px; font-size: 11px; }
+            .charts-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="page-header">
+            <a href="login.html" class="logo">
+                <i class="fas fa-solar-panel"></i> SolarInvest SA
+            </a>
+            <a href="login.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Login
+            </a>
+        </div>
+        
+        <!-- Hero -->
+        <div class="hero">
+            <h1>Why Invest in Solar Energy?</h1>
+            <p>South Africa faces a critical energy crisis. Solar energy is not just the future — it's the solution. Join us in building a sustainable, profitable future.</p>
+            <div class="stats-row">
+                <div class="stat-item">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Panels Installed</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">250+</span>
+                    <span class="stat-label">Active Investors</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">33%</span>
+                    <span class="stat-label">ROI in 30 Days</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">500kg</span>
+                    <span class="stat-label">CO₂ Saved / Panel</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Project Overview -->
+        <div class="section">
+            <h2><i class="fas fa-solar-panel"></i> Project Overview</h2>
+            <p>
+                SolarInvest SA is a renewable energy investment platform focused on South Africa's growing solar market. 
+                Our mission is to make solar energy accessible to everyone while offering investors a stable, transparent, 
+                and profitable opportunity.
+            </p>
+            <p>
+                Every investment directly funds the installation of high-efficiency 550W solar panels. These panels generate 
+                clean electricity that powers homes and businesses, while investors earn a fixed daily return from energy production.
+            </p>
+        </div>
+        
+        <!-- Objectives -->
+        <div class="section">
+            <h2><i class="fas fa-bullseye"></i> Our Objectives</h2>
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Clean Energy</h3>
+                    <p>Reduce South Africa's carbon footprint by replacing coal dependency with solar power.</p>
+                </div>
+                <div class="objective-card">
+                    <i class="fas fa-coins"></i>
+                    <h3>Stable Returns</h3>
+                    <p>Provide investors with consistent daily profits backed by real energy production.</p>
+                </div>
+                <div class="objective-card">
+                    <i class="fas fa-home"></i>
+                    <h3>Energy Access</h3>
+                    <p>Power 10,000+ homes with affordable, renewable electricity by 2027.</p>
+                </div>
+                <div class="objective-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Transparency</h3>
+                    <p>Every panel, every kilowatt, every payment — fully traceable and verifiable.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Profit Charts -->
+        <div class="section">
+            <h2><i class="fas fa-chart-line"></i> Profit Analysis</h2>
+            <p style="margin-bottom: 16px;">
+                See how your investment grows. Based on our standard package of 90 USDT per panel 
+                with 4 USDT daily profit over 30 days.
+            </p>
+            
+            <div class="charts-grid">
+                <div class="chart-box">
+                    <h3><i class="fas fa-chart-line"></i> Cumulative Profit (30 Days)</h3>
+                    <canvas id="growthChart"></canvas>
+                </div>
+                <div class="chart-box">
+                    <h3><i class="fas fa-chart-pie"></i> Return Composition</h3>
+                    <canvas id="compositionChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Profit Table -->
+        <div class="section">
+            <h2><i class="fas fa-table"></i> Investment Packages</h2>
+            <table class="profit-table">
+                <thead>
+                    <tr>
+                        <th>Panels</th>
+                        <th>Investment</th>
+                        <th>Daily Profit</th>
+                        <th>Total (30 days)</th>
+                        <th>Your Profit</th>
+                        <th>ROI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>90 USDT</td>
+                        <td>4 USDT</td>
+                        <td>120 USDT</td>
+                        <td class="highlight">+30 USDT</td>
+                        <td class="highlight">33.3%</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>180 USDT</td>
+                        <td>8 USDT</td>
+                        <td>240 USDT</td>
+                        <td class="highlight">+60 USDT</td>
+                        <td class="highlight">33.3%</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>270 USDT</td>
+                        <td>12 USDT</td>
+                        <td>360 USDT</td>
+                        <td class="highlight">+90 USDT</td>
+                        <td class="highlight">33.3%</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>450 USDT</td>
+                        <td>20 USDT</td>
+                        <td>600 USDT</td>
+                        <td class="highlight">+150 USDT</td>
+                        <td class="highlight">33.3%</td>
+                    </tr>
+                    <tr style="background: #fef3c7;">
+                        <td><strong>10</strong></td>
+                        <td><strong>900 USDT</strong></td>
+                        <td><strong>40 USDT</strong></td>
+                        <td><strong>1,200 USDT</strong></td>
+                        <td class="highlight"><strong>+300 USDT</strong></td>
+                        <td class="highlight"><strong>33.3%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Why Choose Us -->
+        <div class="section">
+            <h2><i class="fas fa-star"></i> Why Choose SolarInvest SA?</h2>
+            <div class="objectives-grid">
+                <div class="objective-card" style="border-left-color: #10b981;">
+                    <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                    <h3>Real Assets</h3>
+                    <p>Your investment is backed by physical 550W solar panels.</p>
+                </div>
+                <div class="objective-card" style="border-left-color: #10b981;">
+                    <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                    <h3>Daily Payouts</h3>
+                    <p>Earn 4 USDT per panel per day — withdraw anytime after 3 days.</p>
+                </div>
+                <div class="objective-card" style="border-left-color: #10b981;">
+                    <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                    <h3>Low Entry</h3>
+                    <p>Start with just 90 USDT (one panel).</p>
+                </div>
+                <div class="objective-card" style="border-left-color: #10b981;">
+                    <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                    <h3>Real Impact</h3>
+                    <p>Every panel offsets 500kg of CO₂ per year.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CTA -->
+        <div class="cta">
+            <h2><i class="fas fa-rocket"></i> Ready to Start?</h2>
+            <p>Join 250+ investors already earning with SolarInvest SA</p>
+            <a href="login.html" class="cta-btn">
+                <i class="fas fa-arrow-right"></i> Get Started Now
+            </a>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            © 2026 SolarInvest SA. All rights reserved.
+        </div>
+    </div>
+    
+    <script>
+        // Growth Chart - Cumulative Profit over 30 days
+        const growthCtx = document.getElementById('growthChart').getContext('2d');
+        const days = [];
+        const cumulativeProfit = [];
+        const invested = [];
+        
+        for (let i = 1; i <= 30; i++) {
+            days.push('Day ' + i);
+            cumulativeProfit.push(i * 4); // 4 USDT per day
+            invested.push(90); // initial investment line
+        }
+        
+        new Chart(growthCtx, {
+            type: 'line',
+            data: {
+                labels: days,
+                datasets: [
+                    {
+                        label: 'Cumulative Profit (USDT)',
+                        data: cumulativeProfit,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 0,
+                        pointHoverRadius: 5
+                    },
+                    {
+                        label: 'Initial Investment (90 USDT)',
+                        data: invested,
+                        borderColor: '#0284c7',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        fill: false,
+                        pointRadius: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { color: '#64748b', font: { size: 11 } }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#e2e8f0' },
+                        ticks: { color: '#64748b', font: { size: 10 } }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#64748b', font: { size: 10 }, maxTicksLimit: 6 }
+                    }
+                }
+            }
+        });
+        
+        // Composition Chart - Investment vs Profit
+        const compCtx = document.getElementById('compositionChart').getContext('2d');
+        
+        new Chart(compCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Initial Investment (90 USDT)', 'Profit (30 USDT)'],
+                datasets: [{
+                    data: [90, 30],
+                    backgroundColor: ['#0284c7', '#10b981'],
+                    borderColor: 'white',
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#64748b', font: { size: 11 }, padding: 12 }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.parsed + ' USDT';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
